@@ -4,8 +4,8 @@
     <h1>{{ msg }}</h1>
     <el-row>
       <el-button type="primary">开始</el-button>
-      <router-link to="/Home">Home</router-link>
     </el-row>
+      <router-link to="/Login">登录</router-link>
   </div>
 </template>
 
