@@ -1,32 +1,32 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <el-container>
       <el-header>
-        <div class="icon">
-          <img src="./assets/logo.png" class="iconImg"/>
-          <span class="title">BP后台管理系统</span>
+        <div class='icon'>
+          <img src='./assets/logo.png' class='iconImg'/>
+          <span class='title'>BP后台管理系统</span>
         </div>
-        <div class="funcDiv">
-          <div class="topButtonDiv">
-            <img src="./assets/button-logout.png" alt="退出" class="buttonImg">
-            <el-button class="topButton" size="mini" type="text" v-on:click="handleLogout">退出</el-button>
+        <div class='funcDiv'>
+          <div class='topButtonDiv'>
+            <img src='./assets/button-logout.png' alt='退出' class='buttonImg'>
+            <el-button class='topButton' size='mini' type='text' v-on:click='handleLogout'>退出</el-button>
           </div>
         </div>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width='200px'>
           <el-menu
-            v-bind:default-active="activeIndex"
-            v-on:select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
+            v-bind:default-active='activeIndex'
+            v-on:select='handleSelect'
+            background-color='#545c64'
+            text-color='#fff'
+            active-text-color='#ffd04b'
             unique-opened
           >
             <menu-item
-              v-for="(menu, index) in menus"
-              v-bind:key="index"
-              v-bind:menu-data="menu"
+              v-for='(menu, index) in menus'
+              v-bind:key='index'
+              v-bind:menu-data='menu'
             >
             </menu-item>
           </el-menu>
@@ -40,69 +40,69 @@
 </template>
 
 <script>
-  import MenuItem from './components/MenuItem'
-  import menus from "./menu";
+import MenuItem from './components/MenuItem'
+import menus from './menu'
 
-  export default {
-    name: "Home",
-    components: {MenuItem},
-    data: function () {
-      // 初始化首页
-      let initMenu = menus[0];
-      return {
-        // 当前选中菜单编码
-        activeIndex: initMenu.menuCode,
-        // 当前选中tab页编码
-        menuIndex: 0,
-        menuLength: menus.length,
-        menus: menus,
-      };
-    },
-    methods: {
-      /**
+export default {
+  name: 'Home',
+  components: {MenuItem},
+  data: function () {
+    // 初始化首页
+    let initMenu = menus[0]
+    return {
+      // 当前选中菜单编码
+      activeIndex: initMenu.menuCode,
+      // 当前选中tab页编码
+      menuIndex: 0,
+      menuLength: menus.length,
+      menus: menus
+    }
+  },
+  methods: {
+    /**
        * 根据keyPath查找菜单
        * @param keyPath
        * @returns {menuData}
        */
-      findMenuDataByKeyPath(keyPath) {
-        let catalog = menus;
-        for (let i = 0; i < keyPath.length - 1; i++) {
-          catalog = catalog.find(data => {
-            return data.catalogCode && data.catalogCode === keyPath[i];
-          }).children
-        }
-        return catalog.find(menu => {
-          return menu.menuCode && menu.menuCode === keyPath[keyPath.length - 1];
-        });
-      },
-      handleSelect(key, keyPath) {
-        // TODO
-        console.log('key:', key);
-        console.log('keyPath:', keyPath);
-        // 新打开tab页
-        let menu = this.findMenuDataByKeyPath(keyPath);
-        console.log(menu);
-        this.$router.push(menu.menuUrl);
-      },
-      /**
+    findMenuDataByKeyPath (keyPath) {
+      let catalog = menus
+      for (let i = 0; i < keyPath.length - 1; i++) {
+        catalog = catalog.find(data => {
+          return data.catalogCode && data.catalogCode === keyPath[i]
+        }).children
+      }
+      return catalog.find(menu => {
+        return menu.menuCode && menu.menuCode === keyPath[keyPath.length - 1]
+      })
+    },
+    handleSelect (key, keyPath) {
+      // TODO
+      console.log('key:', key)
+      console.log('keyPath:', keyPath)
+      // 新打开tab页
+      let menu = this.findMenuDataByKeyPath(keyPath)
+      console.log(menu)
+      this.$router.push(menu.menuUrl)
+    },
+    /**
        * 退出
        */
-      handleLogout() {
-        // TODO
-        console.log('退出')
-      },
-    },
-    mounted: function () {
-      setTimeout(() => {
-        this.$notify({
-          title: '欢迎回来',
-          type: 'success',
-          duration: 2000,
-          offset: 90,
-        });
-      }, 1500);
-    },
+    handleLogout () {
+      // TODO
+      console.log('退出')
+    }
+  },
+  mounted: function () {
+    setTimeout(() => {
+      this.$notify({
+        title: '欢迎回来',
+        type: 'success',
+        duration: 2000,
+        offset: 90
+      })
+    }, 1500)
   }
+}
 </script>
 
 <style>
