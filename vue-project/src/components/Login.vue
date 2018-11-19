@@ -1,118 +1,112 @@
 <template>
   <div>
-    <div class="header">
-      <img src="../assets/logo.png" alt="联通图标" class="icon">
+    <div class='header'>
+      <img src='../assets/logo.png' alt='联通图标' class='icon'>
       BP后台管理系统
     </div>
-    <div class="main">
-      <img src="../assets/timg.jpg" alt="BP后台管理系统" v-bind:height="height - 161">
-      <div class="innerDiv">
+    <div class='main'>
+      <img src='../assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
+      <div class='innerDiv'>
         <el-input
-          class="input"
-          placeholder="账号"
-          size="small"
-          v-model="id">
-          <img slot="prefix" src="../assets/user.svg" alt="用户名" class="input-icon">
+          class='input'
+          placeholder='账号'
+          size='small'
+          v-model='id'>
+          <img slot='prefix' src='../assets/user.svg' alt='用户名' class='input-icon'>
         </el-input>
         <el-input
-          class="input"
-          placeholder="密码"
-          size="small"
-          v-model="password"
-          maxlength="30"
-          type="password">
-          <img slot="prefix" src="../assets/lock.svg" alt="密码" class="input-icon">
+          class='input'
+          placeholder='密码'
+          size='small'
+          v-model='password'
+          maxlength='30'
+          type='password'>
+          <img slot='prefix' src='../assets/lock.svg' alt='密码' class='input-icon'>
         </el-input>
-        <div class="verDiv">
+        <div class='verDiv'>
           <el-input
-            class="input"
-            size="small"
-            v-model="verificationCode"
-            v-on:keyup.enter.native="login"
-            v-bind:maxlength="4">
+            class='input'
+            size='small'
+            v-model='verificationCode'
+            v-on:keyup.enter.native='login'
+            v-bind:maxlength='4'>
           </el-input>
-          <img src="../assets/verf-1.png" alt="验证码" class="verImg" v-on:click="handleVerfClick">
+          <img src='../assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
         </div>
-        <div style="width: 100%;height: 20px;">
-          <!--<el-button type="text" class="forgetPassword" v-bind:click="handleForgetPassword">忘记密码？</el-button>-->
+        <div style='width: 100%;height: 20px;'>
+          <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
         </div>
-        <el-button size="small" type="primary" class="loginButton" v-bind:loading="loading" v-on:click="login">登 录
+        <el-button size='small' type='primary' class='loginButton' v-bind:loading='loading' v-on:click='login'>登 录
         </el-button>
       </div>
     </div>
-    <div class="footer">
+    <div class='footer'>
       COPYRIGHT © 2018 POWERED BY xiaohetongxue.com @xiaohetongxue.cn
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "Login",
-    data: function () {
-      return {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        id: '',
-        password: '',
-        verificationCode: '',
-        loading: false,
-        time: 0,
-        lock: false,
-      };
+export default {
+  name: 'Login',
+  data: function () {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      id: '',
+      password: '',
+      verificationCode: '',
+      loading: false,
+      time: 0,
+      lock: false
+    }
+  },
+  methods: {
+    login () {
+      // 校验是否输入用户名、密码、验证码
+      if (!this.validator(this.id, '账号') ||
+          !this.validator(this.password, '密码') ||
+          !this.validator(this.verificationCode, '验证码')) {
+        return false
+      }
+      // 校验验证码是否通过
+      if ((this.verf === '../assets/verf-1.png' && this.verificationCode.toUpperCase() !== '8950') ||
+          (this.verf === '../assets/verf-2.png' && this.verificationCode.toUpperCase() !== '2586')) {
+        this.$message({showClose: true, message: '验证码不正确，请重新输入', type: 'error'})
+        return false
+      }
+      // 校验用户名密码是否正确
+      if (this.id !== 'admin' || this.password !== '123456') {
+        this.$message({showClose: true, message: '用户名或密码不正确，请重新输入', type: 'error'})
+        return false
+      }
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+        // 页面跳转 TODO
+        console.log('登录成功')
+      }, 500)
     },
-    methods: {
-      login() {
-        // 校验是否输入用户名、密码、验证码
-        if (!this.validator(this.id, '账号')
-          || !this.validator(this.password, '密码')
-          || !this.validator(this.verificationCode, '验证码')) {
-          return false;
-        }
-        // 校验验证码是否通过
-        if ((this.verf === '../assets/verf-1.png' && this.verificationCode.toUpperCase() !== '8950')
-          || (this.verf === '../assets/verf-2.png' && this.verificationCode.toUpperCase() !== '2586')) {
-          this.$message({showClose: true, message: '验证码不正确，请重新输入', type: 'error'});
-          return false;
-        }
-        // 校验用户名密码是否正确
-        if (this.id !== 'admin' || this.password !== '123456') {
-          this.$message({showClose: true, message: '用户名或密码不正确，请重新输入', type: 'error'});
-          return false;
-        }
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-          // 页面跳转 TODO
-          console.log('登录成功');
-        }, 500)
-      },
-      validator(value, label) {
-        if (value.trim() === '') {
-          this.$message({showClose: true, message: '请输入' + label, type: 'warning'});
-          return false;
-        } else {
-          return true;
-        }
-      },
-      handleVerfClick() {
-      },
-      handleForgetPassword() {
-        this.$message({showClose: true, message: '请联系管理员重置密码', type: 'warning'});
+    validator (value, label) {
+      if (value.trim() === '') {
+        this.$message({showClose: true, message: '请输入' + label, type: 'warning'})
+        return false
+      } else {
+        return true
       }
     },
-    mounted: function () {
-      window.onresize = function () {
-        app.width = window.innerWidth;
-        app.height = window.innerHeight;
-      }
+    handleVerfClick () {
     },
-    watch: {
-      verificationCode: function (verificationCode) {
-        this.verificationCode = verificationCode.replace(/\D/g, '');
-      }
+    handleForgetPassword () {
+      this.$message({showClose: true, message: '请联系管理员重置密码', type: 'warning'})
+    }
+  },
+  watch: {
+    verificationCode: function (verificationCode) {
+      this.verificationCode = verificationCode.replace(/\D/g, '')
     }
   }
+}
 </script>
 
 <style scoped>

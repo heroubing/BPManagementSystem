@@ -1,12 +1,22 @@
 <template>
-  <div>Home</div>
+  <div class="content">
+    <img src="../assets/logo.png" alt="BP管理系统" class="home-icon">
+    <h1>欢迎访问BP管理系统</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Home"
-};
+  name: 'Home'
+}
 </script>
 
 <style scoped>
+  .content {
+    margin-top: 100px;
+  }
+
+  .home-icon {
+    width: 100px;
+  }
 </style>

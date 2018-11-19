@@ -3,25 +3,25 @@
  */
 const menus = [
   {
-    menuName: "首页",
-    menuCode: "home",
-    menuUrl: "/home",
+    menuName: '首页',
+    menuCode: 'home',
+    menuUrl: '/home'
   },
   {
-    catalogName: "BP录入界面",
-    catalogCode: "bp",
+    catalogName: 'BP录入界面',
+    catalogCode: 'bp',
     children: [
       {
-        menuName: "添加BP",
-        menuCode: "bp_add",
-        menuUrl: "/bp/add",
+        menuName: '添加BP',
+        menuCode: 'bp_add',
+        menuUrl: '/bp/add'
       },
       {
-        menuName: "BP管理",
-        menuCode: "bp_manage",
-        menuUrl: "/bp/manage",
-      },
+        menuName: 'BP管理',
+        menuCode: 'bp_manage',
+        menuUrl: '/bp/manage'
+      }
     ]
-  },
-];
-export default menus;
+  }
+]
+export default menus
