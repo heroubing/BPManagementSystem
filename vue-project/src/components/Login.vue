@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='header'>
-      <img src='../assets/logo.png' alt='联通图标' class='icon'>
+      <img src='../assets/logo.png' alt='投资数据库logo' class='icon'>
       BP后台管理系统
     </div>
     <div class='main'>
