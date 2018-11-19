@@ -40,159 +40,160 @@
 </template>
 
 <script>
-  import MenuItem from './components/MenuItem'
-  import menus from "./menu";
+import MenuItem from "./components/MenuItem";
+import menus from "./menu";
 
-  export default {
-    name: "Home",
-    components: {MenuItem},
-    data: function () {
-      // 初始化首页
-      let initMenu = menus[0];
-      return {
-        // 当前选中菜单编码
-        activeIndex: initMenu.menuCode,
-        // 当前选中tab页编码
-        menuIndex: 0,
-        menuLength: menus.length,
-        menus: menus,
-      };
+export default {
+  name: "Home",
+  components: { MenuItem },
+  data: function() {
+    // 初始化首页
+    let initMenu = menus[0];
+    return {
+      // 当前选中菜单编码
+      activeIndex: initMenu.menuCode,
+      // 当前选中tab页编码
+      menuIndex: 0,
+      menuLength: menus.length,
+      menus: menus
+    };
+  },
+  methods: {
+    /**
+     * 根据keyPath查找菜单
+     * @param keyPath
+     * @returns {menuData}
+     */
+    findMenuDataByKeyPath(keyPath) {
+      let catalog = menus;
+      for (let i = 0; i < keyPath.length - 1; i++) {
+        catalog = catalog.find(data => {
+          return data.catalogCode && data.catalogCode === keyPath[i];
+        }).children;
+      }
+      return catalog.find(menu => {
+        return menu.menuCode && menu.menuCode === keyPath[keyPath.length - 1];
+      });
     },
-    methods: {
-      /**
-       * 根据keyPath查找菜单
-       * @param keyPath
-       * @returns {menuData}
-       */
-      findMenuDataByKeyPath(keyPath) {
-        let catalog = menus;
-        for (let i = 0; i < keyPath.length - 1; i++) {
-          catalog = catalog.find(data => {
-            return data.catalogCode && data.catalogCode === keyPath[i];
-          }).children
-        }
-        return catalog.find(menu => {
-          return menu.menuCode && menu.menuCode === keyPath[keyPath.length - 1];
-        });
-      },
-      handleSelect(key, keyPath) {
-        // TODO
-        console.log('key:', key);
-        console.log('keyPath:', keyPath);
-        // 新打开tab页
-        let menu = this.findMenuDataByKeyPath(keyPath);
-        console.log(menu);
-        this.$router.push(menu.menuUrl);
-      },
-      /**
-       * 退出
-       */
-      handleLogout() {
-        // TODO
-        console.log('退出')
-      },
+    handleSelect(key, keyPath) {
+      // TODO
+      console.log("key:", key);
+      console.log("keyPath:", keyPath);
+      // 新打开tab页
+      let menu = this.findMenuDataByKeyPath(keyPath);
+      console.log(menu);
+      this.$router.push(menu.menuUrl);
     },
-    mounted: function () {
-      setTimeout(() => {
-        this.$notify({
-          title: '欢迎回来',
-          type: 'success',
-          duration: 2000,
-          offset: 90,
-        });
-      }, 1500);
-    },
+    /**
+     * 退出
+     */
+    handleLogout() {
+      // TODO
+      console.log("退出");
+    }
+  },
+  mounted: function() {
+    setTimeout(() => {
+      this.$notify({
+        title: "欢迎回来",
+        type: "success",
+        duration: 2000,
+        offset: 90
+      });
+    }, 1500);
   }
+};
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    height: 100%;
-  }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100%;
+}
 
-  body, html {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-  }
+body,
+html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
 
-  .el-container {
-    height: 100%;
-  }
+.el-container {
+  height: 100%;
+}
 
-  .el-header {
-    background-color: #545c64;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-content: space-between;
-  }
+.el-header {
+  background-color: #545c64;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
 
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: start;
-  }
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  text-align: start;
+}
 
-  .el-main {
-    background-color: #fff;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-  }
+.el-main {
+  background-color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
 
-  .icon {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 30px;
-  }
+.icon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 30px;
+}
 
-  .iconImg {
-    height: 45px;
-    margin-right: 10px
-  }
+.iconImg {
+  height: 45px;
+  margin-right: 10px;
+}
 
-  .title {
-    font-family: 微软雅黑, 宋体, Arial, serif;
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    color: #fff;
-  }
+.title {
+  font-family: 微软雅黑, 宋体, Arial, serif;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #fff;
+}
 
-  .topButtonDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
-  }
+.topButtonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
 
-  .topButtonDiv:last-child {
-    margin-right: 30px;
-  }
+.topButtonDiv:last-child {
+  margin-right: 30px;
+}
 
-  .topButton {
-    color: #fff;
-  }
+.topButton {
+  color: #fff;
+}
 
-  .buttonImg {
-    width: auto;
-    height: 15px;
-    font-size: 13px;
-    margin-right: 3px;
-  }
+.buttonImg {
+  width: auto;
+  height: 15px;
+  font-size: 13px;
+  margin-right: 3px;
+}
 
-  .funcDiv {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-  }
+.funcDiv {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
 </style>
