@@ -42,7 +42,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    index: 'index_login.html'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -55,7 +56,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      excludeChunks: ['login']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index_login.html',
+      template: 'index.html',
+      inject: true,
+      excludeChunks: ['app']
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
