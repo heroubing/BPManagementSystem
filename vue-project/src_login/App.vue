@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div id='app'>
     <div class='header'>
-      <img src='../../src_login/assets/logo.png' alt='投资数据库logo' class='icon'>
+      <img src='./assets/logo.png' alt='联通图标' class='icon'>
       BP后台管理系统
     </div>
     <div class='main'>
-      <img src='../../src_login/assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
+      <img src='./assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
       <div class='innerDiv'>
         <el-input
           class='input'
           placeholder='账号'
           size='small'
           v-model='id'>
-          <img slot='prefix' src='../../src_login/assets/user.svg' alt='用户名' class='input-icon'>
+          <img slot='prefix' src='./assets/user.svg' alt='用户名' class='input-icon'>
         </el-input>
         <el-input
           class='input'
@@ -21,7 +21,7 @@
           v-model='password'
           maxlength='30'
           type='password'>
-          <img slot='prefix' src='../../src_login/assets/lock.svg' alt='密码' class='input-icon'>
+          <img slot='prefix' src='./assets/lock.svg' alt='密码' class='input-icon'>
         </el-input>
         <div class='verDiv'>
           <el-input
@@ -31,7 +31,7 @@
             v-on:keyup.enter.native='login'
             v-bind:maxlength='4'>
           </el-input>
-          <img src='../../src_login/assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
+          <img src='./assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
         </div>
         <div style='width: 100%;height: 20px;'>
           <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
@@ -47,8 +47,9 @@
 </template>
 
 <script>
+
 export default {
-  name: 'Login',
+  name: 'App',
   data: function () {
     return {
       width: window.innerWidth,
@@ -69,22 +70,18 @@ export default {
           !this.validator(this.verificationCode, '验证码')) {
         return false
       }
-      // 校验验证码是否通过
-      if ((this.verf === '../assets/verf-1.png' && this.verificationCode.toUpperCase() !== '8950') ||
-          (this.verf === '../assets/verf-2.png' && this.verificationCode.toUpperCase() !== '2586')) {
-        this.$message({showClose: true, message: '验证码不正确，请重新输入', type: 'error'})
-        return false
-      }
-      // 校验用户名密码是否正确
-      if (this.id !== 'admin' || this.password !== '123456') {
-        this.$message({showClose: true, message: '用户名或密码不正确，请重新输入', type: 'error'})
-        return false
-      }
+      // 校验验证码是否通过 todo
+      // 校验用户名密码是否正确 todo
+      // if (this.id !== 'admin' || this.password !== '123456') {
+      //   this.$message({showClose: true, message: '用户名或密码不正确，请重新输入', type: 'error'})
+      //   return false
+      // }
       this.loading = true
       setTimeout(() => {
         this.loading = false
         // 页面跳转 TODO
         console.log('登录成功')
+        window.location.href = 'http://localhost:8080/home/'
       }, 500)
     },
     validator (value, label) {
@@ -102,14 +99,30 @@ export default {
     }
   },
   watch: {
-    verificationCode: function (verificationCode) {
-      this.verificationCode = verificationCode.replace(/\D/g, '')
-    }
+  //   verificationCode: function (verificationCode) {
+  //     this.verificationCode = verificationCode.replace(/\D/g, '')
+  //   }
   }
 }
 </script>
 
-<style scoped>
+<style>
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    height: 100%;
+  }
+
+  body,
+  html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
   .header {
     display: flex;
     justify-content: flex-start;
@@ -193,9 +206,5 @@ export default {
     border: 1px solid #dcdfe6;
     margin-left: 5px;
     margin-top: 10px;
-  }
-
-  .append-button {
-
   }
 </style>

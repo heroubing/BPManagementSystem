@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class='icon'>
-          <img src='./assets/logo.png' class='iconImg'/>
+          <img src='../src_login/assets/logo.png' class='iconImg'/>
           <span class='title'>BP后台管理系统</span>
         </div>
         <div class='funcDiv'>
@@ -44,7 +44,7 @@ import MenuItem from './components/MenuItem'
 import menus from './menu'
 
 export default {
-  name: 'Home',
+  name: 'App',
   components: {MenuItem},
   data: function () {
     // 初始化首页

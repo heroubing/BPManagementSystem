@@ -106,18 +106,18 @@
 <body>
 <div id="app" v-cloak>
   <div class='header'>
-    <img src='./src/assets/logo.png' alt='联通图标' class='icon'>
+    <img src='src_login/assets/logo.png' alt='联通图标' class='icon'>
     BP后台管理系统
   </div>
   <div class='main'>
-    <img src='./src/assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
+    <img src='src_login/assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
     <div class='innerDiv'>
       <el-input
         class='input'
         placeholder='账号'
         size='small'
         v-model='id'>
-        <img slot='prefix' src='./src/assets/user.svg' alt='用户名' class='input-icon'>
+        <img slot='prefix' src='src_login/assets/user.svg' alt='用户名' class='input-icon'>
       </el-input>
       <el-input
         class='input'
@@ -126,7 +126,7 @@
         v-model='password'
         maxlength='30'
         type='password'>
-        <img slot='prefix' src='./src/assets/lock.svg' alt='密码' class='input-icon'>
+        <img slot='prefix' src='src_login/assets/lock.svg' alt='密码' class='input-icon'>
       </el-input>
       <div class='verDiv'>
         <el-input
@@ -136,7 +136,7 @@
           v-on:keyup.enter.native='login'
           v-bind:maxlength='4'>
         </el-input>
-        <img src='./src/assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
+        <img src='src_login/assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
       </div>
       <div style='width: 100%;height: 20px;'>
         <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
