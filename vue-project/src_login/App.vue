@@ -5,7 +5,7 @@
       BP后台管理系统
     </div>
     <div class='main'>
-      <img src='./assets/timg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
+      <img src='./assets/bg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
       <div class='innerDiv'>
         <el-input
           class='input'

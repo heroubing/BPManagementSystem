@@ -76,7 +76,7 @@ export default {
       },
       tableData: [
         {
-          id: 'BP1',
+          id: 'BP1-共享单车的商业计划书',
           date: '2016-05-03',
           name: 'service1'
         },
