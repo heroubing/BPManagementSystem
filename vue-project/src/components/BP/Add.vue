@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px' class='demo-ruleForm'>
+  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
     <el-form-item label='BP标题' prop='name1'>
       <el-input v-model='ruleForm.name1'></el-input>
     </el-form-item>
@@ -9,18 +9,28 @@
     <el-form-item label='BP关键字' prop='name3'>
       <el-input v-model='ruleForm.name3'></el-input>
     </el-form-item>
-    <el-upload
-      class='upload'
-      action='https://jsonplaceholder.typicode.com/posts/'
-      :on-preview='handlePreview'
-      :on-remove='handleRemove'
-      :before-remove='beforeRemove'
-      :limit='1'
-      :on-exceed='handleExceed'
-      :file-list='ruleForm.fileList'>
-      <el-button size='small' type='primary'>点击上传</el-button>
-      <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
-    </el-upload>
+    <el-form-item prop='name6'>
+      <el-upload
+        slot='label'
+        class='upload'
+        action='https://jsonplaceholder.typicode.com/posts/'
+        :on-preview='onPreview'
+        :on-remove='onRemove'
+        :on-success='onSuccess'
+        :on-error='onError'
+        :on-progress='onProgress'
+        :on-change='onChange'
+        :before-upload='beforeUpload'
+        :before-remove='beforeRemove'
+        :on-exceed='onExceed'
+        :limit='2'
+        :auto-upload='false'
+        :show-file-list='false'>
+        <el-button size='small' type='primary'>点击上传</el-button>
+        <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
+      </el-upload>
+      <el-input v-model='ruleForm.name6' readonly></el-input>
+    </el-form-item>
     <el-form-item label='阅读积分' prop='name4'>
       <el-input v-model='ruleForm.name4'></el-input>
     </el-form-item>
@@ -48,6 +58,7 @@ export default {
         name3: '',
         name4: '',
         name5: '',
+        name6: '',
         desc: '',
         fileList: []
       },
@@ -68,6 +79,9 @@ export default {
         name5: [
           {required: true, message: '请输入阅读BP联系信息积分', trigger: 'blur'}
         ],
+        name6: [
+          {required: true, message: '请上传BP文件', trigger: 'blur'}
+        ],
         desc: [
           {required: true, message: '请填写上传BP联系信息', trigger: 'blur'}
         ]
@@ -75,20 +89,49 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    // 点击文件列表中已上传的文件时的钩子
+    onPreview (file) {
+      console.log('onPreview', file)
     },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
+    // 文件列表移除文件时的钩子
+    onRemove (file, fileList) {
+      console.log('onRemove', file, fileList)
     },
-    handlePreview (file) {
-      console.log(file)
+    // 文件上传成功时的钩子
+    onSuccess (response, file, fileList) {
+      console.log('onSuccess', response, file, fileList)
     },
-    handleExceed (files, fileList) {
+    // 文件上传失败时的钩子
+    onError (err, file, fileList) {
+      console.log('onError', err, file, fileList)
+    },
+    // 文件上传时的钩子
+    onProgress (event, file, fileList) {
+      console.log('onProgress', event, file, fileList)
+    },
+    // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+    onChange (file, fileList) {
+      this.ruleForm.fileList = []
+      this.ruleForm.fileList.push(file)
+      this.ruleForm.name6 = file.name
+      console.log('onChange', file, fileList)
+    },
+    // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    beforeUpload (file) {
+      console.log('beforeUpload', file)
+    },
+    // 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    beforeRemove (file, fileList) {
+      console.log('beforeRemove', file, fileList)
+    },
+    // 文件超出个数限制时的钩子
+    onExceed (files, fileList) {
+      console.log('onExceed', files, fileList)
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+
+    onSubmit () {
+      console.log('submit!')
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -112,11 +155,13 @@ export default {
     width: 50%;
     text-align: start;
     margin-right: 300px;
+    padding: 20px;
   }
 
   .upload {
     text-align: end;
     width: 100%;
     margin-bottom: 22px;
+    display: inline;
   }
 </style>

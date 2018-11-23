@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <el-form :inline='true' :model='formInline' class='demo-form-inline'>
       <el-form-item label='搜索(BP列表)关键字:'>
         <el-input v-model='formInline.user'></el-input>
@@ -12,6 +12,9 @@
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='onSubmit'>搜索</el-button>
+      </el-form-item>
+      <el-form-item v-if="isMultiSelect">
+        <el-button type='danger' @click='onSubmit'>批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -44,10 +47,16 @@
         width='120'>
         <template slot-scope='scope'>
           <el-button
-            @click.native.prevent='deleteRow(scope.$index, tableDate)'
+            @click.native.prevent='editRow(scope.$index, tableDate)'
             type='text'
             size='small'>
             编辑
+          </el-button>
+          <el-button
+            @click.native.prevent='deleteRow(scope.$index, tableDate)'
+            type='text'
+            size='small'>
+            删除
           </el-button>
         </template>
       </el-table-column>
@@ -89,6 +98,11 @@ export default {
       multipleSelection: []
     }
   },
+  computed: {
+    isMultiSelect: function () {
+      return this.multipleSelection.length > 0
+    }
+  },
   methods: {
     onSubmit () {
       console.log('submit!')
@@ -107,12 +121,19 @@ export default {
     },
     deleteRow (index, rows) {
       rows.splice(index, 1)
+    },
+    editRow (index, rows) {
+      rows.splice(index, 1)
     }
   }
 }
 </script>
 
 <style scoped>
+  .content {
+    padding: 20px;
+  }
+
   .select {
     width: 120px;
   }

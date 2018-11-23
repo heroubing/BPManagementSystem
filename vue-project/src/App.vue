@@ -145,6 +145,7 @@ html {
   text-align: center;
   display: flex;
   justify-content: center;
+  padding: 0;
 }
 
 .icon {

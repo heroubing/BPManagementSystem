@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Add from '@/components/BP/Add'
 import Manage from '@/components/BP/Manage'
+import NotExist from '@/components/NotExist'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/bp/manage',
       name: 'Manage',
       component: Manage
+    },
+    {
+      path: '*',
+      name: 'NotExist',
+      component: NotExist
     }
   ]
 })
