@@ -14,7 +14,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width='200px'>
+        <el-aside width='210px'>
           <el-menu
             v-bind:default-active='activeIndex'
             v-on:select='handleSelect'
