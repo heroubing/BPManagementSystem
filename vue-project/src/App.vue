@@ -89,7 +89,13 @@ export default {
        */
     handleLogout () {
       // TODO
-      console.log('退出')
+      this.$confirm('确认退出当前账号？')
+        .then(_ => {
+          console.log('退出')
+          document.location.href = '/'
+        })
+        .catch(_ => {
+        })
     }
   },
   mounted: function () {
@@ -106,95 +112,95 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  height: 100%;
-}
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    height: 100%;
+  }
 
-body,
-html {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-}
+  body,
+  html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
 
-.el-container {
-  height: 100%;
-}
+  .el-container {
+    height: 100%;
+  }
 
-.el-header {
-  background-color: #545c64;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-content: space-between;
-}
+  .el-header {
+    background-color: #545c64;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+  }
 
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: start;
-}
+  .el-aside {
+    background-color: #d3dce6;
+    color: #333;
+    text-align: start;
+  }
 
-.el-main {
-  background-color: #fff;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-}
+  .el-main {
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
 
-.icon {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 30px;
-}
+  .icon {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 30px;
+  }
 
-.iconImg {
-  height: 45px;
-  margin-right: 10px;
-}
+  .iconImg {
+    height: 45px;
+    margin-right: 10px;
+  }
 
-.title {
-  font-family: 微软雅黑, 宋体, Arial, serif;
-  font-size: 25px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: #fff;
-}
+  .title {
+    font-family: 微软雅黑, 宋体, Arial, serif;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #fff;
+  }
 
-.topButtonDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 20px;
-}
+  .topButtonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+  }
 
-.topButtonDiv:last-child {
-  margin-right: 30px;
-}
+  .topButtonDiv:last-child {
+    margin-right: 30px;
+  }
 
-.topButton {
-  color: #fff;
-}
+  .topButton {
+    color: #fff;
+  }
 
-.buttonImg {
-  width: auto;
-  height: 15px;
-  font-size: 13px;
-  margin-right: 3px;
-}
+  .buttonImg {
+    width: auto;
+    height: 15px;
+    font-size: 13px;
+    margin-right: 3px;
+  }
 
-.funcDiv {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
+  .funcDiv {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
 </style>

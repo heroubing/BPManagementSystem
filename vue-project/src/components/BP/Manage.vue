@@ -62,6 +62,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -96,7 +105,9 @@ export default {
           name: 'service7'
         }
       ],
-      multipleSelection: []
+      multipleSelection: [],
+      currentPage: 1,
+      total: 4
     }
   },
   computed: {
@@ -125,6 +136,12 @@ export default {
     },
     editRow (index, rows) {
       rows.splice(index, 1)
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   }
 }
@@ -137,5 +154,9 @@ export default {
 
   .select {
     width: 120px;
+  }
+
+  .el-pagination{
+    margin-top: 20px;
   }
 </style>
