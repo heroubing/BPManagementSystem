@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formInline' class='demo-form-inline'>
+    <el-form :inline='true' :model='formInline' class='demo-form-inline' style='margin-top: 20px;'>
       <el-form-item label='搜索(BP列表)关键字:'>
         <el-input v-model='formInline.user'></el-input>
       </el-form-item>
@@ -21,30 +21,31 @@
       ref='multipleTable'
       :data='tableData'
       tooltip-effect='dark'
-      style='width: 100%'
+      style='width: 100%; margin-top: 20px'
       @selection-change='handleSelectionChange'>
       <el-table-column
         type='selection'
-        width='55'>
+        width='80px'>
       </el-table-column>
       <el-table-column
         prop='id'
         label='BP标题'
-        width='120'>
+        width='210px'>
       </el-table-column>
       <el-table-column
         prop='name'
         label='提交人'
-        width='120'>
+        width='180px'>
       </el-table-column>
       <el-table-column
         prop='date'
         label='上传时间'
+        width='180px'
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         label='操作'
-        width='120'>
+        width='180px'>
         <template slot-scope='scope'>
           <el-button
             @click.native.prevent='editRow(scope.$index, tableDate)'

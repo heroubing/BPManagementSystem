@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
+  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px' style="left: -150px; width: 100%;">
     <el-form-item label='BP标题' prop='name1'>
       <el-input v-model='ruleForm.name1'></el-input>
     </el-form-item>
