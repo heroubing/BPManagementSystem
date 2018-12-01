@@ -1,13 +1,13 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px' style="left: -150px; width: 100%;">
-    <el-form-item label='BP标题' prop='name1'>
-      <el-input v-model='ruleForm.name1'></el-input>
+  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
+    <el-form-item label='BP标题' prop='project_name'>
+      <el-input v-model='ruleForm.project_name'></el-input>
     </el-form-item>
     <el-form-item label='BP录入' prop='name2'>
       <el-input v-model='ruleForm.name2'></el-input>
     </el-form-item>
-    <el-form-item label='BP关键字' prop='name3'>
-      <el-input v-model='ruleForm.name3'></el-input>
+    <el-form-item label='项目简介' prop='brief'>
+      <el-input v-model='ruleForm.brief'></el-input>
     </el-form-item>
     <el-form-item prop='name6'>
       <el-upload
@@ -31,56 +31,76 @@
       </el-upload>
       <el-input v-model='ruleForm.name6' readonly></el-input>
     </el-form-item>
-    <el-form-item label='阅读积分' prop='name4'>
-      <el-input v-model='ruleForm.name4'></el-input>
+    <el-form-item label='阅读积分' prop='points'>
+      <el-input v-model='ruleForm.points'></el-input>
     </el-form-item>
     <el-form-item label='上传BP联系信息' prop='desc'>
       <el-input type='textarea' v-model='ruleForm.desc'></el-input>
     </el-form-item>
-    <el-form-item label='阅读BP联系信息积分' prop='name5'>
-      <el-input v-model='ruleForm.name5'></el-input>
+    <el-form-item label='阅读BP联系信息积分' prop='contact_points'>
+      <el-input v-model='ruleForm.contact_points'></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type='primary' @click="submitForm('ruleForm')">确定新增</el-button>
-      <el-button @click="resetForm('ruleForm')">清空重写</el-button>
+      <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
+      <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import Utils from '../../utils/Utils'
+
 export default {
   name: 'Add',
+  props: {
+    data: {
+      type: Object,
+      default: function () {
+        return {
+          id: '',
+          project_name: '',
+          name2: '',
+          brief: '',
+          points: '500',
+          contact_points: '500',
+          name6: '',
+          desc: ''
+        }
+      }
+    }
+  },
   data () {
     return {
+      isAdd: this.data.id === '',
       ruleForm: {
-        name1: '',
-        name2: '',
-        name3: '',
-        name4: '',
-        name5: '',
-        name6: '',
-        desc: '',
+        project_name: this.data.project_name,
+        name2: this.data.name2,
+        brief: this.data.brief,
+        points: this.data.points,
+        contact_points: this.data.contact_points,
+        name6: this.data.name6,
+        desc: this.data.desc,
         fileList: []
       },
       rules: {
-        name1: [
+        project_name: [
           {required: true, message: '请输入BP标题', trigger: 'blur'},
           {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
         ],
         name2: [
           {required: true, message: '请输入BP录入', trigger: 'blur'}
         ],
-        name3: [
+        brief: [
           {required: true, message: '请输入BP关键字', trigger: 'blur'}
         ],
-        name4: [
+        points: [
           {required: true, message: '请输入阅读积分', trigger: 'blur'}
         ],
-        name5: [
+        contact_points: [
           {required: true, message: '请输入阅读BP联系信息积分', trigger: 'blur'}
         ],
         name6: [
-          {required: true, message: '请上传BP文件', trigger: 'blur'}
+          {required: true, message: '请上传BP文件', trigger: 'change'}
         ],
         desc: [
           {required: true, message: '请填写上传BP联系信息', trigger: 'blur'}
@@ -136,7 +156,29 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          let params = {
+            project_name: this.ruleForm.project_name,
+            brief: this.ruleForm.brief,
+            contact: this.ruleForm.contact,
+            points: this.ruleForm.points,
+            contact_points: this.ruleForm.contact_points
+          }
+          if (this.isAdd) {
+            Utils.getInfoPost('/api/bp/add/', params, this).then(() => {
+              this.$notify.success({
+                title: '成功',
+                message: '录入成功'
+              })
+            })
+          } else {
+            Utils.getInfoPost(`/api/bp/${this.data.id}/update/`, params, this).then(() => {
+              this.$notify.success({
+                title: '成功',
+                message: '保存成功'
+              })
+              this.$emit('saved')
+            })
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -152,9 +194,10 @@ export default {
 
 <style scoped>
   .el-form {
-    width: 50%;
+    width: 100%;
+    max-width: 500px;
     text-align: start;
-    margin-right: 300px;
+    margin-right: 150px;
     padding: 20px;
   }
 

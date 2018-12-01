@@ -1,34 +1,25 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formInline' class='demo-form-inline' style='margin-top: 20px;'>
+    <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;'>
       <el-form-item label='搜索(BP列表)关键字:'>
-        <el-input v-model='formInline.user'></el-input>
+        <el-input v-model='formData.project_name'></el-input>
       </el-form-item>
+      <!--<el-form-item>-->
+      <!--<el-select v-model='formInline.region' class='select'>-->
+      <!--<el-option label='按标题' value='shanghai'></el-option>-->
+      <!--<el-option label='按关键字' value='beijing'></el-option>-->
+      <!--</el-select>-->
+      <!--</el-form-item>-->
       <el-form-item>
-        <el-select v-model='formInline.region' class='select'>
-          <el-option label='按标题' value='shanghai'></el-option>
-          <el-option label='按关键字' value='beijing'></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type='primary' @click='onSubmit'>搜索</el-button>
-      </el-form-item>
-      <el-form-item v-if="isMultiSelect">
-        <el-button type='danger' @click='onSubmit'>批量删除</el-button>
+        <el-button type='primary' @click='queryList'>搜索</el-button>
       </el-form-item>
     </el-form>
     <el-table
-      ref='multipleTable'
       :data='tableData'
       tooltip-effect='dark'
-      style='width: 100%; margin-top: 20px'
-      @selection-change='handleSelectionChange'>
+      style='width: 100%; margin-top: 20px'>
       <el-table-column
-        type='selection'
-        width='80px'>
-      </el-table-column>
-      <el-table-column
-        prop='id'
+        prop='project_name'
         label='BP标题'
         width='210px'>
       </el-table-column>
@@ -38,7 +29,7 @@
         width='180px'>
       </el-table-column>
       <el-table-column
-        prop='date'
+        prop='upload_time'
         label='上传时间'
         width='180px'
         show-overflow-tooltip>
@@ -48,13 +39,13 @@
         width='180px'>
         <template slot-scope='scope'>
           <el-button
-            @click.native.prevent='editRow(scope.$index, tableDate)'
+            @click.native.prevent='editRow(scope.row)'
             type='text'
             size='small'>
             编辑
           </el-button>
           <el-button
-            @click.native.prevent='deleteRow(scope.$index, tableDate)'
+            @click.native.prevent='deleteRow(scope.row)'
             type='text'
             size='small'>
             删除
@@ -66,83 +57,121 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="10"
+      :page-sizes="[pageSize]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible_edit">
+      <Add :data="dialogData" @saved="editSaved"/>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Utils from '../../utils/Utils'
+import Add from './Add'
+
 export default {
   name: 'Manage',
+  components: {Add},
   data () {
     return {
-      formInline: {
-        user: '',
+      formData: {
+        project_name: '',
         region: 'shanghai'
       },
-      tableData: [
-        {
-          id: 'BP1-共享单车的商业计划书',
-          date: '2016-05-03',
-          name: 'service1'
-        },
-        {
-          id: 'BP2',
-          date: '2016-05-02',
-          name: 'service2'
-        },
-        {
-          id: 'BP3',
-          date: '2016-05-04',
-          name: 'service6'
-        },
-        {
-          id: 'BP4',
-          date: '2016-05-01',
-          name: 'service7'
-        }
-      ],
-      multipleSelection: [],
+      dialogData: {},
+      dialogTitle: '编辑',
+      dialogVisible_edit: false,
+      tableData: [],
       currentPage: 1,
-      total: 4
+      total: 4,
+      pageSize: 50
     }
   },
-  computed: {
-    isMultiSelect: function () {
-      return this.multipleSelection.length > 0
-    }
-  },
+  // computed: {
+  //   isMultiSelect: function () {
+  //     return this.multipleSelection.length > 0
+  //   }
+  // },
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    // 删除
+    deleteRow (row) {
+      console.log(row)
+      let params = {id: row.id}
+      Utils.getInfoPost('/api/bp/delete/', params, this).then(() => {
+        this.queryList()
+      })
     },
-    toggleSelection (rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row)
-        })
-      } else {
-        this.$refs.multipleTable.clearSelection()
-      }
+    // 编辑
+    editRow (row) {
+      console.log(row)
+      this.dialogData = row
+      this.dialogTitle = `编辑-${row.project_name}`
+      this.dialogVisible_edit = true
     },
-    handleSelectionChange (val) {
-      this.multipleSelection = val
+    // 编辑成功回调
+    editSaved () {
+      console.log('编辑成功')
+      this.queryList()
     },
-    deleteRow (index, rows) {
-      rows.splice(index, 1)
-    },
-    editRow (index, rows) {
-      rows.splice(index, 1)
-    },
+    // 修改每页显示数量
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
+      this.pageSize = val
+      this.queryList()
     },
+    // 跳转到某页
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.queryList()
+    },
+    // 分页查询
+    queryList () {
+      let params = {page: this.currentPage}
+      Utils.getInfo('/api/bp/', params, this).then(({result, info}) => {
+        this.tableData = result
+        this.currentPage = info.pagination.num_pages
+        this.total = info.pagination.count
+        this.pageSize = info.pagination.per_page
+      })
+      // setTimeout(() => {
+      //   this.tableData = [
+      //     {
+      //       id: 2,
+      //       project_name: '测试2',
+      //       brief: '',
+      //       upload_time: '2018-10-06T19:47:53+0800',
+      //       update_time: '2018-10-06T19:47:53+0800',
+      //       industries: '1,4',
+      //       round_id: 1,
+      //       round: 'pre-A',
+      //       points: 10,
+      //       permission: false,
+      //       permission_contact: false
+      //     },
+      //     {
+      //       id: 1,
+      //       project_name: '测试',
+      //       brief: '',
+      //       upload_time: '2018-10-06T19:47:53+0800',
+      //       update_time: '2018-10-06T19:47:53+0800',
+      //       industries: '9',
+      //       round_id: 1,
+      //       round: 'pre-A',
+      //       points: 10,
+      //       permission: false,
+      //       permission_contact: false
+      //     }
+      //   ]
+      // }, 1000)
     }
+  },
+  mounted: function () {
+    this.queryList()
   }
 }
 </script>
@@ -156,7 +185,7 @@ export default {
     width: 120px;
   }
 
-  .el-pagination{
+  .el-pagination {
     margin-top: 20px;
   }
 </style>

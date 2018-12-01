@@ -9,6 +9,12 @@ import router from './router'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
+// 阻止promise继续链式下去
+Promise.stop = function () {
+  return new Promise(function () {
+  })
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
