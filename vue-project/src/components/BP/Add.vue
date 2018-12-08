@@ -1,15 +1,41 @@
 <template>
   <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
-    <el-form-item label='BP标题' prop='project_name'>
-      <el-input v-model='ruleForm.project_name'></el-input>
-    </el-form-item>
-    <el-form-item label='BP录入' prop='name2'>
-      <el-input v-model='ruleForm.name2'></el-input>
+    <el-form-item label='项目名称' prop='project_name'>
+      <el-input v-model='ruleForm.project_name'/>
     </el-form-item>
     <el-form-item label='项目简介' prop='brief'>
-      <el-input v-model='ruleForm.brief'></el-input>
+      <el-input v-model='ruleForm.brief'/>
     </el-form-item>
-    <el-form-item prop='name6'>
+    <el-form-item label='联系人ID' prop='contact'>
+      <el-autocomplete
+        v-model="ruleForm.contact"
+        :fetch-suggestions="queryContactList"
+        placeholder="请输入联系人ID查询"
+        @select="handleSelect"
+        :debounce="1000"
+      >
+        <i class="el-icon-search el-input__icon" slot="suffix"></i>
+      </el-autocomplete>
+    </el-form-item>
+    <el-form-item label='阅读商业计划书积分' prop='points'>
+      <el-input v-model='ruleForm.points'/>
+    </el-form-item>
+    <el-form-item label='阅读联系信息积分' prop='contact_points'>
+      <el-input v-model='ruleForm.contact_points'/>
+    </el-form-item>
+    <el-form-item label='行业' prop='industries'>
+      <el-checkbox-group v-model="ruleForm.industries">
+        <el-checkbox v-for="item in industriesList" :key="item.id" :label="item.id" name="industries">
+          {{item.display_name}}
+        </el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
+    <el-form-item label='投资阶段' prop='round_id'>
+      <el-radio-group v-model="ruleForm.round_id">
+        <el-radio v-for="item in roundList" :key="item.id" :label="item.id">{{item.display_name}}</el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item prop='bp_file_input'>
       <el-upload
         slot='label'
         class='upload'
@@ -29,16 +55,7 @@
         <el-button size='small' type='primary'>点击上传</el-button>
         <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
       </el-upload>
-      <el-input v-model='ruleForm.name6' readonly></el-input>
-    </el-form-item>
-    <el-form-item label='阅读积分' prop='points'>
-      <el-input v-model='ruleForm.points'></el-input>
-    </el-form-item>
-    <el-form-item label='上传BP联系信息' prop='desc'>
-      <el-input type='textarea' v-model='ruleForm.desc'></el-input>
-    </el-form-item>
-    <el-form-item label='阅读BP联系信息积分' prop='contact_points'>
-      <el-input v-model='ruleForm.contact_points'></el-input>
+      <el-input v-model='ruleForm.name6' readonly/>
     </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
@@ -49,6 +66,7 @@
 
 <script>
 import Utils from '../../utils/Utils'
+import API from '../../utils/API'
 
 export default {
   name: 'Add',
@@ -58,57 +76,75 @@ export default {
       default: function () {
         return {
           id: '',
-          project_name: '',
-          name2: '',
-          brief: '',
-          points: '500',
-          contact_points: '500',
-          name6: '',
-          desc: ''
+          project_name: '', // 项目名称
+          brief: '', // 项目简介
+          contact: '', // 联系人ID
+          points: '500', // 阅读商业计划书积分，默认500
+          contact_points: '500', // 阅读联系信息积分，默认500
+          industries: [], // 行业，逗号分隔，每一个元素是一个行业ID
+          round_id: '', // 投资阶段ID
+          bp_file_input: '' // 文件校验占用
         }
       }
     }
   },
   data () {
     return {
-      isAdd: this.data.id === '',
+      industriesList: [], // 行业列表
+      roundList: [], // 投资阶段列表
+      isAdd: this.data.id === '', // 是否为新增
       ruleForm: {
-        project_name: this.data.project_name,
-        name2: this.data.name2,
-        brief: this.data.brief,
-        points: this.data.points,
-        contact_points: this.data.contact_points,
-        name6: this.data.name6,
-        desc: this.data.desc,
+        id: this.data.id,
+        project_name: this.data.project_name, // 项目名称
+        brief: this.data.brief, // 项目简介
+        contact: this.data.contact, // 联系人ID
+        points: this.data.points, // 阅读商业计划书积分，默认500
+        contact_points: this.data.contact_points, // 阅读联系信息积分，默认500
+        industries: this.data.industries, // 行业，逗号分隔，每一个元素是一个行业ID
+        round_id: this.data.round_id, // 投资阶段ID
+        bp_file_input: this.data.bp_file_input, // 文件校验占用
         fileList: []
       },
       rules: {
         project_name: [
-          {required: true, message: '请输入BP标题', trigger: 'blur'},
-          {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-        ],
-        name2: [
-          {required: true, message: '请输入BP录入', trigger: 'blur'}
+          {required: true, message: '请输入项目名称', trigger: 'blur'},
+          {min: 3, max: 100, message: '长度在 3 到 5 个字符', trigger: 'blur'}
         ],
         brief: [
-          {required: true, message: '请输入BP关键字', trigger: 'blur'}
+          {required: true, message: '请输入项目简介', trigger: 'blur'}
+        ],
+        contact: [
+          {required: true, message: '请输入联系人', trigger: 'blur'}
         ],
         points: [
-          {required: true, message: '请输入阅读积分', trigger: 'blur'}
+          {required: true, message: '请输入阅读商业计划书积分', trigger: 'blur'}
         ],
         contact_points: [
-          {required: true, message: '请输入阅读BP联系信息积分', trigger: 'blur'}
+          {required: true, message: '请输入阅读联系信息积分', trigger: 'blur'}
         ],
-        name6: [
+        industries: [
+          {required: true, message: '请输入行业', trigger: 'change'}
+        ],
+        round_id: [
+          {required: true, message: '请输入投资阶段ID', trigger: 'change'}
+        ],
+        bp_file_input: [
           {required: true, message: '请上传BP文件', trigger: 'change'}
-        ],
-        desc: [
-          {required: true, message: '请填写上传BP联系信息', trigger: 'blur'}
         ]
       }
     }
   },
   methods: {
+    // 联系人查询
+    queryContactList (id, cb) {
+      let params = {id}
+      // 联系人接口 todo
+      Utils.getInfo(API.BP_contact, params, this).then((result) => cb(result))
+    },
+    handleSelect (item) {
+      console.log(item)
+    },
+
     // 点击文件列表中已上传的文件时的钩子
     onPreview (file) {
       console.log('onPreview', file)
@@ -149,10 +185,7 @@ export default {
       console.log('onExceed', files, fileList)
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
-
-    onSubmit () {
-      console.log('submit!')
-    },
+    // 表单提交
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -161,17 +194,20 @@ export default {
             brief: this.ruleForm.brief,
             contact: this.ruleForm.contact,
             points: this.ruleForm.points,
-            contact_points: this.ruleForm.contact_points
+            contact_points: this.ruleForm.contact_points,
+            industries: this.ruleForm.industries.join(','),
+            round_id: this.ruleForm.round_id,
+            bp_file: this.ruleForm.bp_file
           }
           if (this.isAdd) {
-            Utils.getInfoPost('/api/bp/add/', params, this).then(() => {
+            Utils.getInfoPost(API.BP_add, params, this).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '录入成功'
               })
             })
           } else {
-            Utils.getInfoPost(`/api/bp/${this.data.id}/update/`, params, this).then(() => {
+            Utils.getInfoPost(API.BP_update(this.data.id), params, this).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '保存成功'
@@ -179,15 +215,22 @@ export default {
               this.$emit('saved')
             })
           }
-        } else {
-          console.log('error submit!!')
-          return false
         }
       })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
+  },
+  mounted () {
+    // 获取行业列表
+    Utils.getInfo(API.BP_industry, {}, this).then(({result}) => {
+      this.industriesList = result
+    })
+    // 获取投资阶段列表
+    Utils.getInfo(API.BP_round, {}, this).then(({result}) => {
+      this.roundList = result
+    })
   }
 }
 </script>

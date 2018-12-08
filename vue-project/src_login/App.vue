@@ -11,7 +11,7 @@
           class='input'
           placeholder='账号'
           size='small'
-          v-model='id'>
+          v-model='name'>
           <img slot='prefix' src='./assets/user.svg' alt='用户名' class='input-icon'>
         </el-input>
         <el-input
@@ -27,11 +27,11 @@
           <el-input
             class='input'
             size='small'
-            v-model='verificationCode'
+            v-model='captcha'
             v-on:keyup.enter.native='login'
             v-bind:maxlength='4'>
           </el-input>
-          <img src='./assets/verf-1.png' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
+          <img :src='captchaImg' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
         </div>
         <div style='width: 100%;height: 20px;'>
           <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
@@ -48,44 +48,48 @@
 
 <script>
 
+import API from '../src/utils/API'
+import Utils from '../src/utils/Utils'
+
 export default {
   name: 'App',
   data: function () {
     return {
       width: window.innerWidth,
       height: window.innerHeight,
-      id: '',
+      name: '',
       password: '',
-      verificationCode: '',
       loading: false,
       time: 0,
-      lock: false
+      lock: false,
+      captchaImg: '',
+      captcha: '',
+      captcha_key: ''
     }
   },
   methods: {
     login () {
       // 校验是否输入用户名、密码、验证码
-      if (!this.validator(this.id, '账号') ||
+      if (!this.validator(this.name, '账号') ||
           !this.validator(this.password, '密码') ||
-          !this.validator(this.verificationCode, '验证码')) {
+          !this.validator(this.captcha, '验证码')) {
         return false
       }
-      // 校验验证码是否通过 todo
-      // 校验用户名密码是否正确 todo
-      // if (this.id !== 'admin' || this.password !== '123456') {
-      //   this.$message({showClose: true, message: '用户名或密码不正确，请重新输入', type: 'error'})
-      //   return false
-      // }
       this.loading = true
-      setTimeout(() => {
+      let params = {
+        name: this.name,
+        password: this.password,
+        captcha_key: this.captcha_key,
+        captcha: this.captcha
+      }
+      Utils.getInfoPost(API.SYS_staffLogin, params, this).then(({result}) => {
+        // 登录成功
         this.loading = false
-        // 页面跳转 TODO
-        console.log('登录成功')
-        window.location.href = 'http://localhost:8080/home/'
-      }, 500)
+        window.location.href = `${window.location.origin}/home/`
+      })
     },
     validator (value, label) {
-      if (value.trim() === '') {
+      if (value.replace(' ', '') === '') {
         this.$message({showClose: true, message: '请输入' + label, type: 'warning'})
         return false
       } else {
@@ -93,15 +97,24 @@ export default {
       }
     },
     handleVerfClick () {
-    },
-    handleForgetPassword () {
-      this.$message({showClose: true, message: '请联系管理员重置密码', type: 'warning'})
+      // 获取验证码
+      let params = {}
+      Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
+        this.captchaImg = result.img
+        this.captcha_key = result.captcha_key
+      })
     }
+    // handleForgetPassword () {
+    //   this.$message({showClose: true, message: '请联系管理员重置密码', type: 'warning'})
+    // }
   },
-  watch: {
-  //   verificationCode: function (verificationCode) {
-  //     this.verificationCode = verificationCode.replace(/\D/g, '')
-  //   }
+  mounted () {
+    // 获取验证码
+    let params = {}
+    Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
+      this.captchaImg = result.img
+      this.captcha_key = result.captcha_key
+    })
   }
 }
 </script>
@@ -195,7 +208,7 @@ export default {
 
   .loginButton {
     width: 100%;
-    background-color: #ff6d22;
+    /*background-color: #ff6d22;*/
     color: white;
     border: none;
   }
@@ -206,5 +219,6 @@ export default {
     border: 1px solid #dcdfe6;
     margin-left: 5px;
     margin-top: 10px;
+    font-size: 10px;
   }
 </style>

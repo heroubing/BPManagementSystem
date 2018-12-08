@@ -1,6 +1,7 @@
 /**
  * 工具类
  */
+import MockData from './MockData'
 
 export default class Utils {
   /**
@@ -9,7 +10,7 @@ export default class Utils {
    * @param params        参数
    * @param that          传入vue用于显示遮罩层
    */
-  static getInfo (url, params, that) {
+  static getInfo (url, params = {}, that) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
     const loading = that.$loading({
@@ -18,6 +19,9 @@ export default class Utils {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
+    if (process.env.NODE_ENV === 'development') {
+      return MockData(url, params, loading)
+    }
     // 拼写方法
     url += '?' + this.paramsToUrl(params)
     return fetch(url)
@@ -53,7 +57,7 @@ export default class Utils {
    * @param params        参数
    * @param that          传入vue用于显示遮罩层
    */
-  static getInfoPost (url, params, that) {
+  static getInfoPost (url, params = {}, that) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
     const loading = that.$loading({
@@ -62,7 +66,9 @@ export default class Utils {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    // 拼写方法
+    if (process.env.NODE_ENV === 'development') {
+      return MockData(url, params, loading)
+    }
     return fetch(url, {
       method: 'POST',
       body: params

@@ -1,8 +1,8 @@
 <template>
   <div class="content">
     <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;'>
-      <el-form-item label='搜索(BP列表)关键字:'>
-        <el-input v-model='formData.project_name'></el-input>
+      <el-form-item label=''>
+        <el-input v-model='formData.project_name' placeholder="请输入项目名称进行检索"></el-input>
       </el-form-item>
       <!--<el-form-item>-->
       <!--<el-select v-model='formInline.region' class='select'>-->
@@ -14,42 +14,16 @@
         <el-button type='primary' @click='queryList'>搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data='tableData'
-      tooltip-effect='dark'
-      style='width: 100%; margin-top: 20px'>
-      <el-table-column
-        prop='project_name'
-        label='BP标题'
-        width='210px'>
-      </el-table-column>
-      <el-table-column
-        prop='name'
-        label='提交人'
-        width='180px'>
-      </el-table-column>
-      <el-table-column
-        prop='upload_time'
-        label='上传时间'
-        width='180px'
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        label='操作'
-        width='180px'>
+    <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
+      <el-table-column prop='id' label='BPID' width='100px'></el-table-column>
+      <el-table-column prop='project_name' label='项目名称' width='210px'></el-table-column>
+      <el-table-column prop='upload_time' label='上传时间' width='180px' :formatter="formatterUploadTime"
+                       show-overflow-tooltip></el-table-column>
+      <el-table-column prop='points' label='阅读积分' width='100px'></el-table-column>
+      <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
-          <el-button
-            @click.native.prevent='editRow(scope.row)'
-            type='text'
-            size='small'>
-            编辑
-          </el-button>
-          <el-button
-            @click.native.prevent='deleteRow(scope.row)'
-            type='text'
-            size='small'>
-            删除
-          </el-button>
+          <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
+          <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +37,7 @@
       :total="total">
     </el-pagination>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible_edit">
+    <el-dialog v-if="dialogVisible_edit" :title="dialogTitle" :visible.sync="dialogVisible_edit">
       <Add :data="dialogData" @saved="editSaved"/>
     </el-dialog>
   </div>
@@ -72,6 +46,7 @@
 <script>
 import Utils from '../../utils/Utils'
 import Add from './Add'
+import API from '../../utils/API'
 
 export default {
   name: 'Manage',
@@ -87,26 +62,22 @@ export default {
       dialogVisible_edit: false,
       tableData: [],
       currentPage: 1,
-      total: 4,
+      total: 0,
       pageSize: 50
     }
   },
-  // computed: {
-  //   isMultiSelect: function () {
-  //     return this.multipleSelection.length > 0
-  //   }
-  // },
   methods: {
     // 删除
     deleteRow (row) {
       console.log(row)
       let params = {id: row.id}
-      Utils.getInfoPost('/api/bp/delete/', params, this).then(() => {
+      Utils.getInfoPost(API.BP_delete, params, this).then(() => {
         this.queryList()
       })
     },
     // 编辑
     editRow (row) {
+      row.industries = row.industries.split(',').map((item) => parseInt(item))
       console.log(row)
       this.dialogData = row
       this.dialogTitle = `编辑-${row.project_name}`
@@ -132,42 +103,16 @@ export default {
     // 分页查询
     queryList () {
       let params = {page: this.currentPage}
-      Utils.getInfo('/api/bp/', params, this).then(({result, info}) => {
+      Utils.getInfo(API.BP_query, params, this).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
       })
-      // setTimeout(() => {
-      //   this.tableData = [
-      //     {
-      //       id: 2,
-      //       project_name: '测试2',
-      //       brief: '',
-      //       upload_time: '2018-10-06T19:47:53+0800',
-      //       update_time: '2018-10-06T19:47:53+0800',
-      //       industries: '1,4',
-      //       round_id: 1,
-      //       round: 'pre-A',
-      //       points: 10,
-      //       permission: false,
-      //       permission_contact: false
-      //     },
-      //     {
-      //       id: 1,
-      //       project_name: '测试',
-      //       brief: '',
-      //       upload_time: '2018-10-06T19:47:53+0800',
-      //       update_time: '2018-10-06T19:47:53+0800',
-      //       industries: '9',
-      //       round_id: 1,
-      //       round: 'pre-A',
-      //       points: 10,
-      //       permission: false,
-      //       permission_contact: false
-      //     }
-      //   ]
-      // }, 1000)
+    },
+    // 时间截取
+    formatterUploadTime (row, column) {
+      return row.upload_time.replace('T', ' ').substr(0, 19)
     }
   },
   mounted: function () {
