@@ -100,7 +100,7 @@ export default {
       // 获取验证码
       let params = {}
       Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
-        this.captchaImg = result.img
+        this.captchaImg = result.captcha_image
         this.captcha_key = result.captcha_key
       })
     }
@@ -112,7 +112,7 @@ export default {
     // 获取验证码
     let params = {}
     Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
-      this.captchaImg = result.img
+      this.captchaImg = result.captcha_image
       this.captcha_key = result.captcha_key
     })
   }

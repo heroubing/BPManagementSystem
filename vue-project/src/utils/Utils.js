@@ -4,6 +4,7 @@
 import MockData from './MockData'
 
 export default class Utils {
+  static USE_MOCK = false;
   /**
    * get网络请求公共方法
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
@@ -19,7 +20,7 @@ export default class Utils {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    if (process.env.NODE_ENV === 'development') {
+    if (Utils.USE_MOCK) {
       return MockData(url, params, loading)
     }
     // 拼写方法
@@ -66,7 +67,7 @@ export default class Utils {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    if (process.env.NODE_ENV === 'development') {
+    if (Utils.USE_MOCK) {
       return MockData(url, params, loading)
     }
     return fetch(url, {

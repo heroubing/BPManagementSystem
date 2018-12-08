@@ -22,7 +22,7 @@
       <el-table-column prop='points' label='阅读积分' width='100px'></el-table-column>
       <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
-          <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
+          <!--<el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>-->
           <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
         </template>
       </el-table-column>
