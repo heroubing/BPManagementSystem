@@ -222,15 +222,11 @@ export default {
       this.$refs[formName].resetFields()
     }
   },
-  mounted () {
+  async mounted () {
     // 获取行业列表
-    Utils.getInfo(API.BP_industry, {}, this).then(({result}) => {
-      this.industriesList = result
-    })
+    this.industriesList = await Utils.getAllPageList(API.BP_industry, [], 1, this)
     // 获取投资阶段列表
-    Utils.getInfo(API.BP_round, {}, this).then(({result}) => {
-      this.roundList = result
-    })
+    this.roundList = await Utils.getAllPageList(API.BP_round, [], 1, this)
   }
 }
 </script>

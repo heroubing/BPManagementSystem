@@ -134,4 +134,21 @@ export default class Utils {
     }
     return length
   }
+
+  /**
+   * 递归获取分页查询的所有数据
+   * @param API
+   * @param list
+   * @param page
+   * @param that
+   * @returns {Promise<*>}
+   */
+  static async getAllPageList (API, list, page, that) {
+    let {result, info} = await Utils.getInfo(API, {page}, that)
+    let returnList = [...list, ...result]
+    if (returnList.length < info.pagination.count) {
+      returnList = await this.getAllPageList(API, returnList, ++page, that)
+    }
+    return returnList
+  }
 }

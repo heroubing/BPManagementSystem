@@ -5,28 +5,48 @@ const MockData = function (url, params, loading) {
     let mockData
     switch (url) {
       case API.BP_industry:
-        mockData = {
-          'code': 200,
-          'msg': 'OK',
-          'result': [
-            {
-              'id': 1,
-              'display_name': 'TMT'
-            },
-            {
-              'id': 2,
-              'display_name': '其他'
-            },
-            {
-              'id': 3,
-              'display_name': 'TMT'
+        if (params.page === 1) {
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [
+              {
+                'id': 1,
+                'display_name': 'TMT'
+              },
+              {
+                'id': 2,
+                'display_name': '其他'
+              },
+              {
+                'id': 3,
+                'display_name': 'TMT'
+              }
+            ],
+            'info': {
+              'pagination': {
+                'count': 4,
+                'num_pages': 1,
+                'per_page': 50
+              }
             }
-          ],
-          'info': {
-            'pagination': {
-              'count': 3,
-              'num_pages': 1,
-              'per_page': 50
+          }
+        } else {
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [
+              {
+                'id': 4,
+                'display_name': 'TMTFFF'
+              }
+            ],
+            'info': {
+              'pagination': {
+                'count': 4,
+                'num_pages': 2,
+                'per_page': 50
+              }
             }
           }
         }
