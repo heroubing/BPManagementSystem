@@ -48,26 +48,6 @@ const MockData = function (url, params, loading) {
             {
               'id': 10,
               'display_name': '其他'
-            },
-            {
-              'id': 11,
-              'display_name': 'TMT'
-            },
-            {
-              'id': 12,
-              'display_name': '其他'
-            },
-            {
-              'id': 13,
-              'display_name': '其他'
-            },
-            {
-              'id': 14,
-              'display_name': 'TMT'
-            },
-            {
-              'id': 16,
-              'display_name': '钢铁'
             }
           ],
           'info': {
@@ -176,6 +156,14 @@ const MockData = function (url, params, loading) {
             'address': '',
             'is_staff': true
           },
+          'info': null
+        }
+        break
+      case API.BP_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
           'info': null
         }
         break
