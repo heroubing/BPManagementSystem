@@ -8,6 +8,7 @@
     </el-form-item>
     <el-form-item label='联系人ID' prop='contact'>
       <el-autocomplete
+        popper-class="Add-autocomplete"
         v-model="ruleForm.contact"
         :fetch-suggestions="queryContactList"
         placeholder="请输入联系人ID查询"
@@ -15,6 +16,10 @@
         :debounce="1000"
       >
         <i class="el-icon-search el-input__icon" slot="suffix"></i>
+        <template slot-scope="{ item }">
+          <div class="name">{{ item.user_id}}-{{ item.user.user_name }}-{{ item.user.phone }}</div>
+          <div class="addr">{{ item.organization }} {{ item.user.email }}</div>
+        </template>
       </el-autocomplete>
     </el-form-item>
     <el-form-item label='阅读商业计划书积分' prop='points'>
@@ -136,15 +141,15 @@ export default {
   },
   methods: {
     // 联系人查询
-    queryContactList (id, cb) {
-      let params = {id}
-      // 联系人接口 todo
-      Utils.getInfo(API.BP_contact, params, this).then((result) => cb(result))
+    queryContactList (searchKey, cb) {
+      let params = {search_key: searchKey}
+      Utils.getInfo(API.BP_contact, params, this, false).then(({result}) => {
+        cb(result.map(item => Object.assign({value: item.user.user_name}, item)))
+      })
     },
     handleSelect (item) {
       console.log(item)
     },
-
     // 点击文件列表中已上传的文件时的钩子
     onPreview (file) {
       console.log('onPreview', file)
@@ -222,11 +227,15 @@ export default {
       this.$refs[formName].resetFields()
     }
   },
-  async mounted () {
+  mounted () {
     // 获取行业列表
-    this.industriesList = await Utils.getAllPageList(API.BP_industry, [], 1, this)
+    Utils.getAllPageList(API.BP_industry, [], 1).then((result) => {
+      this.industriesList = result
+    })
     // 获取投资阶段列表
-    this.roundList = await Utils.getAllPageList(API.BP_round, [], 1, this)
+    Utils.getAllPageList(API.BP_round, [], 1).then((result) => {
+      this.roundList = result
+    })
   }
 }
 </script>
@@ -246,4 +255,29 @@ export default {
     margin-bottom: 22px;
     display: inline;
   }
+
+  .el-autocomplete {
+    width: 100%;
+  }
+
+  .my-autocomplete li {
+    line-height: normal;
+    padding: 7px;
+
+  }
+
+  .my-autocomplete .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .my-autocomplete .addr {
+    font-size: 12px;
+    color: #b4b4b4;
+  }
+
+  .my-autocomplete .highlighted .addr {
+    color: #ddd;
+  }
+
 </style>

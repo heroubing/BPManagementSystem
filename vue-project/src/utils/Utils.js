@@ -1,6 +1,7 @@
 /**
  * 工具类
  */
+import {Loading, Notification} from 'element-ui'
 import MockData from './MockData'
 
 export default class Utils {
@@ -9,19 +10,24 @@ export default class Utils {
    * get网络请求公共方法
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
    * @param params        参数
-   * @param that          传入vue用于显示遮罩层
+   * @param isShowLoading 是否加载遮罩层
    */
-  static getInfo (url, params = {}, that) {
+  static getInfo (url, params = {}, isShowLoading = true) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
-    const loading = that.$loading({
-      lock: true,
-      text: '加载中，请稍等...',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
+    if (isShowLoading && !window.TOAST_STS) {
+      window.TOAST_STS = true
+      this.loading = Loading.service({
+        lock: true,
+        text: '加载中，请稍等...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+        fullscreen: true
+      })
+    }
+
     if (Utils.USE_MOCK) {
-      return MockData(url, params, loading)
+      return MockData(url, params, isShowLoading)
     }
     // 拼写方法
     url += '?' + this.paramsToUrl(params)
@@ -29,11 +35,12 @@ export default class Utils {
       .then((res) => res.json())
       .then((json) => {
         console.log('【网络请求出参】', json)
-        loading.close()
+        if (isShowLoading) this.closeLoading()
         if (json.code === 200) {
           return json
         } else {
-          that.$notify.error({
+          if (isShowLoading) this.closeLoading()
+          Notification.error({
             title: '错误',
             message: json.msg
           })
@@ -42,8 +49,8 @@ export default class Utils {
       })
       .catch(e => {
         console.error(e)
-        loading.close()
-        that.$notify.error({
+        if (isShowLoading) this.closeLoading()
+        Notification.error({
           title: '错误',
           message: e.message
         })
@@ -56,19 +63,23 @@ export default class Utils {
    * get网络请求公共方法
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
    * @param params        参数
-   * @param that          传入vue用于显示遮罩层
+   * @param isShowLoading 是否加载遮罩层
    */
-  static getInfoPost (url, params = {}, that) {
+  static getInfoPost (url, params = {}, isShowLoading = true) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
-    const loading = that.$loading({
-      lock: true,
-      text: '加载中，请稍等...',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
+    if (isShowLoading && !window.TOAST_STS) {
+      window.TOAST_STS = true
+      Loading.service({
+        lock: true,
+        text: '加载中，请稍等...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+        fullscreen: true
+      })
+    }
     if (Utils.USE_MOCK) {
-      return MockData(url, params, loading)
+      return MockData(url, params, isShowLoading)
     }
     return fetch(url, {
       method: 'POST',
@@ -77,11 +88,11 @@ export default class Utils {
       .then((res) => res.json())
       .then((json) => {
         console.log('【网络请求出参】', json)
-        loading.close()
+        if (isShowLoading) this.closeLoading()
         if (json.code === 200) {
           return json
         } else {
-          that.$notify.error({
+          Notification.error({
             title: '错误',
             message: json.msg
           })
@@ -90,8 +101,8 @@ export default class Utils {
       })
       .catch(e => {
         console.error(e)
-        loading.close()
-        that.$notify.error({
+        if (isShowLoading) this.closeLoading()
+        Notification.error({
           title: '错误',
           message: e.message
         })
@@ -140,15 +151,19 @@ export default class Utils {
    * @param API
    * @param list
    * @param page
-   * @param that
    * @returns {Promise<*>}
    */
-  static async getAllPageList (API, list, page, that) {
-    let {result, info} = await Utils.getInfo(API, {page}, that)
+  static async getAllPageList (API, list, page) {
+    let {result, info} = await Utils.getInfo(API, {page})
     let returnList = [...list, ...result]
     if (returnList.length < info.pagination.count) {
-      returnList = await this.getAllPageList(API, returnList, ++page, that)
+      returnList = await this.getAllPageList(API, returnList, ++page)
     }
     return returnList
+  }
+
+  static closeLoading () {
+    this.loading.close()
+    window.TOAST_STS = false
   }
 }

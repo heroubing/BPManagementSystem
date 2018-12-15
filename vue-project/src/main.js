@@ -15,6 +15,9 @@ Promise.stop = function () {
   })
 }
 
+// 全局loading状态
+window.LOADING_STS = false
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
