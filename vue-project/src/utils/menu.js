@@ -22,6 +22,17 @@ const menus = [
         menuUrl: '/bp/manage'
       }
     ]
+  },
+  {
+    catalogName: '投资人',
+    catalogCode: 'investor',
+    children: [
+      {
+        menuName: '投资人审核',
+        menuCode: 'investor_review',
+        menuUrl: '/investor/review'
+      }
+    ]
   }
 ]
 export default menus

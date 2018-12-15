@@ -214,6 +214,65 @@ const MockData = function (url, params, isShowLoading) {
             }
           }}
         break
+      case API.Investor_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'organization': 'Tju',
+              'reg_time': '2018-11-21T22:10:14+0800',
+              'org_email': 't@j.cn',
+              'fav_industries': '1,2,5,19',
+              'fav_round': '3,5',
+              'is_reviewed': true,
+              'user_id': 2,
+              'user': {
+                'user_name': 'staff10',
+                'email': null,
+                'phone': null,
+                'sex': '',
+                'reg_time': '2018-06-27T00:12:00+0800',
+                'homepage': '',
+                'qq': '',
+                'points': 100,
+                'user_avatar': '',
+                'birthday': null,
+                'address': ''
+              }
+            },
+            {
+              'organization': 'InvestData',
+              'reg_time': '2018-11-21T22:11:14+0800',
+              'org_email': '',
+              'fav_industries': '',
+              'fav_round': '',
+              'is_reviewed': false,
+              'user_id': 3,
+              'user': {
+                'user_name': 'staff11',
+                'email': null,
+                'phone': null,
+                'sex': '',
+                'reg_time': '2018-06-29T00:12:00+0800',
+                'homepage': '',
+                'qq': '',
+                'points': 0,
+                'user_avatar': '',
+                'birthday': null,
+                'address': ''
+              }
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 2,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
       default:
         mockData = {
           'code': 400,

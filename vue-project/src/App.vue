@@ -41,7 +41,7 @@
 
 <script>
 import MenuItem from './components/MenuItem'
-import menus from './menu'
+import menus from './utils/menu'
 
 export default {
   name: 'App',
