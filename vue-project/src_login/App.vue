@@ -82,7 +82,7 @@ export default {
         captcha_key: this.captcha_key,
         captcha: this.captcha
       }
-      Utils.getInfoPost(API.SYS_staffLogin, params, this).then(({result}) => {
+      Utils.getInfoPost(API.SYS_staffLogin, params).then(({result}) => {
         // 登录成功
         this.loading = false
         window.location.href = `${window.location.origin}/home/`
@@ -99,7 +99,7 @@ export default {
     handleVerfClick () {
       // 获取验证码
       let params = {}
-      Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
+      Utils.getInfo(API.SYS_captcha, params).then(({result}) => {
         this.captchaImg = result.captcha_image
         this.captcha_key = result.captcha_key
       })
@@ -111,7 +111,7 @@ export default {
   mounted () {
     // 获取验证码
     let params = {}
-    Utils.getInfo(API.SYS_captcha, params, this).then(({result}) => {
+    Utils.getInfo(API.SYS_captcha, params).then(({result}) => {
       this.captchaImg = result.captcha_image
       this.captcha_key = result.captcha_key
     })

@@ -73,7 +73,7 @@ export default {
       this.$confirm(`确认删除"${row.project_name}"项目吗？`)
         .then(_ => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.BP_delete, params, this).then(() => {
+          Utils.getInfoPost(API.BP_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '删除成功'
@@ -111,7 +111,7 @@ export default {
     // 分页查询
     queryList () {
       let params = {page: this.currentPage}
-      Utils.getInfo(API.BP_query, params, this).then(({result, info}) => {
+      Utils.getInfo(API.BP_query, params).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count

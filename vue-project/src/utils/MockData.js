@@ -152,6 +152,26 @@ const MockData = function (url, params, isShowLoading) {
           }
         }
         break
+      case API.BP_add:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 6,
+            'project_name': '1118',
+            'brief': '',
+            'upload_time': '2018-11-21T21:47:53+0800',
+            'update_time': '2018-11-21T21:47:53+0800',
+            'industries': '',
+            'round_id': null,
+            'round': null,
+            'points': 500,
+            'contact_points': 500,
+            'view_count': 0
+          },
+          'info': null
+        }
+        break
       case API.BP_delete:
         mockData = {
           'code': 200,
@@ -213,6 +233,12 @@ const MockData = function (url, params, isShowLoading) {
               'per_page': 50
             }
           }}
+        break
+      case API.BP_contactCreate:
+        mockData = {
+          'code': 200,
+          'msg': 'OK'
+        }
         break
       case API.Investor_query:
         mockData = {
@@ -276,7 +302,7 @@ const MockData = function (url, params, isShowLoading) {
       default:
         mockData = {
           'code': 400,
-          'msg': '错误'
+          'msg': '未找到模拟接口'
         }
     }
     setTimeout(() => {

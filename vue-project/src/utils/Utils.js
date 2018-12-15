@@ -72,7 +72,7 @@ export default class Utils {
     console.log('【网络请求入参】', params)
     if (isShowLoading && !window.TOAST_STS) {
       window.TOAST_STS = true
-      Loading.service({
+      this.loading = Loading.service({
         lock: true,
         text: '加载中，请稍等...',
         spinner: 'el-icon-loading',

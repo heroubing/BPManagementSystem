@@ -6,20 +6,21 @@
     <el-form-item label='项目简介' prop='brief'>
       <el-input v-model='ruleForm.brief'/>
     </el-form-item>
-    <el-form-item label='联系人ID' prop='contact'>
+    <el-form-item label='联系人ID' prop='contact_value'>
       <el-autocomplete
         popper-class="Add-autocomplete"
-        v-model="ruleForm.contact"
+        v-model="ruleForm.contact_value"
         :fetch-suggestions="queryContactList"
         placeholder="请输入联系人ID查询"
         @select="handleSelect"
+        :trigger-on-focus="false"
         :debounce="1000"
       >
-        <i class="el-icon-search el-input__icon" slot="suffix"></i>
         <template slot-scope="{ item }">
           <div class="name">{{ item.user_id}}-{{ item.user.user_name }}-{{ item.user.phone }}</div>
           <div class="addr">{{ item.organization }} {{ item.user.email }}</div>
         </template>
+        <el-button slot="append" icon="el-icon-plus" @click="dialogVisible_addContact = true"></el-button>
       </el-autocomplete>
     </el-form-item>
     <el-form-item label='阅读商业计划书积分' prop='points'>
@@ -44,37 +45,33 @@
       <el-upload
         slot='label'
         class='upload'
-        action='https://jsonplaceholder.typicode.com/posts/'
-        :on-preview='onPreview'
-        :on-remove='onRemove'
-        :on-success='onSuccess'
-        :on-error='onError'
-        :on-progress='onProgress'
+        action=""
         :on-change='onChange'
-        :before-upload='beforeUpload'
-        :before-remove='beforeRemove'
-        :on-exceed='onExceed'
-        :limit='2'
         :auto-upload='false'
         :show-file-list='false'>
         <el-button size='small' type='primary'>点击上传</el-button>
         <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
       </el-upload>
-      <el-input v-model='ruleForm.name6' readonly/>
+      <el-input v-model='ruleForm.bp_file_input' readonly/>
     </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
       <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
     </el-form-item>
+    <el-dialog title="新增联系人" :visible.sync="dialogVisible_addContact">
+      <edit-contact @saved="contactSaved"/>
+    </el-dialog>
   </el-form>
 </template>
 
 <script>
 import Utils from '../../utils/Utils'
 import API from '../../utils/API'
+import EditContact from './EditContact'
 
 export default {
   name: 'Add',
+  components: {EditContact},
   props: {
     data: {
       type: Object,
@@ -95,6 +92,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible_addContact: false, // 新建联系人弹出框
       industriesList: [], // 行业列表
       roundList: [], // 投资阶段列表
       isAdd: this.data.id === '', // 是否为新增
@@ -103,23 +101,24 @@ export default {
         project_name: this.data.project_name, // 项目名称
         brief: this.data.brief, // 项目简介
         contact: this.data.contact, // 联系人ID
+        contact_value: '', // 联系人显示信息
         points: this.data.points, // 阅读商业计划书积分，默认500
         contact_points: this.data.contact_points, // 阅读联系信息积分，默认500
         industries: this.data.industries, // 行业，逗号分隔，每一个元素是一个行业ID
         round_id: this.data.round_id, // 投资阶段ID
         bp_file_input: this.data.bp_file_input, // 文件校验占用
-        fileList: []
+        bp_file: null // BP文件
       },
       rules: {
         project_name: [
-          {required: true, message: '请输入项目名称', trigger: 'blur'},
-          {min: 3, max: 100, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+          {required: true, message: '请输入项目名称', trigger: 'blur'}
         ],
         brief: [
           {required: true, message: '请输入项目简介', trigger: 'blur'}
         ],
-        contact: [
-          {required: true, message: '请输入联系人', trigger: 'blur'}
+        contact_value: [
+          {required: true, message: '请选择联系人', trigger: 'blur'},
+          {validator: this.validatorContact, message: '请通过点击选择现有联系人或通过右侧新增按钮新增'}
         ],
         points: [
           {required: true, message: '请输入阅读商业计划书积分', trigger: 'blur'}
@@ -140,55 +139,34 @@ export default {
     }
   },
   methods: {
+    // 新增联系人回传
+    contactSaved (contactData) {
+      this.dialogVisible_addContact = false
+      this.ruleForm.contact = contactData.user
+      this.ruleForm.contact_value = contactData.user
+    },
     // 联系人查询
     queryContactList (searchKey, cb) {
+      if (searchKey === '') {
+        return null
+      }
+      // 清空contact，确保联系人是用户点击选择的
+      this.ruleForm.contact = ''
       let params = {search_key: searchKey}
-      Utils.getInfo(API.BP_contact, params, this, false).then(({result}) => {
+      Utils.getInfo(API.BP_contact, params, false).then(({result}) => {
         cb(result.map(item => Object.assign({value: item.user.user_name}, item)))
       })
     },
+    // 选中联系人
     handleSelect (item) {
-      console.log(item)
+      this.ruleForm.contact = item.user_id
     },
     // 点击文件列表中已上传的文件时的钩子
-    onPreview (file) {
-      console.log('onPreview', file)
-    },
-    // 文件列表移除文件时的钩子
-    onRemove (file, fileList) {
-      console.log('onRemove', file, fileList)
-    },
-    // 文件上传成功时的钩子
-    onSuccess (response, file, fileList) {
-      console.log('onSuccess', response, file, fileList)
-    },
-    // 文件上传失败时的钩子
-    onError (err, file, fileList) {
-      console.log('onError', err, file, fileList)
-    },
-    // 文件上传时的钩子
-    onProgress (event, file, fileList) {
-      console.log('onProgress', event, file, fileList)
-    },
     // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
     onChange (file, fileList) {
-      this.ruleForm.fileList = []
-      this.ruleForm.fileList.push(file)
-      this.ruleForm.name6 = file.name
+      this.ruleForm.bp_file = file.raw
+      this.ruleForm.bp_file_input = file.name
       console.log('onChange', file, fileList)
-    },
-    // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-    beforeUpload (file) {
-      console.log('beforeUpload', file)
-    },
-    // 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止上传。
-    beforeRemove (file, fileList) {
-      console.log('beforeRemove', file, fileList)
-    },
-    // 文件超出个数限制时的钩子
-    onExceed (files, fileList) {
-      console.log('onExceed', files, fileList)
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     // 表单提交
     submitForm (formName) {
@@ -205,14 +183,14 @@ export default {
             bp_file: this.ruleForm.bp_file
           }
           if (this.isAdd) {
-            Utils.getInfoPost(API.BP_add, params, this).then(() => {
+            Utils.getInfoPost(API.BP_add, params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '录入成功'
               })
             })
           } else {
-            Utils.getInfoPost(API.BP_update(this.data.id), params, this).then(() => {
+            Utils.getInfoPost(API.BP_update(this.data.id), params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '保存成功'
@@ -225,6 +203,14 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    // 校验联系人是否为用户选择而非手填
+    validatorContact (rule, value, callback) {
+      if (this.ruleForm.contact === '') {
+        callback(new Error())
+      } else {
+        callback()
+      }
     }
   },
   mounted () {

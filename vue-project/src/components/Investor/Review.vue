@@ -60,7 +60,7 @@ export default {
       this.$confirm(`确认审核通过"${row.project_name}"项目吗？`)
         .then(_ => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.BP_delete, params, this).then(() => {
+          Utils.getInfoPost(API.BP_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '审核通过'
@@ -89,7 +89,7 @@ export default {
         page: this.currentPage,
         search_key: this.formData.search_key
       }
-      Utils.getInfo(API.Investor_query, params, this).then(({result, info}) => {
+      Utils.getInfo(API.Investor_query, params).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
