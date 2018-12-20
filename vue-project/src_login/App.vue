@@ -48,6 +48,7 @@
 
 <script>
 
+import {Notification} from 'element-ui'
 import API from '../src/utils/API'
 import Utils from '../src/utils/Utils'
 
@@ -82,10 +83,29 @@ export default {
         captcha_key: this.captcha_key,
         captcha: this.captcha
       }
-      Utils.getInfoPost(API.SYS_staffLogin, params).then(({result}) => {
-        // 登录成功
+      Utils.getInfoPost(API.SYS_staffLogin, params, true, false).then((json) => {
         this.loading = false
-        window.location.href = `${window.location.origin}/home/`
+        let message
+        switch (json.code) {
+          case 200:
+            // 登录成功
+            window.location.href = `${window.location.origin}/home/`
+            break
+          case 1001:
+            message = '验证码错误，请重试'
+            break
+          case 1002:
+            message = '验证码已过期，请重新输入'
+            this.handleVerfClick()
+            break
+          default:
+            message = json.msg
+            break
+        }
+        Notification.error({
+          title: '错误',
+          message
+        })
       })
     },
     validator (value, label) {
@@ -98,23 +118,16 @@ export default {
     },
     handleVerfClick () {
       // 获取验证码
-      let params = {}
-      Utils.getInfo(API.SYS_captcha, params).then(({result}) => {
+      Utils.getInfo(API.SYS_captcha, {}).then(({result}) => {
+        result.captcha_image.splice(0, 1)
         this.captchaImg = result.captcha_image
         this.captcha_key = result.captcha_key
       })
     }
-    // handleForgetPassword () {
-    //   this.$message({showClose: true, message: '请联系管理员重置密码', type: 'warning'})
-    // }
   },
   mounted () {
     // 获取验证码
-    let params = {}
-    Utils.getInfo(API.SYS_captcha, params).then(({result}) => {
-      this.captchaImg = result.captcha_image
-      this.captcha_key = result.captcha_key
-    })
+    this.handleVerfClick()
   }
 }
 </script>

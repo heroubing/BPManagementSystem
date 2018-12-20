@@ -13,8 +13,9 @@ export default class Utils {
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
    * @param params        参数
    * @param isShowLoading 是否加载遮罩层
+   * @param dealError     是否需要自动处理错误
    */
-  static getInfo (url, params = {}, isShowLoading = true) {
+  static getInfo (url, params = {}, isShowLoading = true, dealError = true) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
     if (isShowLoading && !window.TOAST_STS) {
@@ -38,15 +39,18 @@ export default class Utils {
       .then((json) => {
         console.log('【网络请求出参】', json)
         if (isShowLoading) this.closeLoading()
-        if (json.code === 200) {
-          return json
+        if (dealError) {
+          if (json.code === 200) {
+            return json
+          } else {
+            Notification.error({
+              title: '错误',
+              message: json.msg
+            })
+            return Promise.stop()
+          }
         } else {
-          if (isShowLoading) this.closeLoading()
-          Notification.error({
-            title: '错误',
-            message: json.msg
-          })
-          return Promise.stop()
+          return json
         }
       })
       .catch(e => {
@@ -66,8 +70,9 @@ export default class Utils {
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
    * @param params        参数
    * @param isShowLoading 是否加载遮罩层
+   * @param dealError     是否需要自动处理错误
    */
-  static getInfoPost (url, params = {}, isShowLoading = true) {
+  static getInfoPost (url, params = {}, isShowLoading = true, dealError = true) {
     console.log('【网络请求接口】', url)
     console.log('【网络请求入参】', params)
     if (isShowLoading && !window.TOAST_STS) {
@@ -91,14 +96,18 @@ export default class Utils {
       .then((json) => {
         console.log('【网络请求出参】', json)
         if (isShowLoading) this.closeLoading()
-        if (json.code === 200) {
-          return json
+        if (dealError) {
+          if (json.code === 200) {
+            return json
+          } else {
+            Notification.error({
+              title: '错误',
+              message: json.msg
+            })
+            return Promise.stop()
+          }
         } else {
-          Notification.error({
-            title: '错误',
-            message: json.msg
-          })
-          return Promise.stop()
+          return json
         }
       })
       .catch(e => {
