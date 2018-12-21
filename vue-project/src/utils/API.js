@@ -9,7 +9,7 @@ const API = {
   BP_industry: '/api/bp/industry/',
   BP_round: '/api/bp/round/',
   BP_contact: '/api/project_contact/',
-  BP_contactCreate: '/api/project_contact/create',
+  BP_contactCreate: '/api/project_contact/create/',
 
   Investor_query: '/api/investor/'
 }

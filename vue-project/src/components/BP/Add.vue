@@ -188,6 +188,7 @@ export default {
                 title: '成功',
                 message: '录入成功'
               })
+              this.resetForm('ruleForm')
             })
           } else {
             Utils.getInfoPost(API.BP_update(this.data.id), params).then(() => {

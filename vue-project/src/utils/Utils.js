@@ -88,9 +88,14 @@ export default class Utils {
     if (Utils.USE_MOCK) {
       return MockData(url, params, isShowLoading)
     }
+    let formData = new FormData()
+    for (let key in params) {
+      formData.append(key, params[key])
+    }
     return fetch(url, {
       method: 'POST',
-      body: params
+      body: formData,
+      credentials: 'include'
     })
       .then((res) => res.json())
       .then((json) => {

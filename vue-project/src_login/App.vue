@@ -96,16 +96,17 @@ export default {
             break
           case 1002:
             message = '验证码已过期，请重新输入'
-            this.handleVerfClick()
             break
           default:
-            message = json.msg
+            message = json.info
             break
         }
         Notification.error({
           title: '错误',
           message
         })
+        this.handleVerfClick()
+        this.captcha = ''
       })
     },
     validator (value, label) {
@@ -119,8 +120,7 @@ export default {
     handleVerfClick () {
       // 获取验证码
       Utils.getInfo(API.SYS_captcha, {}).then(({result}) => {
-        result.captcha_image.splice(0, 1)
-        this.captchaImg = result.captcha_image
+        this.captchaImg = result.captcha_image.substring(1)
         this.captcha_key = result.captcha_key
       })
     }

@@ -63,7 +63,7 @@ export default {
         if (valid) {
           console.log(3)
           let params = {
-            user: this.ruleForm.user,
+            user: parseInt(this.ruleForm.user),
             organization: this.ruleForm.organization,
             contact_info: this.ruleForm.contact_info
           }
