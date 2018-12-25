@@ -43,7 +43,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     watchOptions: {
       poll: config.dev.poll,
     },
-    index: 'index_login.html'
+    index: 'staff_login.html'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -54,13 +54,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'index.html',
+      filename: 'staff_admin.html',
       template: 'index.html',
       inject: true,
       excludeChunks: ['login']
     }),
     new HtmlWebpackPlugin({
-      filename: 'index_login.html',
+      filename: 'staff_login.html',
       template: 'index.html',
       inject: true,
       excludeChunks: ['app']
