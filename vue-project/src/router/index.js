@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import NotExist from '@/components/NotExist'
+// import NotExist from '@/components/NotExist'
 import Add from '@/components/BP/Add'
 import Manage from '@/components/BP/Manage'
 import Review from '@/components/Investor/Review'
@@ -33,8 +33,9 @@ export default new Router({
     },
     {
       path: '*',
-      name: 'NotExist',
-      component: NotExist
+      // name: 'NotExist',
+      // component: NotExist,
+      redirect: '/home'
     }
   ]
 })
