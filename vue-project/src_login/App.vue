@@ -120,7 +120,7 @@ export default {
     handleVerfClick () {
       // 获取验证码
       Utils.getInfo(API.SYS_captcha, {}).then(({result}) => {
-        this.captchaImg = result.captcha_image.substring(1)
+        this.captchaImg = result.captcha_image
         this.captcha_key = result.captcha_key
       })
     }
