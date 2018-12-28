@@ -57,7 +57,7 @@ export default {
     // 删除
     review (row) {
       console.log(row)
-      this.$confirm(`确认审核通过"${row.project_name}"项目吗？`)
+      this.$confirm(`确认审核通过"${row.user.user_name}"吗？`)
         .then(_ => {
           let params = {id: row.id}
           Utils.getInfoPost(API.BP_delete, params).then(() => {

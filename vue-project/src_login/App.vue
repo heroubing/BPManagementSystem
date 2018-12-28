@@ -89,7 +89,7 @@ export default {
         switch (json.code) {
           case 200:
             // 登录成功
-            window.location.href = `${window.location.href}staff_admin.html`
+            window.location.href = `${window.location.origin}/staff_admin_0/`
             break
           case 1001:
             message = '验证码错误，请重试'
