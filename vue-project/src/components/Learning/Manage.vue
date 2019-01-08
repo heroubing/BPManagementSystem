@@ -18,8 +18,8 @@
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
       <el-table-column prop='id' label='ID' width='100px'></el-table-column>
       <el-table-column prop='material_title' label='资料标题' width='210px'></el-table-column>
-      <el-table-column prop='outline_file' label='介绍文件(PDF文件，公开)' width='180px'></el-table-column>
-      <el-table-column prop='video_file' label='视频文件(私有)' width='100px'></el-table-column>
+      <el-table-column prop='outline_file' label='介绍文件' width='200px'></el-table-column>
+      <el-table-column prop='video_file' label='视频文件(私有)' width='200px'></el-table-column>
       <el-table-column prop='points' label='所需积分' width='100px'></el-table-column>
       <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
