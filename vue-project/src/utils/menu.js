@@ -20,6 +20,16 @@ const menus = [
         menuName: 'BP管理',
         menuCode: 'bp_manage',
         menuUrl: '/bp/manage'
+      },
+      {
+        menuName: '行业管理',
+        menuCode: 'bp_industry_manage',
+        menuUrl: '/bp/industry/manage'
+      },
+      {
+        menuName: '投资阶段管理',
+        menuCode: 'bp_round_manage',
+        menuUrl: '/bp/round/manage'
       }
     ]
   },
@@ -33,6 +43,11 @@ const menus = [
         menuUrl: '/investor/review'
       }
     ]
+  },
+  {
+    menuName: '在线学习',
+    menuCode: 'investor_review',
+    menuUrl: '/investor/review'
   }
 ]
 export default menus

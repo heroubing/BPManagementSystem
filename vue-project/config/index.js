@@ -11,11 +11,17 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api/':{
+      '/api/': {
         target: 'http://127.0.0.1:8000'
       },
-      '/captcha/':{
+      '/captcha/': {
         target: 'http://127.0.0.1:8000'
+      },
+      '/staff_admin_0/': {
+        target: 'http://127.0.0.1:8080/staff_admin.html',
+        pathRewrite: {
+          '^/staff_admin_0/': ''   //重写接口
+        }
       }
     },
 

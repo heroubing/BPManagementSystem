@@ -2,9 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 // import NotExist from '@/components/NotExist'
-import Add from '@/components/BP/Add'
-import Manage from '@/components/BP/Manage'
-import Review from '@/components/Investor/Review'
+import BpAdd from '@/components/BP/Add'
+import BpManage from '@/components/BP/Manage'
+import IndustryManage from '@/components/BP/Industry/Manage'
+import RoundManage from '@/components/BP/Round/Manage'
+import InvestorReview from '@/components/Investor/Review'
+import LearningManage from '@/components/Learning/Manage'
 
 Vue.use(Router)
 
@@ -18,18 +21,33 @@ export default new Router({
     },
     {
       path: '/bp/add',
-      name: 'Add',
-      component: Add
+      name: 'BpAdd',
+      component: BpAdd
     },
     {
       path: '/bp/manage',
-      name: 'Manage',
-      component: Manage
+      name: 'BpManage',
+      component: BpManage
+    },
+    {
+      path: '/bp/industry/manage',
+      name: 'IndustryManage',
+      component: IndustryManage
+    },
+    {
+      path: '/bp/round/manage',
+      name: 'RoundManage',
+      component: RoundManage
     },
     {
       path: '/investor/review',
-      name: 'Review',
-      component: Review
+      name: 'InvestorReview',
+      component: InvestorReview
+    },
+    {
+      path: '/learning/manage',
+      name: 'LearningManage',
+      component: LearningManage
     },
     {
       path: '*',
