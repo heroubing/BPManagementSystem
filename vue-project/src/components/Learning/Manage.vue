@@ -12,17 +12,18 @@
       <!--</el-form-item>-->
       <el-form-item>
         <el-button type='primary' @click='queryList'>搜索</el-button>
+        <el-button type='primary' @click='add'>新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
       <el-table-column prop='id' label='ID' width='100px'></el-table-column>
-      <el-table-column prop='project_name' label='项目名称' width='210px'></el-table-column>
-      <el-table-column prop='upload_time' label='上传时间' width='180px' :formatter="formatterUploadTime"
-                       show-overflow-tooltip></el-table-column>
-      <el-table-column prop='points' label='阅读积分' width='100px'></el-table-column>
+      <el-table-column prop='material_title' label='资料标题' width='210px'></el-table-column>
+      <el-table-column prop='outline_file' label='介绍文件(PDF文件，公开)' width='180px'></el-table-column>
+      <el-table-column prop='video_file' label='视频文件(私有)' width='100px'></el-table-column>
+      <el-table-column prop='points' label='所需积分' width='100px'></el-table-column>
       <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
-          <!--<el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>-->
+          <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
           <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
         </template>
       </el-table-column>
@@ -37,8 +38,8 @@
       :total="total">
     </el-pagination>
 
-    <el-dialog v-if="dialogVisible_edit" :title="dialogTitle" :visible.sync="dialogVisible_edit">
-      <Edit :data="dialogData" @saved="editSaved"/>
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible_edit">
+      <Edit v-if="dialogVisible_edit" :data="dialogData" @saved="editSaved"/>
     </el-dialog>
   </div>
 </template>
@@ -67,6 +68,11 @@ export default {
     }
   },
   methods: {
+    add () {
+      this.dialogData = {}
+      this.dialogTitle = '新增行业'
+      this.dialogVisible_edit = true
+    },
     // 删除
     deleteRow (row) {
       console.log(row)
@@ -85,8 +91,6 @@ export default {
     },
     // 编辑
     editRow (row) {
-      row.industries = row.industries.split(',').map((item) => parseInt(item))
-      console.log(row)
       this.dialogData = row
       this.dialogTitle = `编辑-${row.project_name}`
       this.dialogVisible_edit = true

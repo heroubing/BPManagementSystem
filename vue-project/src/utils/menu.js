@@ -46,8 +46,8 @@ const menus = [
   },
   {
     menuName: '在线学习',
-    menuCode: 'investor_review',
-    menuUrl: '/investor/review'
+    menuCode: 'learning_manage',
+    menuUrl: '/learning/manage'
   }
 ]
 export default menus
