@@ -299,6 +299,30 @@ const MockData = function (url, params, isShowLoading) {
           }
         }
         break
+      case API.Learning_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'permission': true,
+              'id': 1,
+              'points': 0,
+              'view_count': 0,
+              'ol_source_outline': 'http://localhost:8000/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
+              'ol_title': '在线学习资料ABC',
+              'ol_date': '2019-01-08T17:00:16+0800'
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 1,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
       default:
         mockData = {
           'code': 400,

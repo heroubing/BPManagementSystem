@@ -115,7 +115,7 @@ export default {
             bp_file: this.ruleForm.bp_file
           }
           if (this.isAdd) {
-            Utils.getInfoPost(API.BP_add, params).then(() => {
+            Utils.getInfoPost(API.Learning_add, params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '录入成功'
@@ -123,7 +123,7 @@ export default {
               this.resetForm('ruleForm')
             })
           } else {
-            Utils.getInfoPost(API.BP_update(this.data.id), params).then(() => {
+            Utils.getInfoPost(API.Learning_update(this.data.id), params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '保存成功'

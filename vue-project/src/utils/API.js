@@ -11,6 +11,12 @@ const API = {
   BP_contact: '/api/project_contact/',
   BP_contactCreate: '/api/project_contact/create/',
 
-  Investor_query: '/api/investor/'
+  Investor_query: '/api/investor/',
+
+  // 在线学习
+  Learning_query: '/api/online_learning/',
+  Learning_add: '/api/online_learning/create/',
+  Learning_update: (id) => `/api/online_learning/${id}/update/`,
+  Learning_delete: '/api/online_learning/delete/'
 }
 export default API

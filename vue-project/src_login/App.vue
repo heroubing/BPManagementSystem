@@ -85,28 +85,30 @@ export default {
       }
       Utils.getInfoPost(API.SYS_staffLogin, params, true, false).then((json) => {
         this.loading = false
-        let message
+        let errMessage
         switch (json.code) {
           case 200:
             // 登录成功
             window.location.href = `${window.location.origin}/staff_admin_0/`
             break
           case 1001:
-            message = '验证码错误，请重试'
+            errMessage = '验证码错误，请重试'
             break
           case 1002:
-            message = '验证码已过期，请重新输入'
+            errMessage = '验证码已过期，请重新输入'
             break
           default:
-            message = json.info
+            errMessage = json.info
             break
         }
-        Notification.error({
-          title: '错误',
-          message
-        })
-        this.handleVerfClick()
-        this.captcha = ''
+        if (errMessage) {
+          Notification.error({
+            title: '错误',
+            message: errMessage
+          })
+          this.handleVerfClick()
+          this.captcha = ''
+        }
       })
     },
     validator (value, label) {

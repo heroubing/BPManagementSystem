@@ -17,10 +17,23 @@
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
       <el-table-column prop='id' label='ID' width='100px'></el-table-column>
-      <el-table-column prop='material_title' label='资料标题' width='210px'></el-table-column>
-      <el-table-column prop='outline_file' label='介绍文件' width='200px'></el-table-column>
-      <el-table-column prop='video_file' label='视频文件(私有)' width='200px'></el-table-column>
+      <el-table-column label='标题' width='180px'>
+        <template slot-scope='scope'>
+          <el-button @click.native.prevent='viewFile(scope.row.ol_source_outline)' type='text' size='small'>
+            {{scope.row.ol_title}}
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop='ol_date' label='上传时间' width='180px' :formatter='formatterUploadTime'
+                       show-overflow-tooltip></el-table-column>
       <el-table-column prop='points' label='所需积分' width='100px'></el-table-column>
+      <el-table-column prop='view_count' label='浏览数' width='80px'></el-table-column>
+      <el-table-column label='是否有读取权限' width='150px'>
+        <template slot-scope='scope'>
+          <div>{{scope.row.permission?'是':'否'}}</div>
+        </template>
+      </el-table-column>
+
       <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
@@ -70,7 +83,7 @@ export default {
   methods: {
     add () {
       this.dialogData = {}
-      this.dialogTitle = '新增行业'
+      this.dialogTitle = '新增在线学习'
       this.dialogVisible_edit = true
     },
     // 删除
@@ -87,7 +100,8 @@ export default {
             this.queryList()
           })
         })
-        .catch(_ => {})
+        .catch(_ => {
+        })
     },
     // 编辑
     editRow (row) {
@@ -115,7 +129,7 @@ export default {
     // 分页查询
     queryList () {
       let params = {page: this.currentPage}
-      Utils.getInfo(API.BP_query, params).then(({result, info}) => {
+      Utils.getInfo(API.Learning_query, params).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
@@ -124,7 +138,11 @@ export default {
     },
     // 时间截取
     formatterUploadTime (row, column) {
-      return row.upload_time.replace('T', ' ').substr(0, 19)
+      return row.ol_date.replace('T', ' ').substr(0, 19)
+    },
+    // 获取文件
+    viewFile (url) {
+      window.open(url)
     }
   },
   mounted: function () {
