@@ -1,10 +1,19 @@
 <template>
   <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
-    <el-form-item label='项目名称' prop='project_name'>
-      <el-input v-model='ruleForm.project_name'/>
+    <el-form-item label='上传时间' prop='ol_date'>
+      <el-input v-model='ruleForm.ol_date'/>
     </el-form-item>
-    <el-form-item label='项目简介' prop='brief'>
-      <el-input v-model='ruleForm.brief'/>
+    <el-form-item label='所需积分' prop='points'>
+      <el-input v-model='ruleForm.points'/>
+    </el-form-item>
+    <el-form-item label='是否有读取权限' prop='permission'>
+      <el-input v-model='ruleForm.permission'/>
+    </el-form-item>
+    <el-form-item label='浏览数' prop='view_count'>
+      <el-input v-model='ruleForm.view_count'/>
+    </el-form-item>
+    <el-form-item label='简介文件路径' prop='ol_source_outline'>
+      <el-input v-model='ruleForm.ol_source_outline'/>
     </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
@@ -24,15 +33,13 @@ export default {
       type: Object,
       default: function () {
         return {
-          id: '',
-          project_name: '', // 项目名称
-          brief: '', // 项目简介
-          contact: '', // 联系人ID
-          points: '500', // 阅读商业计划书积分，默认500
-          contact_points: '500', // 阅读联系信息积分，默认500
-          industries: [], // 行业，逗号分隔，每一个元素是一个行业ID
-          round_id: '', // 投资阶段ID
-          bp_file_input: '' // 文件校验占用
+          id: '', // ID
+          ol_date: '', // 上传时间，格式形如 ``2018-07-08T01:02:30+0800``
+          points: '', // 所需积分
+          permission: '', // 是否有读取权限
+          view_count: '', // 浏览数
+          ol_source_outline: '', // 简介文件路径
+          ol_title: '' // 标题
         }
       }
     }
