@@ -2,14 +2,8 @@
   <div class="content">
     <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input v-model='formData.project_name' placeholder="请输入资料标题进行检索"></el-input>
+        <el-input v-model='formData.search_key' placeholder="请输入标题进行检索"></el-input>
       </el-form-item>
-      <!--<el-form-item>-->
-      <!--<el-select v-model='formInline.region' class='select'>-->
-      <!--<el-option label='按标题' value='shanghai'></el-option>-->
-      <!--<el-option label='按关键字' value='beijing'></el-option>-->
-      <!--</el-select>-->
-      <!--</el-form-item>-->
       <el-form-item>
         <el-button type='primary' @click='queryList'>搜索</el-button>
         <el-button type='primary' @click='add'>新增</el-button>
@@ -19,12 +13,12 @@
       <el-table-column prop='id' label='ID' width='100px'></el-table-column>
       <el-table-column label='标题' width='180px'>
         <template slot-scope='scope'>
-          <el-button @click.native.prevent='viewFile(scope.row.ol_source_outline)' type='text' size='small'>
-            {{scope.row.ol_title}}
+          <el-button @click.native.prevent='viewFile(scope.row.outline_file)' type='text' size='small'>
+            {{scope.row.material_title}}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop='ol_date' label='上传时间' width='180px' :formatter='formatterUploadTime'
+      <el-table-column prop='update_time' label='上传时间' width='180px' :formatter='formatterUploadTime'
                        show-overflow-tooltip></el-table-column>
       <el-table-column prop='points' label='所需积分' width='100px'></el-table-column>
       <el-table-column prop='view_count' label='浏览数' width='80px'></el-table-column>
@@ -68,11 +62,10 @@ export default {
   data () {
     return {
       formData: {
-        project_name: '',
-        region: 'shanghai'
+        search_key: ''
       },
       dialogData: {},
-      dialogTitle: '编辑',
+      dialogTitle: '',
       dialogVisible_edit: false,
       tableData: [],
       currentPage: 1,
@@ -89,7 +82,7 @@ export default {
     // 删除
     deleteRow (row) {
       console.log(row)
-      this.$confirm(`确认删除"${row.project_name}"项目吗？`)
+      this.$confirm(`确认删除"${row.material_title}"吗？`)
         .then(_ => {
           let params = {id: row.id}
           Utils.getInfoPost(API.BP_delete, params).then(() => {
@@ -100,18 +93,17 @@ export default {
             this.queryList()
           })
         })
-        .catch(_ => {
-        })
+        .catch(_ => {})
     },
     // 编辑
     editRow (row) {
       this.dialogData = row
-      this.dialogTitle = `编辑-${row.project_name}`
+      this.dialogTitle = `编辑-${row.material_title}`
       this.dialogVisible_edit = true
     },
     // 编辑成功回调
     editSaved () {
-      console.log('编辑成功')
+      this.dialogVisible_edit = false
       this.queryList()
     },
     // 修改每页显示数量
@@ -138,7 +130,7 @@ export default {
     },
     // 时间截取
     formatterUploadTime (row, column) {
-      return row.ol_date.replace('T', ' ').substr(0, 19)
+      return row.update_time.replace('T', ' ').substr(0, 19)
     },
     // 获取文件
     viewFile (url) {

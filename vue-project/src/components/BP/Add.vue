@@ -216,7 +216,7 @@ export default {
   },
   mounted () {
     // 获取行业列表
-    Utils.getAllPageList(API.BP_industry, [], 1).then((result) => {
+    Utils.getAllPageList(API.BP_Industry_query, [], 1).then((result) => {
       this.industriesList = result
     })
     // 获取投资阶段列表

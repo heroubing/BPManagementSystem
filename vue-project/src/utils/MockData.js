@@ -37,53 +37,6 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
-      case API.BP_industry:
-        if (params.page === 1) {
-          mockData = {
-            'code': 200,
-            'msg': 'OK',
-            'result': [
-              {
-                'id': 1,
-                'display_name': 'TMT'
-              },
-              {
-                'id': 2,
-                'display_name': '其他'
-              },
-              {
-                'id': 3,
-                'display_name': 'TMT'
-              }
-            ],
-            'info': {
-              'pagination': {
-                'count': 3,
-                'num_pages': 1,
-                'per_page': 50
-              }
-            }
-          }
-        } else {
-          mockData = {
-            'code': 200,
-            'msg': 'OK',
-            'result': [
-              {
-                'id': 4,
-                'display_name': 'TMTFFF'
-              }
-            ],
-            'info': {
-              'pagination': {
-                'count': 4,
-                'num_pages': 2,
-                'per_page': 50
-              }
-            }
-          }
-        }
-        break
       case API.BP_round:
         mockData = {
           'code': 200,
@@ -240,6 +193,146 @@ const MockData = function (url, params, isShowLoading) {
           'msg': 'OK'
         }
         break
+      case API.BP_Industry_query:
+        if (params.page === 1) {
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [
+              {
+                'id': 2,
+                'display_name': 'TMT'
+              },
+              {
+                'id': 3,
+                'display_name': '其他'
+              },
+              {
+                'id': 1,
+                'display_name': '钢铁'
+              }
+            ],
+            'info': {
+              'pagination': {
+                'count': 3,
+                'num_pages': 1,
+                'per_page': 50
+              }
+            }
+          }
+        }
+        break
+      case API.BP_Industry_add:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': '阶段1'
+          },
+          'info': null
+        }
+        break
+      case API.BP_Industry_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.BP_Industry_update(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': '阶段2'
+          },
+          'info': null
+        }
+        break
+      case API.BP_Industry_detail(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': 'Pre-A'
+          },
+          'info': null
+        }
+        break
+      case API.BP_Round_query:
+        if (params.page === 1) {
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [
+              {
+                'id': 2,
+                'display_name': 'A'
+              },
+              {
+                'id': 1,
+                'display_name': 'Pre-A'
+              },
+              {
+                'id': 3,
+                'display_name': 'Pre-IPO'
+              }
+            ],
+            'info': {
+              'pagination': {
+                'count': 3,
+                'num_pages': 1,
+                'per_page': 50
+              }
+            }
+          }
+        }
+        break
+      case API.BP_Round_add:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': '行业1'
+          },
+          'info': null
+        }
+        break
+      case API.BP_Round_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.BP_Round_update(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': '行业2'
+          },
+          'info': null
+        }
+        break
+      case API.BP_Round_detail(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_name': '行业1'
+          },
+          'info': null
+        }
+        break
       case API.Investor_query:
         mockData = {
           'code': 200,
@@ -309,9 +402,9 @@ const MockData = function (url, params, isShowLoading) {
               'id': 1,
               'points': 0,
               'view_count': 0,
-              'ol_source_outline': 'http://localhost:8000/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
-              'ol_title': '在线学习资料ABC',
-              'ol_date': '2019-01-08T17:00:16+0800'
+              'outline_file': 'http://localhost:8000/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
+              'material_title': '在线学习哈哈哈',
+              'update_time': '2019-01-08T17:00:16+0800'
             }
           ],
           'info': {
@@ -321,6 +414,44 @@ const MockData = function (url, params, isShowLoading) {
               'per_page': 50
             }
           }
+        }
+        break
+      case API.Learning_add:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 2,
+            'points': 1,
+            'view_count': 0,
+            'outline_file': 'http://localhost:8000/media/public/online_learning/outline/20190108204146_537888c67f.jpg',
+            'material_title': 'ttt',
+            'update_time': '2019-01-08T20:41:46+0800'
+          },
+          'info': null
+        }
+        break
+      case API.Learning_update:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'points': 0,
+            'view_count': 0,
+            'outline_file': 'http://localhost:8000/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
+            'material_title': 'tt',
+            'update_time': '2019-01-08T17:00:16+0800'
+          },
+          'info': null
+        }
+        break
+      case API.Learning_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
         }
         break
       default:

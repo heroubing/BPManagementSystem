@@ -1,6 +1,6 @@
 <template>
   <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
-    <el-form-item label='行业名称' prop='display_name'>
+    <el-form-item label='投资阶段名称' prop='display_name'>
       <el-input v-model='ruleForm.display_name'/>
     </el-form-item>
     <el-form-item>
@@ -22,7 +22,7 @@ export default {
       default: function () {
         return {
           id: '',
-          display_name: '' // 行业名称
+          display_name: '' // 投资阶段名称
         }
       }
     }
@@ -32,11 +32,11 @@ export default {
       isAdd: this.data.id === '', // 是否为新增
       ruleForm: {
         id: this.data.id,
-        display_name: this.data.display_name // 行业名称
+        display_name: this.data.display_name // 投资阶段名称
       },
       rules: {
         display_name: [
-          {required: true, message: '请输入行业名称', trigger: 'blur'}
+          {required: true, message: '请输入投资阶段名称', trigger: 'blur'}
         ]
       }
     }
@@ -50,7 +50,7 @@ export default {
             display_name: this.ruleForm.display_name
           }
           if (this.isAdd) {
-            Utils.getInfoPost(API.BP_Industry_add, params).then(() => {
+            Utils.getInfoPost(API.BP_Round_add, params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '录入成功'
@@ -58,7 +58,7 @@ export default {
               this.resetForm('ruleForm')
             })
           } else {
-            Utils.getInfoPost(API.BP_Industry_update(this.data.id), params).then(() => {
+            Utils.getInfoPost(API.BP_Round_update(this.data.id), params).then(() => {
               this.$notify.success({
                 title: '成功',
                 message: '保存成功'

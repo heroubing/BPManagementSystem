@@ -6,17 +6,28 @@ const API = {
   BP_query: '/api/bp/',
   BP_delete: '/api/bp/delete/',
   BP_update: (id) => `/api/bp/${id}/update/`,
-  BP_industry: '/api/bp/industry/',
   BP_round: '/api/bp/round/',
   BP_contact: '/api/project_contact/',
   BP_contactCreate: '/api/project_contact/create/',
 
+  BP_Industry_query: '/api/bp/industry/',
+  BP_Industry_add: '/api/bp/industry/create/',
+  BP_Industry_delete: '/api/bp/industry/delete/',
+  BP_Industry_update: (id) => `/api/bp/industry/${id}/update/`,
+  BP_Industry_detail: (id) => `/api/bp/industry/${id}/`,
+
+  BP_Round_query: '/api/bp/round/',
+  BP_Round_add: '/api/bp/round/create/',
+  BP_Round_delete: '/api/bp/round/delete/',
+  BP_Round_update: (id) => `/api/bp/round/${id}/update/`,
+  BP_Round_detail: (id) => `/api/bp/round/${id}/`,
+
   Investor_query: '/api/investor/',
 
   // 在线学习
-  Learning_query: '/api/online_learning/',
-  Learning_add: '/api/online_learning/create/',
-  Learning_update: (id) => `/api/online_learning/${id}/update/`,
-  Learning_delete: '/api/online_learning/delete/'
+  Learning_query: '/api/learning/',
+  Learning_add: '/api/learning/create/',
+  Learning_update: (id) => `/api/learning/${id}/update/`,
+  Learning_delete: '/api/learning/delete/'
 }
 export default API
