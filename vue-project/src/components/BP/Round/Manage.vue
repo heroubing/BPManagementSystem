@@ -2,7 +2,7 @@
   <div class="content">
     <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input v-model='formData.search_key' placeholder="请输入投资阶段ID进行检索"></el-input>
+        <el-input v-model='formData.search_key' placeholder="请输入投资阶段名称进行检索"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='queryList'>搜索</el-button>
@@ -104,26 +104,13 @@ export default {
     },
     // 分页查询
     queryList () {
-      if (this.formData.search_key !== '') {
-        let id = this.formData.search_key
-        Utils.getInfo(API.BP_Round_detail(id), {}).then(({result}) => {
-          if (result && result.id) {
-            this.tableData = [result]
-            this.currentPage = 1
-          } else {
-            this.tableData = []
-            this.currentPage = 1
-          }
-        })
-      } else {
-        let params = {page: this.currentPage}
-        Utils.getInfo(API.BP_Round_query, params).then(({result, info}) => {
-          this.tableData = result
-          this.currentPage = info.pagination.num_pages
-          this.total = info.pagination.count
-          this.pageSize = info.pagination.per_page
-        })
-      }
+      let params = {page: this.currentPage, search_key: this.search_key}
+      Utils.getInfo(API.BP_Round_query, params).then(({result, info}) => {
+        this.tableData = result
+        this.currentPage = info.pagination.num_pages
+        this.total = info.pagination.count
+        this.pageSize = info.pagination.per_page
+      })
     }
   },
   mounted: function () {
