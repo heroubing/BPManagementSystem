@@ -59,7 +59,7 @@ export default {
   },
   data () {
     return {
-      isAdd: this.data.id === '', // 是否为新增
+      isAdd: !this.data.id, // 是否为新增
       ruleForm: {
         points: this.data.points, // int 在线学习视频所需积分
         material_title: this.data.material_title, // str 在线学习标题

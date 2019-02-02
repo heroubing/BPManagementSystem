@@ -35,7 +35,7 @@ export default {
   },
   data () {
     return {
-      isAdd: this.data.user === '', // 是否为新增
+      isAdd: !this.data.user, // 是否为新增
       ruleForm: {
         user: this.data.user, // 用户ID
         organization: this.data.organization, // 所属机构

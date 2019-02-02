@@ -29,7 +29,7 @@ export default {
   },
   data () {
     return {
-      isAdd: this.data.id === '', // 是否为新增
+      isAdd: !this.data.id, // 是否为新增
       ruleForm: {
         id: this.data.id,
         display_name: this.data.display_name // 行业名称
