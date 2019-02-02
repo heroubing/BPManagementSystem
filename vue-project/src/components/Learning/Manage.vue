@@ -93,7 +93,8 @@ export default {
             this.queryList()
           })
         })
-        .catch(_ => {})
+        .catch(_ => {
+        })
     },
     // 编辑
     editRow (row) {
@@ -120,7 +121,7 @@ export default {
     },
     // 分页查询
     queryList () {
-      let params = {page: this.currentPage}
+      let params = {page: this.currentPage, search_key: this.formData.search_key}
       Utils.getInfo(API.Learning_query, params).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages

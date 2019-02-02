@@ -56,6 +56,7 @@ export default {
                 message: '录入成功'
               })
               this.resetForm('ruleForm')
+              this.$emit('saved')
             })
           } else {
             Utils.getInfoPost(API.BP_Round_update(this.data.id), params).then(() => {
