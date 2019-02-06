@@ -104,7 +104,7 @@ export default {
     },
     // 分页查询
     queryList () {
-      let params = {page: this.currentPage, search_key: this.search_key}
+      let params = {page: this.currentPage, search_key: this.formData.search_key}
       Utils.getInfo(API.BP_Industry_query, params).then(({result, info}) => {
         this.tableData = result
         this.currentPage = info.pagination.num_pages

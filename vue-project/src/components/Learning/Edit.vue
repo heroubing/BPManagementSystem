@@ -6,30 +6,32 @@
     <el-form-item label='所需积分' prop='points'>
       <el-input v-model='ruleForm.points'/>
     </el-form-item>
-    <el-form-item prop='outline_file_input'>
-      <el-upload
-        slot='label'
-        class='upload'
-        action=""
-        :on-change='onChangeOutlineFile'
-        :auto-upload='false'
-        :show-file-list='false'>
-        <el-button size='small' type='primary'>点击上传</el-button>
-      </el-upload>
-      <el-input v-model='ruleForm.outline_file_input' readonly/>
-    </el-form-item>
-    <el-form-item prop='video_file_input'>
-      <el-upload
-        slot='label'
-        class='upload'
-        action=""
-        :on-change='onChanGevideoFile'
-        :auto-upload='false'
-        :show-file-list='false'>
-        <el-button size='small' type='primary'>点击上传</el-button>
-      </el-upload>
-      <el-input v-model='ruleForm.video_file_input' readonly/>
-    </el-form-item>
+    <template v-if="isAdd">
+      <el-form-item prop='outline_file_input'>
+        <el-upload
+          slot='label'
+          class='upload'
+          action=""
+          :on-change='onChangeOutlineFile'
+          :auto-upload='false'
+          :show-file-list='false'>
+          <el-button size='small' type='primary'>点击上传简介</el-button>
+        </el-upload>
+        <el-input v-model='ruleForm.outline_file_input' readonly/>
+      </el-form-item>
+      <el-form-item prop='video_file_input'>
+        <el-upload
+          slot='label'
+          class='upload'
+          action=""
+          :on-change='onChanGevideoFile'
+          :auto-upload='false'
+          :show-file-list='false'>
+          <el-button size='small' type='primary'>点击上传视频</el-button>
+        </el-upload>
+        <el-input v-model='ruleForm.video_file_input' readonly/>
+      </el-form-item>
+    </template>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
       <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
@@ -103,11 +105,13 @@ export default {
         if (valid) {
           let params = {
             points: this.ruleForm.points,
-            material_title: this.ruleForm.material_title,
-            outline_file: this.ruleForm.outline_file,
-            video_file: this.ruleForm.video_file
+            material_title: this.ruleForm.material_title
           }
           if (this.isAdd) {
+            params = Object.assign(params, {
+              outline_file: this.ruleForm.outline_file,
+              video_file: this.ruleForm.video_file
+            })
             Utils.getInfoPost(API.Learning_add, params).then(() => {
               this.$notify.success({
                 title: '成功',
