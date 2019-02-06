@@ -1,7 +1,7 @@
 <template>
   <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='100px'>
     <el-form-item label='用户ID' prop='user'>
-      <el-input v-model='ruleForm.user'/>
+      <el-input v-model.number='ruleForm.user'/>
     </el-form-item>
     <el-form-item label='所属机构' prop='organization'>
       <el-input v-model='ruleForm.organization'/>
@@ -34,6 +34,16 @@ export default {
     }
   },
   data () {
+    const checkUser = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('用户ID不能为空'))
+      }
+      if (!Number.isInteger(value)) {
+        callback(new Error('用户ID必须为数字'))
+      } else {
+        callback()
+      }
+    }
     return {
       isAdd: !this.data.user, // 是否为新增
       ruleForm: {
@@ -43,7 +53,7 @@ export default {
       },
       rules: {
         user: [
-          {required: true, message: '请输入用户ID', trigger: 'blur'}
+          {required: true, validator: checkUser, trigger: 'blur'}
         ],
         organization: [
           {required: true, message: '请输入所属机构', trigger: 'blur'}
@@ -57,13 +67,10 @@ export default {
   methods: {
     // 表单提交
     submitForm (formName) {
-      console.log(12)
       this.$refs[formName].validate((valid) => {
-        console.log(1)
         if (valid) {
-          console.log(3)
           let params = {
-            user: parseInt(this.ruleForm.user),
+            user: this.ruleForm.user,
             organization: this.ruleForm.organization,
             contact_info: this.ruleForm.contact_info
           }
@@ -74,6 +81,7 @@ export default {
                 message: '新增联系人成功'
               })
               this.$emit('saved', params)
+              this.$refs[formName].resetFields()
             })
           } else {
           }
