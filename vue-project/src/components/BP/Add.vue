@@ -13,8 +13,8 @@
         :fetch-suggestions="queryContactList"
         placeholder="请输入联系人ID查询"
         @select="handleSelect"
-        :trigger-on-focus="false"
-        :debounce="1000"
+        :trigger-on-focus="true"
+        :debounce="500"
       >
         <template slot-scope="{ item }">
           <div class="name">{{ item.user_id}}-{{ item.user.user_name }}-{{ item.user.phone }}</div>
@@ -147,12 +147,12 @@ export default {
     },
     // 联系人查询
     queryContactList (searchKey, cb) {
-      if (searchKey === '') {
-        return null
-      }
+      // if (searchKey === '') {
+      //   return null
+      // }
       // 清空contact，确保联系人是用户点击选择的
       this.ruleForm.contact = ''
-      let params = {search_key: searchKey}
+      let params = {search_key: searchKey, page: 1}
       Utils.getInfo(API.BP_contact, params, false).then(({result}) => {
         cb(result.map(item => Object.assign({value: item.user.user_name}, item)))
       })
