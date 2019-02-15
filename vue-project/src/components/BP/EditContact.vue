@@ -109,7 +109,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
-            user_value: this.ruleForm.user_value,// 用于回显
+            user_value: this.ruleForm.user_value, // 用于回显
             user: this.ruleForm.user,
             organization: this.ruleForm.organization,
             contact_info: this.ruleForm.contact_info
