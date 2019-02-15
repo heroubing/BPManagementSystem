@@ -2,6 +2,8 @@ const API = {
   SYS_staffLogin: '/api/staff/login/',
   SYS_captcha: '/api/captcha/',
 
+  USER_query: '/api/user/',
+
   BP_add: '/api/bp/create/',
   BP_query: '/api/bp/',
   BP_delete: '/api/bp/delete/',

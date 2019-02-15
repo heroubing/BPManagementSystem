@@ -1,7 +1,19 @@
 <template>
   <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='100px'>
-    <el-form-item label='用户ID' prop='user'>
-      <el-input v-model.number='ruleForm.user'/>
+    <el-form-item label='用户' prop='user_value'>
+      <el-autocomplete
+        popper-class="Add-autocomplete"
+        v-model="ruleForm.user_value"
+        :fetch-suggestions="queryUserList"
+        placeholder="请输入关键字查询"
+        @select="handleSelect"
+        :trigger-on-focus="true"
+        :debounce="500"
+      >
+        <template slot-scope="{ item }">
+          <div class="name">{{ item.id}}-{{ item.user_name }}</div>
+        </template>
+      </el-autocomplete>
     </el-form-item>
     <el-form-item label='所属机构' prop='organization'>
       <el-input v-model='ruleForm.organization'/>
@@ -27,6 +39,7 @@ export default {
       default: function () {
         return {
           user: '', // 用户ID
+          user_value: '', // 用户ID显示信息
           organization: '', // 所属机构
           contact_info: '' // 联系方式
         }
@@ -48,12 +61,17 @@ export default {
       isAdd: !this.data.user, // 是否为新增
       ruleForm: {
         user: this.data.user, // 用户ID
+        user_value: this.data.user_value, // 用户ID显示信息
         organization: this.data.organization, // 所属机构
         contact_info: this.data.contact_info // 联系方式
       },
       rules: {
         user: [
           {required: true, validator: checkUser, trigger: 'blur'}
+        ],
+        user_value: [
+          {required: true, message: '请选择用户', trigger: 'blur'},
+          {validator: this.validatorUser, message: '请通过查询点击选择现有用户'}
         ],
         organization: [
           {required: true, message: '请输入所属机构', trigger: 'blur'}
@@ -65,11 +83,33 @@ export default {
     }
   },
   methods: {
+    // 用户查询
+    queryUserList (searchKey, cb) {
+      // 清空user，确保user是用户点击选择的
+      this.ruleForm.user = ''
+      let params = {search_key: searchKey, page: 1}
+      Utils.getInfo(API.USER_query, params, false).then(({result}) => {
+        cb(result.map(item => Object.assign({value: item.user_name}, item)))
+      })
+    },
+    // 选中联系人 todo
+    handleSelect (item) {
+      this.ruleForm.user = item.id
+    },
+    // 校验用户ID是否为用户选择而非手填
+    validatorUser (rule, value, callback) {
+      if (this.ruleForm.user === '') {
+        callback(new Error())
+      } else {
+        callback()
+      }
+    },
     // 表单提交
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
+            user_value: this.ruleForm.user_value,// 用于回显
             user: this.ruleForm.user,
             organization: this.ruleForm.organization,
             contact_info: this.ruleForm.contact_info
@@ -95,15 +135,16 @@ export default {
 <style scoped>
   .el-form {
     width: 100%;
-    /*max-width: 400px;*/
-    text-align: center;
-    margin-right: 150px;
-    /*padding: 20px;*/
+    text-align: right;
+    margin:0 auto 0 auto;
+    padding-left: 50px;
   }
 
   .el-form-item {
     width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  }
+
+  .el-autocomplete {
+    width: 100%;
   }
 </style>

@@ -18,7 +18,7 @@
       >
         <template slot-scope="{ item }">
           <div class="name">{{ item.user_id}}-{{ item.user.user_name }}-{{ item.user.phone }}</div>
-          <div class="addr">{{ item.organization }} {{ item.user.email }}</div>
+          <div class="addr">{{ item.organization }} {{ item.user.contact_info }}</div>
         </template>
         <el-button slot="append" icon="el-icon-plus" @click="dialogVisible_addContact = true"></el-button>
       </el-autocomplete>
@@ -143,7 +143,7 @@ export default {
     contactSaved (contactData) {
       this.dialogVisible_addContact = false
       this.ruleForm.contact = contactData.user
-      this.ruleForm.contact_value = contactData.user
+      this.ruleForm.contact_value = contactData.user_value
     },
     // 联系人查询
     queryContactList (searchKey, cb) {
@@ -231,7 +231,7 @@ export default {
   .el-form {
     width: 100%;
     max-width: 500px;
-    text-align: start;
+    text-align: left;
     margin-right: 150px;
     padding: 20px;
   }

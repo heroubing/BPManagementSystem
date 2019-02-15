@@ -64,6 +64,116 @@ const MockData = function (url, params, isShowLoading) {
           }
         }
         break
+      case API.USER_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': '3',
+              'user_name': 'user3',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-11-18T10:50:46+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': '',
+              'subscription': [],
+              'investor': null
+            },
+            {
+              'id': '2',
+              'user_name': 'user2',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-11-18T10:50:00+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': '',
+              'subscription': [],
+              'investor': null
+            },
+            {
+              'user_name': 'user1',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-11-18T10:50:00+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': '',
+              'subscription': [],
+              'investor': null
+            },
+            {
+              'id': '1',
+              'user_name': 'sun',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-11-17T22:34:53+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': '',
+              'subscription': [],
+              'investor': {
+                'organization': '',
+                'reg_time': '2018-11-17T22:35:15+0800',
+                'org_email': '',
+                'fav_industries': '',
+                'fav_round': '',
+                'is_reviewed': true,
+                'user_id': 2
+              }
+            },
+            {
+              'id': '4',
+              'user_name': 'DefineFC',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-11-16T21:49:02+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': '',
+              'subscription': [],
+              'investor': {
+                'organization': '',
+                'reg_time': '2018-11-17T12:42:48+0800',
+                'org_email': '',
+                'fav_industries': '',
+                'fav_round': '',
+                'is_reviewed': true,
+                'user_id': 1
+              }
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 5,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
       case API.BP_query:
         mockData = {
           'code': 200,

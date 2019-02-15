@@ -156,29 +156,4 @@ export default {
     margin-bottom: 22px;
     display: inline;
   }
-
-  .el-autocomplete {
-    width: 100%;
-  }
-
-  .my-autocomplete li {
-    line-height: normal;
-    padding: 7px;
-
-  }
-
-  .my-autocomplete .name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .my-autocomplete .addr {
-    font-size: 12px;
-    color: #b4b4b4;
-  }
-
-  .my-autocomplete .highlighted .addr {
-    color: #ddd;
-  }
-
 </style>
