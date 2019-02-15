@@ -92,7 +92,7 @@ export default {
         cb(result.map(item => Object.assign({value: item.user_name}, item)))
       })
     },
-    // 选中联系人 todo
+    // 选中联系人
     handleSelect (item) {
       this.ruleForm.user = item.id
     },
