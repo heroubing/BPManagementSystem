@@ -35,7 +35,13 @@ export default class Utils {
     // 拼写方法
     url += '?' + this.paramsToUrl(params)
     return fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}-${res.statusText}`)
+        } else {
+          return res.json()
+        }
+      })
       .then((json) => {
         console.log('【网络请求出参】', json)
         if (isShowLoading) this.closeLoading()
@@ -58,7 +64,7 @@ export default class Utils {
         if (isShowLoading) this.closeLoading()
         Notification.error({
           title: '错误',
-          message: e.message
+          message: '请求出错，请联系管理员。【错误信息】' + e.message
         })
         // 停止链式传递
         return Promise.stop()
