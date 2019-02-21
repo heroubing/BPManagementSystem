@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;'>
+    <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;' @submit.native.prevent>
       <el-form-item label=''>
         <el-input v-model='formData.search_key' placeholder="请输入投资阶段名称进行检索"></el-input>
       </el-form-item>
