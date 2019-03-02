@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
+  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px' @submit.native.prevent>
     <el-form-item label='投资阶段名称' prop='display_name'>
       <el-input v-model='ruleForm.display_name'/>
     </el-form-item>
