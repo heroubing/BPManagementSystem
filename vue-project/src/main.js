@@ -9,12 +9,6 @@ import router from './router'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-// 阻止promise继续链式下去
-Promise.stop = function () {
-  return new Promise(function () {
-  })
-}
-
 // 全局loading状态
 window.LOADING_STS = false
 

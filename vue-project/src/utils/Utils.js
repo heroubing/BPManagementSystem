@@ -4,6 +4,12 @@
 import {Loading, Notification} from 'element-ui'
 import MockData from './MockData'
 
+// 阻止promise继续链式下去
+Promise.stop = function () {
+  return new Promise(function () {
+  })
+}
+
 export default class Utils {
   // 是否使用模拟数据
   static USE_MOCK = false;
@@ -103,7 +109,13 @@ export default class Utils {
       body: formData,
       credentials: 'include'
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error(`${res.status}-${res.statusText}`)
+        } else {
+          return res.json()
+        }
+      })
       .then((json) => {
         console.log('【网络请求出参】', json)
         if (isShowLoading) this.closeLoading()
