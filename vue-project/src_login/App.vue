@@ -89,7 +89,9 @@ export default {
         switch (json.code) {
           case 200:
             // 登录成功
-            window.location.href = `${window.location.origin}/staff_admin_0/`
+            setTimeout(() => {
+              window.location.href = `${window.location.origin}/staff_admin_0/`
+            }, 200)
             break
           case 1001:
             errMessage = '验证码错误，请重试'
