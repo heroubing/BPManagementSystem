@@ -49,10 +49,10 @@
         :on-change='onChange'
         :auto-upload='false'
         :show-file-list='false'>
-        <el-button size='small' type='primary'>点击上传</el-button>
+        <el-button size='small' type='primary'>上传附件</el-button>
         <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
       </el-upload>
-      <el-input v-model='ruleForm.bp_file_input' readonly/>
+      <el-input v-model='ruleForm.bp_file_input' readonly placeholder='请上传pdf文件'/>
     </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
