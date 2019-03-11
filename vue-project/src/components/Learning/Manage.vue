@@ -85,7 +85,7 @@ export default {
       this.$confirm(`确认删除"${row.material_title}"吗？`)
         .then(_ => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.BP_delete, params).then(() => {
+          Utils.getInfoPost(API.Learning_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '删除成功'
