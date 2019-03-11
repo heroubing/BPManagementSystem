@@ -40,7 +40,9 @@ export default class Utils {
     }
     // 拼写方法
     url += '?' + this.paramsToUrl(params)
-    return fetch(url)
+    return fetch(url, {
+      credentials: 'include'
+    })
       .then((res) => {
         if (res.status !== 200) {
           throw new Error(`${res.status}-${res.statusText}`)
@@ -102,7 +104,7 @@ export default class Utils {
     }
     let formData = new FormData()
     for (let key in params) {
-      formData.append(key, params[key])
+      formData.append(key, this.isNotNull(params[key]) ? params[key] : '')
     }
     return fetch(url, {
       method: 'POST',
@@ -154,7 +156,7 @@ export default class Utils {
     try {
       let paramsArr = []
       for (let key in params) {
-        paramsArr.push(key + '=' + params[key])
+        paramsArr.push(key + '=' + this.isNotNull(params[key]) ? params[key] : '')
       }
       return paramsArr.join('&')
     } catch (e) {
@@ -199,5 +201,18 @@ export default class Utils {
   static closeLoading () {
     this.loading.close()
     window.TOAST_STS = false
+  }
+
+  /**
+   * 判断是否不为[空字符串/null/undefined]
+   * @param value
+   * @returns {boolean}
+   */
+  static isNotNull (value) {
+    // number类型且为0时为真
+    if (typeof value === 'number' && value === 0) {
+      return true
+    }
+    return !!value
   }
 }
