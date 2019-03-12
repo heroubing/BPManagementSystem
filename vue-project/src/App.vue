@@ -88,11 +88,13 @@ export default {
        * 退出
        */
     handleLogout () {
-      // TODO
+      // TODO 是否需要走网络请求删除session
       this.$confirm('确认退出当前账号？')
         .then(_ => {
           console.log('退出')
-          document.location.href = '/'
+          // 清空cookie
+          document.cookie = ''
+          document.location.href = '/staff_admin_0/login/'
         })
         .catch(_ => {
         })
