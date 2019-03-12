@@ -10,14 +10,12 @@
         <el-input
           class='input'
           placeholder='账号'
-          size='small'
           v-model='name'>
           <img slot='prefix' src='./assets/user.svg' alt='用户名' class='input-icon'>
         </el-input>
         <el-input
           class='input'
           placeholder='密码'
-          size='small'
           v-model='password'
           maxlength='30'
           type='password'>
@@ -26,7 +24,6 @@
         <div class='verDiv'>
           <el-input
             class='input'
-            size='small'
             v-model='captcha'
             v-on:keyup.enter.native='login'
             v-bind:maxlength='4'>
@@ -36,7 +33,7 @@
         <div style='width: 100%;height: 20px;'>
           <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
         </div>
-        <el-button size='small' type='primary' class='loginButton' v-bind:loading='loading' v-on:click='login'>登 录
+        <el-button type='primary' class='loginButton' v-bind:loading='loading' v-on:click='login'>登 录
         </el-button>
       </div>
     </div>
@@ -193,13 +190,15 @@ export default {
     position: absolute;
     right: 10%;
     top: 18%;
-    width: 220px;
-    height: 200px;
+    min-width: 280px;
+    min-height: 240px;
+    width: 20vw;
+    height: 30vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    padding: 30px 30px;
+    padding: 5vh 30px;
   }
 
   .input {
@@ -231,8 +230,8 @@ export default {
   }
 
   .verImg {
-    width: 60px;
-    height: 30px;
+    width: 80px;
+    height: 40px;
     border: 1px solid #dcdfe6;
     margin-left: 5px;
     margin-top: 10px;
