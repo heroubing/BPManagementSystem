@@ -59,8 +59,8 @@ export default {
       console.log(row)
       this.$confirm(`确认审核通过"${row.user.user_name}"吗？`)
         .then(_ => {
-          let params = {id: row.id}
-          Utils.getInfoPost(API.BP_delete, params).then(() => {
+          let params = {id: row.id, result: true}
+          Utils.getInfoPost(API.Investor_review(row.id), params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '审核通过'

@@ -25,6 +25,7 @@ const API = {
   BP_Round_detail: (id) => `/api/bp/round/${id}/`,
 
   Investor_query: '/api/investor/',
+  Investor_review: (id) => `/api/investor/${id}/review/`,
 
   // 在线学习
   Learning_query: '/api/learning/',
