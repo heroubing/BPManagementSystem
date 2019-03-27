@@ -182,26 +182,28 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': 2,
               'project_name': '测试2',
-              'brief': '',
+              'brief': 'brief',
               'upload_time': '2018-10-06T19:47:53+0800',
               'update_time': '2018-10-06T19:47:53+0800',
               'industries': '1,4',
               'round_id': 1,
               'round': 'pre-A',
               'points': 10,
+              'contact_points': 20,
               'permission': false,
               'permission_contact': false
             },
             {
               'id': 1,
               'project_name': '测试',
-              'brief': '',
+              'brief': 'brief',
               'upload_time': '2018-10-06T19:47:53+0800',
               'update_time': '2018-10-06T19:47:53+0800',
               'industries': '9',
-              'round_id': 1,
+              'round_id': 3,
               'round': 'pre-A',
               'points': 10,
+              'contact_points': 20,
               'permission': false,
               'permission_contact': false
             }
@@ -303,6 +305,33 @@ const MockData = function (url, params, isShowLoading) {
           'msg': 'OK'
         }
         break
+      case API.BP_projectContactDetailApiView(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'organization': 'b',
+            'contact_info': '',
+            'user_id': 1,
+            'reg_time': '2018-11-16T21:57:05+0800',
+            'is_reviewed': true,
+            'user': {
+              'user_name': 'staff10',
+              'email': null,
+              'phone': null,
+              'sex': '',
+              'reg_time': '2018-06-27T00:12:00+0800',
+              'homepage': '',
+              'qq': '',
+              'points': 100,
+              'user_avatar': '',
+              'birthday': null,
+              'address': ''
+            }
+          },
+          'info': null
+        }
+        break
       case API.BP_Industry_query:
         if (params.page === 1) {
           mockData = {
@@ -310,15 +339,15 @@ const MockData = function (url, params, isShowLoading) {
             'msg': 'OK',
             'result': [
               {
-                'id': 2,
+                'id': 1,
                 'display_name': 'TMT'
               },
               {
-                'id': 3,
+                'id': 4,
                 'display_name': '其他'
               },
               {
-                'id': 1,
+                'id': 9,
                 'display_name': '钢铁'
               }
             ],

@@ -41,18 +41,19 @@
         <el-radio v-for="item in roundList" :key="item.id" :label="item.id">{{item.display_name}}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item prop='bp_file_input'>
-      <el-upload
-        slot='label'
-        class='upload'
-        action=""
-        :on-change='onChange'
-        :auto-upload='false'
-        :show-file-list='false'>
-        <el-button size='small' type='primary'>上传附件</el-button>
-        <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
-      </el-upload>
-      <el-input v-model='ruleForm.bp_file_input' readonly placeholder='请上传pdf文件'/>
+    <el-form-item prop='bp_file_input' label="BP文件">
+      <el-input v-model='ruleForm.bp_file_input' readonly placeholder='请上传pdf文件'>
+        <el-button v-if="!isAdd && !ruleForm.bp_file" slot="prepend" icon="el-icon-download" @click="downloadFile"/>
+        <el-upload
+          slot="append"
+          action=""
+          :on-change='onChange'
+          :auto-upload='false'
+          :show-file-list='false'>
+          <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
+          <el-button slot="trigger" size='small' type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
+        </el-upload>
+      </el-input>
     </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
@@ -80,12 +81,10 @@ export default {
           id: '',
           project_name: '', // 项目名称
           brief: '', // 项目简介
-          contact: '', // 联系人ID
           points: '500', // 阅读商业计划书积分，默认500
           contact_points: '500', // 阅读联系信息积分，默认500
           industries: [], // 行业，逗号分隔，每一个元素是一个行业ID
-          round_id: '', // 投资阶段ID
-          bp_file_input: '' // 文件校验占用
+          round_id: '' // 投资阶段ID
         }
       }
     }
@@ -96,6 +95,7 @@ export default {
       industriesList: [], // 行业列表
       roundList: [], // 投资阶段列表
       isAdd: this.data.id === '', // 是否为新增
+      downloadUrl: API.BP_fileApiView(this.data.id),
       ruleForm: {
         id: this.data.id,
         project_name: this.data.project_name, // 项目名称
@@ -106,7 +106,7 @@ export default {
         contact_points: this.data.contact_points, // 阅读联系信息积分，默认500
         industries: this.data.industries, // 行业，逗号分隔，每一个元素是一个行业ID
         round_id: this.data.round_id, // 投资阶段ID
-        bp_file_input: this.data.bp_file_input, // 文件校验占用
+        bp_file_input: this.data.id === '' ? '' : '已上传BP文件', // 文件校验占用
         bp_file: null // BP文件
       },
       rules: {
@@ -139,6 +139,10 @@ export default {
     }
   },
   methods: {
+    // 附件下载
+    downloadFile () {
+      window.open(window.location.origin + API.BP_fileApiView(this.data.id))
+    },
     // 新增联系人回传
     contactSaved (contactData) {
       this.dialogVisible_addContact = false
@@ -223,6 +227,15 @@ export default {
     Utils.getAllPageList(API.BP_round, [], 1).then((result) => {
       this.roundList = result
     })
+    if (!this.isAdd) {
+      // 非新增时查询联系人信息并回显
+      Utils.getInfo(API.BP_projectContactDetailApiView(this.data.id)).then(({result}) => {
+        this.ruleForm.contact = result.user_id
+        this.ruleForm.contact_value = result.user.user_name
+        // 校验输入信息
+        this.$refs.ruleForm.validate().then((isPass, unPassData) => console.log(isPass, unPassData))
+      })
+    }
   }
 }
 </script>
@@ -234,13 +247,6 @@ export default {
     text-align: left;
     margin-right: 150px;
     padding: 20px;
-  }
-
-  .upload {
-    text-align: end;
-    width: 100%;
-    margin-bottom: 22px;
-    display: inline;
   }
 
   .el-autocomplete {

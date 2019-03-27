@@ -22,7 +22,8 @@
       <el-table-column prop='points' label='阅读积分' width='100px'></el-table-column>
       <el-table-column label='操作' width='180px'>
         <template slot-scope='scope'>
-          <!--<el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>-->
+          <el-button @click.native.prevent='downloadFile(scope.row)' type='text' size='small'>下载文件</el-button>
+          <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
           <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
         </template>
       </el-table-column>
@@ -67,6 +68,11 @@ export default {
     }
   },
   methods: {
+    // 下载商业计划书文件
+    downloadFile (row) {
+      let url = API.BP_fileApiView(row.id)
+      window.open(window.location.origin + url)
+    },
     // 删除
     deleteRow (row) {
       console.log(row)
@@ -81,19 +87,23 @@ export default {
             this.queryList()
           })
         })
-        .catch(_ => {})
+        .catch(_ => {
+        })
     },
     // 编辑
     editRow (row) {
-      row.industries = row.industries.split(',').map((item) => parseInt(item))
-      console.log(row)
-      this.dialogData = row
-      this.dialogTitle = `编辑-${row.project_name}`
+      let tempRow = JSON.parse(JSON.stringify(row))
+      tempRow.industries = tempRow.industries.split(',').map((item) => parseInt(item))
+      console.log(tempRow)
+      this.dialogData = tempRow
+      this.dialogTitle = `编辑-${tempRow.project_name}`
       this.dialogVisible_edit = true
     },
     // 编辑成功回调
     editSaved () {
-      console.log('编辑成功')
+      // 关闭弹框
+      this.dialogVisible_edit = false
+      // 重新查询列表
       this.queryList()
     },
     // 修改每页显示数量

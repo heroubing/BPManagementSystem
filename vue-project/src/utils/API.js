@@ -9,8 +9,11 @@ const API = {
   BP_delete: '/api/bp/delete/',
   BP_update: (id) => `/api/bp/${id}/update/`,
   BP_round: '/api/bp/round/',
+  BP_fileApiView: (id) => `/api/bp/${id}/`,
+
   BP_contact: '/api/project_contact/',
   BP_contactCreate: '/api/project_contact/create/',
+  BP_projectContactDetailApiView: (id) => `/api/project_contact/${id}/`, // 通过id获取项目联系人
 
   BP_Industry_query: '/api/bp/industry/',
   BP_Industry_add: '/api/bp/industry/create/',
