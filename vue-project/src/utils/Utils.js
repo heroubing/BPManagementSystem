@@ -156,7 +156,8 @@ export default class Utils {
     try {
       let paramsArr = []
       for (let key in params) {
-        paramsArr.push(key + '=' + this.isNotNull(params[key]) ? params[key] : '')
+        let param = key + '=' + (this.isNotNull(params[key]) ? params[key] : '')
+        paramsArr.push(param)
       }
       return paramsArr.join('&')
     } catch (e) {
