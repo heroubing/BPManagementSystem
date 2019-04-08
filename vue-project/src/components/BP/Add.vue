@@ -195,6 +195,7 @@ export default {
               this.resetForm('ruleForm')
             })
           } else {
+            if (!params.bp_file) delete params.bp_file
             Utils.getInfoPost(API.BP_update(this.data.id), params).then(() => {
               this.$notify.success({
                 title: '成功',
