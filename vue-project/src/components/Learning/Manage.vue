@@ -18,17 +18,17 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop='update_time' label='上传时间' width='180px' :formatter='formatterUploadTime'
+      <el-table-column prop='update_time' label='上传时间' :formatter='formatterUploadTime'
                        show-overflow-tooltip></el-table-column>
-      <el-table-column prop='points' label='所需积分' width='100px'></el-table-column>
-      <el-table-column prop='view_count' label='浏览数' width='80px'></el-table-column>
-      <el-table-column label='是否有读取权限' width='150px'>
+      <el-table-column prop='points' label='所需积分'></el-table-column>
+      <el-table-column prop='view_count' label='浏览数'></el-table-column>
+      <el-table-column label='是否有读取权限'>
         <template slot-scope='scope'>
           <div>{{scope.row.permission?'是':'否'}}</div>
         </template>
       </el-table-column>
 
-      <el-table-column label='操作' width='180px'>
+      <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
           <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
@@ -147,6 +147,8 @@ export default {
 <style scoped>
   .content {
     padding: 20px;
+    width: 90%;
+    max-width: 1400px;
   }
 
   .select {

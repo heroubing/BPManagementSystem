@@ -15,12 +15,13 @@
       </el-form-item>
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
-      <el-table-column prop='id' label='BPID' width='100px'></el-table-column>
-      <el-table-column prop='project_name' label='项目名称' width='210px'></el-table-column>
-      <el-table-column prop='upload_time' label='上传时间' width='180px' :formatter="formatterUploadTime"
+      <el-table-column prop='id' label='BPID'></el-table-column>
+      <el-table-column prop='project_name' label='项目名称'></el-table-column>
+      <el-table-column prop='upload_time' label='上传时间' :formatter="formatterUploadTime"
                        show-overflow-tooltip></el-table-column>
-      <el-table-column prop='points' label='阅读积分' width='100px'></el-table-column>
-      <el-table-column label='操作' width='180px'>
+      <el-table-column prop='points' label='阅读商业计划书积分'></el-table-column>
+      <el-table-column prop='contact_points' label='获取联系信息积分'></el-table-column>
+      <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='downloadFile(scope.row)' type='text' size='small'>下载文件</el-button>
           <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
@@ -142,6 +143,8 @@ export default {
 <style scoped>
   .content {
     padding: 20px;
+    width: 90%;
+    max-width: 1400px;
   }
 
   .select {

@@ -10,9 +10,9 @@
       </el-form-item>
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
-      <el-table-column prop='id' label='行业ID' width='100px'></el-table-column>
-      <el-table-column prop='display_name' label='行业名称' width='210px'></el-table-column>
-      <el-table-column label='操作' width='180px'>
+      <el-table-column prop='id' label='行业ID'></el-table-column>
+      <el-table-column prop='display_name' label='行业名称'></el-table-column>
+      <el-table-column label='操作' width='150px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
           <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
@@ -122,6 +122,8 @@ export default {
 <style scoped>
   .content {
     padding: 20px;
+    width: 70%;
+    max-width: 600px;
   }
 
   .select {
