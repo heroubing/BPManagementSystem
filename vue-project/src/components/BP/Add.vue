@@ -230,9 +230,9 @@ export default {
     })
     if (!this.isAdd) {
       // 非新增时查询联系人信息并回显
-      Utils.getInfo(API.BP_projectContactDetailApiView(this.data.id)).then(({result}) => {
-        this.ruleForm.contact = result.user_id
-        this.ruleForm.contact_value = result.user.user_name
+      Utils.getInfo(API.BP_detailApiView(this.data.id)).then(({result}) => {
+        this.ruleForm.contact = result.contact.user_id
+        this.ruleForm.contact_value = result.contact.user.user_name
         // 校验输入信息
         this.$refs.ruleForm.validate().then((isPass, unPassData) => console.log(isPass, unPassData))
       })
