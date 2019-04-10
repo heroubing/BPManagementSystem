@@ -182,30 +182,34 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': 2,
               'project_name': '测试2',
-              'brief': 'brief',
+              'brief': '',
               'upload_time': '2018-10-06T19:47:53+0800',
               'update_time': '2018-10-06T19:47:53+0800',
               'industries': '1,4',
               'round_id': 1,
               'round': 'pre-A',
+              'bp_file': 'https://www.investdata.com.cn/api/bp/2/file/',
               'points': 10,
-              'contact_points': 20,
               'permission': false,
-              'permission_contact': false
+              'permission_contact': false,
+              'contact_points': 2,
+              'view_count': 9
             },
             {
               'id': 1,
               'project_name': '测试',
-              'brief': 'brief',
+              'brief': '',
               'upload_time': '2018-10-06T19:47:53+0800',
               'update_time': '2018-10-06T19:47:53+0800',
               'industries': '9',
-              'round_id': 3,
+              'round_id': 1,
               'round': 'pre-A',
+              'bp_file': 'https://www.investdata.com.cn/api/bp/1/file/',
               'points': 10,
-              'contact_points': 20,
               'permission': false,
-              'permission_contact': false
+              'permission_contact': false,
+              'contact_points': 2,
+              'view_count': 9
             }
           ],
           'info': {
@@ -343,11 +347,11 @@ const MockData = function (url, params, isShowLoading) {
                 'display_name': 'TMT'
               },
               {
-                'id': 4,
+                'id': 2,
                 'display_name': '其他'
               },
               {
-                'id': 9,
+                'id': 3,
                 'display_name': '钢铁'
               }
             ],
@@ -481,8 +485,8 @@ const MockData = function (url, params, isShowLoading) {
               'organization': 'Tju',
               'reg_time': '2018-11-21T22:10:14+0800',
               'org_email': 't@j.cn',
-              'fav_industries': '1,2,5,19',
-              'fav_round': '3,5',
+              'fav_industries': '1,2',
+              'fav_round': '1,3',
               'is_reviewed': true,
               'user_id': 2,
               'user': {

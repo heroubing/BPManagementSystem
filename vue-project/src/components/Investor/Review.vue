@@ -10,16 +10,20 @@
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
       <el-table-column prop='user_id' label='用户id' width='100px'></el-table-column>
-      <el-table-column prop='user.user_name' label='用户名称' width='100px'></el-table-column>
-      <el-table-column prop='organization' label='所属机构' width='100px'></el-table-column>
-      <!--<el-table-column prop='org_email' label='机构邮箱' width='100px'></el-table-column>-->
-      <el-table-column prop='fav_round' label='偏好阶段' width='100px'></el-table-column>
-      <el-table-column prop='fav_industries' label='偏好行业' width='100px'></el-table-column>
-      <el-table-column prop='reg_time' label='注册时间' width='180px' :formatter="formatterRegTime"></el-table-column>
+      <el-table-column prop='user.user_name' label='用户名称'></el-table-column>
+      <el-table-column prop='organization' label='所属机构'></el-table-column>
+      <el-table-column prop='org_email' label='机构邮箱'></el-table-column>
+      <el-table-column prop='fav_round' :formatter="formatterRound" label='偏好阶段'></el-table-column>
+      <el-table-column prop='fav_industries' :formatter="formatterIndustries" label='偏好行业'></el-table-column>
+      <el-table-column prop='reg_time' label='注册时间' show-overflow-tooltip
+                       :formatter="formatterRegTime"></el-table-column>
       <el-table-column prop='is_reviewed' label='审核状态' width='100px' :formatter="formatterIsReview"></el-table-column>
-      <el-table-column label='操作' width='180px'>
+      <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
-          <el-button v-if="!scope.row.is_reviewed" @click.native.prevent='review(scope.row)' type='text' size='small'>审核</el-button>
+          <el-button @click.native.prevent='info(scope.row)' type='text' size='small'>查看名片</el-button>
+          <el-button v-if="!scope.row.is_reviewed" @click.native.prevent='review(scope.row)' type='text' size='small'>
+            审核
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,13 +54,18 @@ export default {
       tableData: [],
       currentPage: 1,
       total: 0,
-      pageSize: 50
+      pageSize: 50,
+      industriesList: [],
+      roundList: []
     }
   },
   methods: {
+    info (row) {
+      let url = API.Investor_businessCard(row.user_id)
+      window.open(window.location.origin + url)
+    },
     // 删除
     review (row) {
-      console.log(row)
       this.$confirm(`确认审核通过"${row.user.user_name}"吗？`)
         .then(_ => {
           let params = {id: row.user_id, result: true}
@@ -103,10 +112,34 @@ export default {
     // 时间截取
     formatterIsReview (row, column) {
       return row.is_reviewed ? '已审核' : '未审核'
+    },
+    formatterRound (row, column) {
+      let roundObjList = this.roundList
+      let roundList = row.fav_round ? row.fav_round.split(',') : []
+      roundList = roundList.map(round => {
+        let returnItem = roundObjList.find(item => item.id === Number(round))
+        return returnItem.display_name
+      })
+      return roundList.join(',')
+    },
+    formatterIndustries (row, column) {
+      let industriesObjList = this.industriesList
+      let industriesList = row.fav_industries ? row.fav_industries.split(',') : []
+      industriesList = industriesList.map(industry => {
+        let returnItem = industriesObjList.find(item => item.id === Number(industry))
+        return returnItem.display_name
+      })
+      return industriesList.join(',')
     }
   },
   mounted: function () {
-    this.queryList()
+    // 获取行业列表/投资阶段列表
+    Promise.all([Utils.getAllPageList(API.BP_Industry_query, [], 1), Utils.getAllPageList(API.BP_round, [], 1)]).then((resultList) => {
+      console.log(resultList)
+      this.industriesList = resultList[0]
+      this.roundList = resultList[1]
+      this.queryList()
+    })
   }
 }
 </script>
@@ -114,6 +147,8 @@ export default {
 <style scoped>
   .content {
     padding: 20px;
+    width: 90%;
+    max-width: 1400px;
   }
 
   .el-pagination {

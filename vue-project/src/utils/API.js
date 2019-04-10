@@ -30,6 +30,7 @@ const API = {
 
   Investor_query: '/api/investor/',
   Investor_review: (id) => `/api/investor/${id}/review/`,
+  Investor_businessCard: (id) => `/api/investor/${id}/business_card/`,
 
   // 在线学习
   Learning_query: '/api/learning/',
