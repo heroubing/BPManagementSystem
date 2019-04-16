@@ -154,6 +154,7 @@ export default {
     display: flex;
     justify-content: center;
     padding: 0;
+    height: calc(100vh - 60px);
   }
 
   .icon {
