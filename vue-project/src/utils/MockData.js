@@ -545,8 +545,9 @@ const MockData = function (url, params, isShowLoading) {
               'id': 1,
               'points': 0,
               'view_count': 0,
-              'outline_file': 'http://localhost:8000/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
-              'material_title': '在线学习哈哈哈',
+              'outline_file': 'https://www.investdata.com.cn/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
+              'video_file': 'https://www.investdata.com.cn/api/learning/1/video/',
+              'material_title': '在线学习test',
               'update_time': '2019-01-08T17:00:16+0800'
             }
           ],
@@ -574,7 +575,7 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
-      case API.Learning_update:
+      case API.Learning_update(1):
         mockData = {
           'code': 200,
           'msg': 'OK',

@@ -6,32 +6,43 @@
     <el-form-item label='所需积分' prop='points'>
       <el-input v-model='ruleForm.points'/>
     </el-form-item>
-    <template v-if="isAdd">
-      <el-form-item prop='outline_file_input'>
+
+    <el-form-item prop='outline_file_input' label="简介文件">
+      <el-input v-model='ruleForm.outline_file_input' readonly placeholder='请上传简介文件'>
+        <el-button
+          v-if="!isAdd && !ruleForm.outline_file && ruleForm.outline_file_input"
+          slot="prepend"
+          icon="el-icon-download"
+          @click="downloadFile(data.outline_file)"
+        />
         <el-upload
-          slot='label'
-          class='upload'
+          slot="append"
           action=""
           :on-change='onChangeOutlineFile'
           :auto-upload='false'
           :show-file-list='false'>
-          <el-button size='small' type='primary'>点击上传简介</el-button>
+          <el-button slot="trigger" size='small' type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
         </el-upload>
-        <el-input v-model='ruleForm.outline_file_input' readonly/>
-      </el-form-item>
-      <el-form-item prop='video_file_input'>
+      </el-input>
+    </el-form-item>
+    <el-form-item prop='video_file_input' label="视频文件">
+      <el-input v-model='ruleForm.video_file_input' readonly placeholder='请上传视频文件'>
+        <el-button
+          v-if="!isAdd && !ruleForm.video_file && ruleForm.video_file_input"
+          slot="prepend"
+          icon="el-icon-download"
+          @click="downloadFile(data.video_file)"
+        />
         <el-upload
-          slot='label'
-          class='upload'
+          slot="append"
           action=""
-          :on-change='onChanGevideoFile'
+          :on-change='onChangeVideoFile'
           :auto-upload='false'
           :show-file-list='false'>
-          <el-button size='small' type='primary'>点击上传视频</el-button>
+          <el-button slot="trigger" size='small' type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
         </el-upload>
-        <el-input v-model='ruleForm.video_file_input' readonly/>
-      </el-form-item>
-    </template>
+      </el-input>
+    </el-form-item>
     <el-form-item>
       <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
       <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
@@ -53,8 +64,8 @@ export default {
           id: '', // int 在线学习ID
           points: '', // int 在线学习视频所需积分
           material_title: '', // str 在线学习标题
-          outline_file: null, // file 简介文件
-          video_file: null // file 视频文件
+          outline_file: '', // file 简介文件
+          video_file: '' // file 视频文件
         }
       }
     }
@@ -65,10 +76,10 @@ export default {
       ruleForm: {
         points: this.data.points, // int 在线学习视频所需积分
         material_title: this.data.material_title, // str 在线学习标题
-        outline_file: this.data.outline_file, // file 简介文件
-        video_file: this.data.material_title, // file 视频文件
-        outline_file_input: this.data.outline_file_input, // 文件校验占用
-        video_file_input: this.data.video_file_input // 文件校验占用
+        outline_file: null, // file 简介文件
+        video_file: null, // file 视频文件
+        outline_file_input: this.data.id === '' ? '' : '已上传简介文件', // 文件校验占用
+        video_file_input: this.data.id === '' ? '' : '已上传视频文件'// 文件校验占用
       },
       rules: {
         material_title: [
@@ -87,6 +98,10 @@ export default {
     }
   },
   methods: {
+    // 文件下载
+    downloadFile (url) {
+      window.open(url)
+    },
     // 点击文件列表中已上传的文件时的钩子
     // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
     onChangeOutlineFile (file, fileList) {
@@ -94,7 +109,7 @@ export default {
       this.ruleForm.outline_file_input = file.name
       console.log('onChange', file, fileList)
     },
-    onChanGevideoFile (file, fileList) {
+    onChangeVideoFile (file, fileList) {
       this.ruleForm.video_file = file.raw
       this.ruleForm.video_file_input = file.name
       console.log('onChange', file, fileList)
@@ -121,6 +136,8 @@ export default {
               this.$emit('saved')
             })
           } else {
+            if (this.ruleForm.outline_file) params.outline_file = this.ruleForm.outline_file
+            if (this.ruleForm.video_file) params.video_file = this.ruleForm.video_file
             Utils.getInfoPost(API.Learning_update(this.data.id), params).then(() => {
               this.$notify.success({
                 title: '成功',

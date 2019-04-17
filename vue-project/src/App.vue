@@ -4,7 +4,7 @@
       <el-header>
         <div class='icon'>
           <img src='../src_login/assets/logo.png' class='iconImg'/>
-          <span class='title'>BP后台管理系统</span>
+          <span class='title'>投资数据库管理</span>
         </div>
         <div class='funcDiv'>
           <div class='topButtonDiv'>
