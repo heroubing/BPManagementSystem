@@ -2,7 +2,7 @@
   <div id='app'>
     <div class='header'>
       <img src='./assets/logo.png' class='icon'>
-      BP后台管理系统
+      投资数据库管理
     </div>
     <div class='main'>
       <img src='./assets/bg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class='footer'>
-      COPYRIGHT © 2018 POWERED BY xiaohetongxue.com @xiaohetongxue.cn
+      COPYRIGHT © 2018 POWERED BY 投资数据库
     </div>
   </div>
 </template>

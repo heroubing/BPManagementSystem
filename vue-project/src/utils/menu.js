@@ -8,7 +8,7 @@ const menus = [
     menuUrl: '/home'
   },
   {
-    catalogName: 'BP录入界面',
+    catalogName: '投资数据库管理',
     catalogCode: 'bp',
     children: [
       {

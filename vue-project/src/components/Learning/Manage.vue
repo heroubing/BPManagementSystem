@@ -17,7 +17,7 @@
           <el-button @click.native.prevent='viewFile(scope.row.outline_file)' type='text' size='small'>
             [简介]
           </el-button>
-          <el-button @click.native.prevent='viewFile(scope.row.update_time)' type='text' size='small'>
+          <el-button @click.native.prevent='viewFile(scope.row.video_file)' type='text' size='small'>
             [视频]
           </el-button>
         </template>
