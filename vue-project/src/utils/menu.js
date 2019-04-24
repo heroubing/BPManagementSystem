@@ -8,7 +8,7 @@ const menus = [
     menuUrl: '/home'
   },
   {
-    catalogName: '投资数据库管理',
+    catalogName: '商业计划书管理',
     catalogCode: 'bp',
     children: [
       {

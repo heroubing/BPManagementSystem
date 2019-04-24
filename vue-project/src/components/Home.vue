@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <img src="../../src_login/assets/logo.png" alt="BP管理系统" class="home-icon">
-    <h1>欢迎访问BP管理系统</h1>
+    <h1>欢迎访问投资数据库管理系统</h1>
   </div>
 </template>
 
