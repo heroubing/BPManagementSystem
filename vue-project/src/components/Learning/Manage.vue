@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     add () {
-      this.dialogData = {}
+      this.dialogData = {id: ''}
       this.dialogTitle = '新增在线学习'
       this.dialogVisible_edit = true
     },

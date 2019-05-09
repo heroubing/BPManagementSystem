@@ -88,9 +88,6 @@ export default {
         points: [
           {required: true, message: '请输入所需积分', trigger: 'blur'}
         ],
-        outline_file_input: [
-          {required: true, message: '请上传简介文件', trigger: 'change'}
-        ],
         video_file_input: [
           {required: true, message: '请上传视频文件', trigger: 'change'}
         ]
