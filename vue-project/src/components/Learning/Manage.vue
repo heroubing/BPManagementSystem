@@ -136,6 +136,14 @@ export default {
     },
     // 获取文件
     viewFile (url) {
+      if (!url || url.indexOf('/null') >= 0) {
+        this.$message({
+          showClose: true,
+          message: '您还未上传相关文件',
+          type: 'warning'
+        })
+        return
+      }
       window.open(url)
     }
   },
