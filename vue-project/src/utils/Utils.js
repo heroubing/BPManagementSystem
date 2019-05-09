@@ -12,8 +12,8 @@ Promise.stop = function () {
 
 export default class Utils {
   // 是否使用模拟数据
-  // static USE_MOCK = false;
-  static USE_MOCK = true;
+  static USE_MOCK = false;
+  // static USE_MOCK = true;
   /**
    * get网络请求公共方法
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
