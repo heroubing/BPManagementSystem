@@ -486,8 +486,11 @@ const MockData = function (url, params, isShowLoading) {
               'reg_time': '2018-11-21T22:10:14+0800',
               'org_email': 't@j.cn',
               'fav_industries': '1,2',
-              'fav_round': '1,3',
-              'is_reviewed': true,
+              'fav_round': '3',
+              'business_card': 'https://www.investdata.com.cn/api/investor/2/business_card/',
+              'review_status': 'WAITING',
+              'reviewer_note': '',
+              'review_update_time': null,
               'user_id': 2,
               'user': {
                 'user_name': 'staff10',
@@ -509,7 +512,10 @@ const MockData = function (url, params, isShowLoading) {
               'org_email': '',
               'fav_industries': '',
               'fav_round': '',
-              'is_reviewed': false,
+              'business_card': 'https://www.investdata.com.cn/api/investor/3/business_card/',
+              'review_status': 'PASS',
+              'reviewer_note': '',
+              'review_update_time': '2018-06-29T00:12:00+0800',
               'user_id': 3,
               'user': {
                 'user_name': 'staff11',
@@ -546,7 +552,7 @@ const MockData = function (url, params, isShowLoading) {
               'points': 0,
               'view_count': 0,
               'outline_file': 'https://www.investdata.com.cn/media/public/online_learning/outline/20190108170016_c7714f79a9.jpg',
-              'video_file': 'https://www.investdata.com.cn/api/learning/1/video/',
+              'video_file': 'https://www.investdata.com.cn/api/learning/1/video/null',
               'material_title': '在线学习test',
               'update_time': '2019-01-08T17:00:16+0800'
             }

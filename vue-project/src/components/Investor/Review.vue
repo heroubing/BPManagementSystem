@@ -21,7 +21,8 @@
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='info(scope.row)' type='text' size='small'>查看名片</el-button>
-          <el-button v-if="!scope.row.is_reviewed" @click.native.prevent='review(scope.row)' type='text' size='small'>
+          <el-button v-if="scope.row.review_status === 'WAITING'" @click.native.prevent='openReview(scope.row)'
+                     type='text' size='small'>
             审核
           </el-button>
         </template>
@@ -36,6 +37,29 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+
+    <!--驳回审核填写弹出框-->
+    <el-dialog title="审核" :visible.sync="dialog_rejectReview">
+      <el-form :model="formData_rejectReview" :rules='rules_rejectReview' ref='ruleForm_rejectReview'
+               label-width='100px' style=" text-align: left;">
+        <el-form-item label="审核">
+          <el-radio-group v-model="formData_rejectReview.review_status">
+            <el-radio label="PASS">通过</el-radio>
+            <el-radio label="REJECT">驳回</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="formData_rejectReview.review_status === 'PASS'" label="审核备注" prop="reviewer_note_pass">
+          <el-input v-model="formData_rejectReview.reviewer_note_pass"></el-input>
+        </el-form-item>
+        <el-form-item v-if="formData_rejectReview.review_status === 'REJECT'" label="审核备注" prop="reviewer_note_reject">
+          <el-input v-model="formData_rejectReview.reviewer_note_reject"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialog_rejectReview = false">取 消</el-button>
+        <el-button type="primary" @click="review">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -56,29 +80,69 @@ export default {
       total: 0,
       pageSize: 50,
       industriesList: [],
-      roundList: []
+      roundList: [],
+      currentRow: {}, // 当前选中行
+      dialog_rejectReview: false,
+      formData_rejectReview: {
+        review_status: 'PASS', // 是否通过
+        reviewer_note_pass: '', // 通过备注
+        reviewer_note_reject: '' // 驳回备注
+      },
+      rules_rejectReview: {
+        reviewer_note_reject: [
+          {required: true, message: '请输入驳回原因', trigger: 'blur'}
+        ]
+      }
     }
+  },
+  mounted: function () {
+    // 获取行业列表/投资阶段列表
+    Promise.all([Utils.getAllPageList(API.BP_Industry_query, [], 1), Utils.getAllPageList(API.BP_round, [], 1)]).then((resultList) => {
+      console.log(resultList)
+      this.industriesList = resultList[0]
+      this.roundList = resultList[1]
+      this.queryList()
+    })
   },
   methods: {
     info (row) {
-      let url = API.Investor_businessCard(row.user_id)
-      window.open(window.location.origin + url)
+      let url
+      if (row.business_card) {
+        url = row.business_card
+      } else {
+        url = window.location.origin + API.Investor_businessCard(row.user_id)
+      }
+      window.open(url)
     },
-    // 删除
-    review (row) {
-      this.$confirm(`确认审核通过"${row.user.user_name}"吗？`)
-        .then(_ => {
-          let params = {id: row.user_id, result: true}
+    // 打开审核页面
+    openReview (row) {
+      this.dialog_rejectReview = true
+      this.currentRow = row
+      setTimeout(() => this.$refs.ruleForm_rejectReview.resetFields(), 100)
+    },
+    // 审核
+    review () {
+      this.$refs.ruleForm_rejectReview.validate((valid) => {
+        if (valid) {
+          let {review_status: reviewStatus, reviewer_note_pass: reviewerNotePass, reviewer_note_reject: reviewerNoteReject} = this.formData_rejectReview
+          let params = {
+            id: this.currentRow.user_id,
+            reviewStatus,
+            // eslint-disable-next-line camelcase
+            reviewer_note: reviewStatus === 'PASS' ? reviewerNotePass : reviewerNoteReject
+          }
           Utils.getInfoPost(API.Investor_review(params.id), params).then(() => {
             this.$notify.success({
               title: '成功',
-              message: '审核通过'
+              message: '操作成功'
             })
+            this.$refs.ruleForm_rejectReview.resetFields()
+            this.currentRow = {}
+            this.dialog_rejectReview = false
             this.queryList()
           })
-        })
-        .catch(_ => {
-        })
+        }
+      })
     },
     // 修改每页显示数量
     handleSizeChange (val) {
@@ -111,7 +175,19 @@ export default {
     },
     // 时间截取
     formatterIsReview (row, column) {
-      return row.is_reviewed ? '已审核' : '未审核'
+      // PASS 通过 | REJECT 驳回 | WAITING 等待审核
+      let reviewedName
+      switch (row.review_status) {
+        case 'PASS':
+          reviewedName = '通过'
+          break
+        case 'WAITING':
+          reviewedName = '等待审核'
+          break
+        case 'REJECT':
+          reviewedName = '驳回'
+      }
+      return reviewedName
     },
     formatterRound (row, column) {
       let roundObjList = this.roundList
@@ -131,15 +207,6 @@ export default {
       })
       return industriesList.join(',')
     }
-  },
-  mounted: function () {
-    // 获取行业列表/投资阶段列表
-    Promise.all([Utils.getAllPageList(API.BP_Industry_query, [], 1), Utils.getAllPageList(API.BP_round, [], 1)]).then((resultList) => {
-      console.log(resultList)
-      this.industriesList = resultList[0]
-      this.roundList = resultList[1]
-      this.queryList()
-    })
   }
 }
 </script>
