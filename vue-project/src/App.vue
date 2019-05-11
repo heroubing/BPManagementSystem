@@ -42,6 +42,8 @@
 <script>
 import MenuItem from './components/MenuItem'
 import menus from './utils/menu'
+import API from './utils/API'
+import Utils from './utils/Utils'
 
 export default {
   name: 'App',
@@ -92,9 +94,16 @@ export default {
       this.$confirm('确认退出当前账号？')
         .then(_ => {
           console.log('退出')
-          // 清空cookie
-          document.cookie = ''
-          document.location.href = '/staff_admin_0/login/'
+          Utils.getInfo(API.USER_logout).then(() => {
+            // 清空cookie
+            document.cookie = ''
+            document.location.href = '/staff_admin_0/login/'
+          }).catch((e) => {
+            console.log(e)
+            // 清空cookie
+            document.cookie = ''
+            document.location.href = '/staff_admin_0/login/'
+          })
         })
         .catch(_ => {
         })

@@ -3,10 +3,12 @@ const API = {
   SYS_captcha: '/api/captcha/',
 
   USER_query: '/api/user/',
+  USER_logout: 'api/user/logout/',
 
   BP_add: '/api/bp/create/',
   BP_query: '/api/bp/',
   BP_delete: '/api/bp/delete/',
+
   BP_update: (id) => `/api/bp/${id}/update/`,
   BP_round: '/api/bp/round/',
   BP_fileApiView: (id) => `/api/bp/${id}/`,

@@ -174,6 +174,13 @@ const MockData = function (url, params, isShowLoading) {
           }
         }
         break
+      case API.USER_logout:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': true,
+        }
+        break
       case API.BP_query:
         mockData = {
           'code': 200,
