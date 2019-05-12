@@ -7,7 +7,7 @@
       <el-input v-model='ruleForm.points'/>
     </el-form-item>
 
-    <el-form-item prop='outline_file_input' label="简介文件">
+    <el-form-item prop='outline_file_input' label="简介文件" class="el-form-outline_file">
       <el-input v-model='ruleForm.outline_file_input' readonly placeholder='请上传简介文件'>
         <el-button
           v-if="!isAdd && !ruleForm.outline_file && ruleForm.outline_file_input"
@@ -24,6 +24,7 @@
           <el-button slot="trigger" size='small' type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
         </el-upload>
       </el-input>
+      <el-button v-if="ruleForm.outline_file_input" type="text" style="margin-left: 10px" @click="deleteFile_outline_file">删除</el-button>
     </el-form-item>
     <el-form-item prop='video_file_input' label="视频文件">
       <el-input v-model='ruleForm.video_file_input' readonly placeholder='请上传视频文件'>
@@ -112,6 +113,10 @@ export default {
       this.ruleForm.video_file_input = file.name
       console.log('onChange', file, fileList)
     },
+    deleteFile_outline_file () {
+      this.ruleForm.outline_file = null
+      this.ruleForm.outline_file_input = ''
+    },
     // 表单提交
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -129,6 +134,10 @@ export default {
           if (this.isAdd) {
             url = API.Learning_update(this.data.id)
             message = '保存成功'
+          } else {
+            // 非新增时若用户不更改文件则不进行文件提交
+            if (this.ruleForm.outline_file_input === '已上传简介文件') delete params.outline_file
+            if (this.ruleForm.video_file_input === '已上传视频文件') delete params.video_file
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({title: '成功', message})
@@ -161,5 +170,10 @@ export default {
     width: 100%;
     margin-bottom: 22px;
     display: inline;
+  }
+</style>
+<style>
+  .el-form-outline_file .el-form-item__content{
+    display: flex;
   }
 </style>

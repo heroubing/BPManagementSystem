@@ -22,8 +22,7 @@ export default class Utils {
    * @param dealError     是否需要自动处理错误
    */
   static getInfo (url, params = {}, isShowLoading = true, dealError = true) {
-    console.log('【网络请求接口】', url)
-    console.log('【网络请求入参】', params)
+    console.log('【网络请求接口及入参】', url, params)
     if (isShowLoading && !window.TOAST_STS) {
       window.TOAST_STS = true
       this.loading = Loading.service({
@@ -51,7 +50,7 @@ export default class Utils {
         }
       })
       .then((json) => {
-        console.log('【网络请求出参】', json)
+        console.log('【网络请求接口及出参】', url, json)
         if (isShowLoading) this.closeLoading()
         if (dealError) {
           if (json.code === 200) {
@@ -87,8 +86,7 @@ export default class Utils {
    * @param dealError     是否需要自动处理错误
    */
   static getInfoPost (url, params = {}, isShowLoading = true, dealError = true) {
-    console.log('【网络请求接口】', url)
-    console.log('【网络请求入参】', params)
+    console.log('【网络请求接口及入参】', url, params)
     if (isShowLoading && !window.TOAST_STS) {
       window.TOAST_STS = true
       this.loading = Loading.service({
@@ -119,7 +117,7 @@ export default class Utils {
         }
       })
       .then((json) => {
-        console.log('【网络请求出参】', json)
+        console.log('【网络请求接口及出参】', url, json)
         if (isShowLoading) this.closeLoading()
         if (dealError) {
           if (json.code === 200) {
