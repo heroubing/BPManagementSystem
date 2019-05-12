@@ -118,32 +118,23 @@ export default {
         if (valid) {
           let params = {
             points: this.ruleForm.points,
-            material_title: this.ruleForm.material_title
+            material_title: this.ruleForm.material_title,
+            outline_file: null,
+            video_file: null
           }
+          if (this.ruleForm.outline_file) params.outline_file = this.ruleForm.outline_file
+          if (this.ruleForm.video_file) params.video_file = this.ruleForm.video_file
+          let url = API.Learning_add
+          let message = '录入成功'
           if (this.isAdd) {
-            params = Object.assign(params, {
-              outline_file: this.ruleForm.outline_file,
-              video_file: this.ruleForm.video_file
-            })
-            Utils.getInfoPost(API.Learning_add, params).then(() => {
-              this.$notify.success({
-                title: '成功',
-                message: '录入成功'
-              })
-              this.resetForm('ruleForm')
-              this.$emit('saved')
-            })
-          } else {
-            if (this.ruleForm.outline_file) params.outline_file = this.ruleForm.outline_file
-            if (this.ruleForm.video_file) params.video_file = this.ruleForm.video_file
-            Utils.getInfoPost(API.Learning_update(this.data.id), params).then(() => {
-              this.$notify.success({
-                title: '成功',
-                message: '保存成功'
-              })
-              this.$emit('saved')
-            })
+            url = API.Learning_update(this.data.id)
+            message = '保存成功'
           }
+          Utils.getInfoPost(url, params).then(() => {
+            this.$notify.success({title: '成功', message})
+            this.resetForm('ruleForm')
+            this.$emit('saved')
+          })
         }
       })
     },
