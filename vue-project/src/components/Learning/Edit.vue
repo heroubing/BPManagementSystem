@@ -71,15 +71,16 @@ export default {
     }
   },
   data () {
+    let data = this.data
     return {
-      isAdd: !this.data.id, // 是否为新增
+      isAdd: !data.id, // 是否为新增
       ruleForm: {
-        points: this.data.points, // int 在线学习视频所需积分
-        material_title: this.data.material_title, // str 在线学习标题
+        points: data.points, // int 在线学习视频所需积分
+        material_title: data.material_title, // str 在线学习标题
         outline_file: null, // file 简介文件
         video_file: null, // file 视频文件
-        outline_file_input: this.data.id === '' ? '' : '已上传简介文件', // 文件校验占用
-        video_file_input: this.data.id === '' ? '' : '已上传视频文件'// 文件校验占用
+        outline_file_input: (data.outline_file && data.outline_file.indexOf('/null') < 0) ? '已上传简介文件' : '', // 文件校验占用
+        video_file_input: (data.video_file && data.video_file.indexOf('/null') < 0) ? '已上传视频文件' : ''// 文件校验占用
       },
       rules: {
         material_title: [
