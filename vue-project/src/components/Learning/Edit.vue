@@ -131,10 +131,9 @@ export default {
           if (this.ruleForm.video_file) params.video_file = this.ruleForm.video_file
           let url = API.Learning_add
           let message = '录入成功'
-          if (this.isAdd) {
+          if (!this.isAdd) {
             url = API.Learning_update(this.data.id)
             message = '保存成功'
-          } else {
             // 非新增时若用户不更改文件则不进行文件提交
             if (this.ruleForm.outline_file_input === '已上传简介文件') delete params.outline_file
             if (this.ruleForm.video_file_input === '已上传视频文件') delete params.video_file
