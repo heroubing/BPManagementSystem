@@ -5,15 +5,13 @@ import {Loading, Notification} from 'element-ui'
 import MockData from './MockData'
 
 // 阻止promise继续链式下去
-Promise.stop = function () {
-  return new Promise(function () {
-  })
-}
+Promise.stop = () => new Promise(() => {})
 
 export default class Utils {
   // 是否使用模拟数据
   static USE_MOCK = false;
   // static USE_MOCK = true;
+
   /**
    * get网络请求公共方法
    * @param url           请求接口(controller的actionName+'!'+方法名+'.json'：eg.'mobilemain!getListCacheManager.json')
@@ -55,6 +53,17 @@ export default class Utils {
         if (dealError) {
           if (json.code === 200) {
             return json
+          } else if (json.code === 400) {
+            let {errors} = json.info
+            let message = ''
+            for (let key in errors) {
+              message += `【${key}】`
+              errors[key].forEach((item) => {
+                message += `${item.message}`
+              })
+              message += '\n'
+            }
+            Notification.error({title: '错误', message})
           } else {
             Notification.error({
               title: '错误',
@@ -122,6 +131,17 @@ export default class Utils {
         if (dealError) {
           if (json.code === 200) {
             return json
+          } else if (json.code === 400) {
+            let {errors} = json.info
+            let message = ''
+            for (let key in errors) {
+              message += `【${key}】`
+              errors[key].forEach((item) => {
+                message += `${item.message}`
+              })
+              message += '\n'
+            }
+            Notification.error({title: '错误', message})
           } else {
             Notification.error({
               title: '错误',
