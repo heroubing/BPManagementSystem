@@ -54,21 +54,8 @@ export default class Utils {
           if (json.code === 200) {
             return json
           } else if (json.code === 400) {
-            let {errors} = json.info
-            let message = ''
-            if (errors) {
-              message += `【${json.msg}】\n`
-              for (let key in errors) {
-                message += `【${key}】`
-                errors[key].forEach((item) => {
-                  message += `${item.message}`
-                })
-                message += '\n'
-              }
-            } else {
-              message = json.msg
-            }
-            Notification.error({title: '错误', message})
+            this.deal400Error(json)
+            return Promise.stop()
           } else {
             Notification.error({
               title: '错误',
@@ -137,21 +124,8 @@ export default class Utils {
           if (json.code === 200) {
             return json
           } else if (json.code === 400) {
-            let {errors} = json.info
-            let message = ''
-            if (errors) {
-              message += `【${json.msg}】\n`
-              for (let key in errors) {
-                message += `【${key}】`
-                errors[key].forEach((item) => {
-                  message += `${item.message}`
-                })
-                message += '\n'
-              }
-            } else {
-              message = json.msg
-            }
-            Notification.error({title: '错误', message})
+            this.deal400Error(json)
+            return Promise.stop()
           } else {
             Notification.error({
               title: '错误',
@@ -243,5 +217,28 @@ export default class Utils {
       return true
     }
     return !!value
+  }
+
+  /**
+   * 400类错误处理
+   * @param json
+   */
+  static deal400Error (json) {
+    let {info = {}} = json
+    let {errors} = info
+    let message = ''
+    if (errors) {
+      message += `【${json.msg}】\n`
+      for (let key in errors) {
+        message += `【${key}】`
+        errors[key].forEach((item) => {
+          message += `${item.message}`
+        })
+        message += '\n'
+      }
+    } else {
+      message = json.msg
+    }
+    Notification.error({title: '错误', message})
   }
 }
