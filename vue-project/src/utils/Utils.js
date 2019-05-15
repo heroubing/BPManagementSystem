@@ -55,8 +55,9 @@ export default class Utils {
             return json
           } else if (json.code === 400) {
             let {errors} = json.info
+            let message = ''
             if (errors) {
-              let message = ''
+              message += `【${json.msg}】\n`
               for (let key in errors) {
                 message += `【${key}】`
                 errors[key].forEach((item) => {
@@ -64,8 +65,10 @@ export default class Utils {
                 })
                 message += '\n'
               }
-              Notification.error({title: '错误', message})
+            } else {
+              message = json.msg
             }
+            Notification.error({title: '错误', message})
           } else {
             Notification.error({
               title: '错误',
