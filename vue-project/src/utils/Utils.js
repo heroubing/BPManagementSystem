@@ -4,9 +4,6 @@
 import {Loading, Notification} from 'element-ui'
 import MockData from './MockData'
 
-// 阻止promise继续链式下去
-Promise.stop = () => new Promise(() => {})
-
 export default class Utils {
   // 是否使用模拟数据
   static USE_MOCK = false;
@@ -55,13 +52,13 @@ export default class Utils {
             return json
           } else if (json.code === 400) {
             this.deal400Error(json)
-            return Promise.stop()
+            return Utils.stopPromise()
           } else {
             Notification.error({
               title: '错误',
               message: json.msg
             })
-            return Promise.stop()
+            return Utils.stopPromise()
           }
         } else {
           return json
@@ -75,7 +72,7 @@ export default class Utils {
           message: '请求出错，请联系管理员。【错误信息】' + e.message
         })
         // 停止链式传递
-        return Promise.stop()
+        return Utils.stopPromise()
       })
   }
 
@@ -125,13 +122,13 @@ export default class Utils {
             return json
           } else if (json.code === 400) {
             this.deal400Error(json)
-            return Promise.stop()
+            return Utils.stopPromise()
           } else {
             Notification.error({
               title: '错误',
               message: json.msg
             })
-            return Promise.stop()
+            return Utils.stopPromise()
           }
         } else {
           return json
@@ -145,7 +142,7 @@ export default class Utils {
           message: e.message
         })
         // 停止链式传递
-        return Promise.stop()
+        return Utils.stopPromise()
       })
   }
 
@@ -224,10 +221,10 @@ export default class Utils {
    * @param json
    */
   static deal400Error (json) {
-    let {info = {}} = json
-    let {errors} = info
+    let {info} = json
     let message = ''
-    if (errors) {
+    if (info && info.errors) {
+      let {errors} = info
       message += `【${json.msg}】\n`
       for (let key in errors) {
         message += `【${key}】`
@@ -241,4 +238,10 @@ export default class Utils {
     }
     Notification.error({title: '错误', message})
   }
+
+  /**
+   * 阻止promise继续链式下去
+   */
+
+  static stopPromise () { return new Promise(() => {}) }
 }

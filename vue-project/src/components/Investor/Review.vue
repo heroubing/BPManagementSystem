@@ -127,8 +127,7 @@ export default {
           let {review_status: reviewStatus, reviewer_note_pass: reviewerNotePass, reviewer_note_reject: reviewerNoteReject} = this.formData_rejectReview
           let params = {
             id: this.currentRow.user_id,
-            reviewStatus,
-            // eslint-disable-next-line camelcase
+            review_status: reviewStatus,
             reviewer_note: reviewStatus === 'PASS' ? reviewerNotePass : reviewerNoteReject
           }
           Utils.getInfoPost(API.Investor_review(params.id), params).then(() => {
