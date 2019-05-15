@@ -139,12 +139,17 @@ export default class Utils {
           } else if (json.code === 400) {
             let {errors} = json.info
             let message = ''
-            for (let key in errors) {
-              message += `【${key}】`
-              errors[key].forEach((item) => {
-                message += `${item.message}`
-              })
-              message += '\n'
+            if (errors) {
+              message += `【${json.msg}】\n`
+              for (let key in errors) {
+                message += `【${key}】`
+                errors[key].forEach((item) => {
+                  message += `${item.message}`
+                })
+                message += '\n'
+              }
+            } else {
+              message = json.msg
             }
             Notification.error({title: '错误', message})
           } else {
