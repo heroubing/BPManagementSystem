@@ -95,13 +95,6 @@ export default {
         .then(_ => {
           console.log('退出')
           Utils.getInfo(API.USER_logout).then(() => {
-            // 清空cookie
-            document.cookie = ''
-            document.location.href = '/staff_admin_0/login/'
-          }).catch((e) => {
-            console.log(e)
-            // 清空cookie
-            document.cookie = ''
             document.location.href = '/staff_admin_0/login/'
           })
         })

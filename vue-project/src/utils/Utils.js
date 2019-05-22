@@ -6,8 +6,8 @@ import MockData from './MockData'
 
 export default class Utils {
   // 是否使用模拟数据
-  static USE_MOCK = false;
-  // static USE_MOCK = true;
+  // static USE_MOCK = false;
+  static USE_MOCK = true;
 
   /**
    * get网络请求公共方法
