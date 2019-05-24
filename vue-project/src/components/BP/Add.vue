@@ -225,7 +225,7 @@ export default {
       this.industriesList = result
     })
     // 获取投资阶段列表
-    Utils.getAllPageList(API.BP_round, [], 1).then((result) => {
+    Utils.getAllPageList(API.BP_Round_query, [], 1).then((result) => {
       this.roundList = result
     })
     if (!this.isAdd) {

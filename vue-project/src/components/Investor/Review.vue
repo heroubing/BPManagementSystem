@@ -1,24 +1,25 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;' @submit.native.prevent>
-      <el-form-item label=''>
-        <el-input v-model='formData.search_key' placeholder="请输入投资人信息进行检索"></el-input>
+    <el-form :inline='true' :model='formData' style='margin-top: 20px;' @submit.native.prevent>
+      <el-form-item>
+        <el-input v-model='formData.search_key' placeholder="请输入投资人信息进行检索" style="width: 200px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='queryList'>搜索</el-button>
       </el-form-item>
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
-      <el-table-column prop='user_id' label='用户id' width='100px'></el-table-column>
-      <el-table-column prop='user.user_name' label='用户名称'></el-table-column>
-      <el-table-column prop='organization' label='所属机构'></el-table-column>
+      <el-table-column prop='user_id' label='用户id' width='70px'></el-table-column>
+      <el-table-column prop='user.user_name' label='用户名称' width='120px'></el-table-column>
+      <el-table-column prop='user.phone' label='电话' width='110px'></el-table-column>
       <el-table-column prop='org_email' label='机构邮箱'></el-table-column>
+      <el-table-column prop='organization' label='所属机构'></el-table-column>
       <el-table-column prop='fav_round' :formatter="formatterRound" label='偏好阶段'></el-table-column>
-      <el-table-column prop='fav_industries' :formatter="formatterIndustries" label='偏好行业'></el-table-column>
-      <el-table-column prop='reg_time' label='注册时间' show-overflow-tooltip
+      <el-table-column prop='fav_industries' :formatter="formatterIndustries" label='偏好行业' show-overflow-tooltip></el-table-column>
+      <el-table-column prop='reg_time' label='注册时间'
                        :formatter="formatterRegTime"></el-table-column>
-      <el-table-column prop='is_reviewed' label='审核状态' width='100px' :formatter="formatterIsReview"></el-table-column>
-      <el-table-column label='操作' width='200px'>
+      <el-table-column prop='is_reviewed' label='审核状态' width='80px' :formatter="formatterIsReview"></el-table-column>
+      <el-table-column label='操作' width='100px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='info(scope.row)' type='text' size='small'>查看名片</el-button>
           <el-button v-if="scope.row.review_status === 'WAITING'" @click.native.prevent='openReview(scope.row)'
@@ -97,7 +98,7 @@ export default {
   },
   mounted: function () {
     // 获取行业列表/投资阶段列表
-    Promise.all([Utils.getAllPageList(API.BP_Industry_query, [], 1), Utils.getAllPageList(API.BP_round, [], 1)]).then((resultList) => {
+    Promise.all([Utils.getAllPageList(API.BP_Industry_query, [], 1), Utils.getAllPageList(API.BP_Round_query, [], 1)]).then((resultList) => {
       console.log(resultList)
       this.industriesList = resultList[0]
       this.roundList = resultList[1]
@@ -193,7 +194,7 @@ export default {
       let roundList = row.fav_round ? row.fav_round.split(',') : []
       roundList = roundList.map(round => {
         let returnItem = roundObjList.find(item => item.id === Number(round))
-        return returnItem.display_name
+        return returnItem ? returnItem.display_name : ''
       })
       return roundList.join(',')
     },
@@ -202,7 +203,7 @@ export default {
       let industriesList = row.fav_industries ? row.fav_industries.split(',') : []
       industriesList = industriesList.map(industry => {
         let returnItem = industriesObjList.find(item => item.id === Number(industry))
-        return returnItem.display_name
+        return returnItem ? returnItem.display_name : ''
       })
       return industriesList.join(',')
     }

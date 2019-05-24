@@ -10,7 +10,6 @@ const API = {
   BP_delete: '/api/bp/delete/',
 
   BP_update: (id) => `/api/bp/${id}/update/`,
-  BP_round: '/api/bp/round/',
   BP_fileApiView: (id) => `/api/bp/${id}/`,
   BP_detailApiView: (id) => `/api/bp/${id}/detail/`,
 

@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formData' class='demo-form-inline' style='margin-top: 20px;' @submit.native.prevent>
+    <el-form :inline='true' :model='formData' style='margin-top: 20px;' @submit.native.prevent>
       <el-form-item label=''>
         <el-input v-model='formData.project_name' placeholder="请输入项目名称进行检索"></el-input>
       </el-form-item>
