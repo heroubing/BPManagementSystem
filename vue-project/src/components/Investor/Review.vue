@@ -26,6 +26,10 @@
                      type='text' size='small'>
             审核
           </el-button>
+          <el-button v-if="scope.row.review_status === 'PASS'" @click.native.prevent='openReview(scope.row)'
+                     type='text' size='small'>
+            驳回
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,9 +47,9 @@
     <el-dialog title="审核" :visible.sync="dialog_rejectReview">
       <el-form :model="formData_rejectReview" :rules='rules_rejectReview' ref='ruleForm_rejectReview'
                label-width='100px' style=" text-align: left;">
-        <el-form-item label="审核">
+        <el-form-item label="审核" prop="review_status">
           <el-radio-group v-model="formData_rejectReview.review_status">
-            <el-radio label="PASS">通过</el-radio>
+            <el-radio v-show="currentRow.review_status !== 'PASS'" label="PASS">通过</el-radio>
             <el-radio label="REJECT">驳回</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -85,7 +89,7 @@ export default {
       currentRow: {}, // 当前选中行
       dialog_rejectReview: false,
       formData_rejectReview: {
-        review_status: 'PASS', // 是否通过
+        review_status: 'REJECT', // 是否通过
         reviewer_note_pass: '', // 通过备注
         reviewer_note_reject: '' // 驳回备注
       },
