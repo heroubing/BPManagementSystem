@@ -48,6 +48,11 @@ const menus = [
     menuName: '在线学习',
     menuCode: 'learning_manage',
     menuUrl: '/learning/manage'
+  },
+  {
+    menuName: '广告',
+    menuCode: 'ads_manage',
+    menuUrl: '/ads/manage'
   }
 ]
 export default menus

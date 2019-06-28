@@ -37,6 +37,13 @@ const API = {
   Learning_query: '/api/learning/',
   Learning_add: '/api/learning/create/',
   Learning_update: (id) => `/api/learning/${id}/update/`,
-  Learning_delete: '/api/learning/delete/'
+  Learning_delete: '/api/learning/delete/',
+
+  // 广告
+  ads_query: '/api/ads/',
+  ads_create: '/api/ads/create/',
+  ads_detail: (id) => `/api/ads/${id}/`,
+  ads_update: (id) => `/api/ads/${id}/update/`,
+  ads_delete: (id) => `/api/ads/${id}/delete/`
 }
 export default API

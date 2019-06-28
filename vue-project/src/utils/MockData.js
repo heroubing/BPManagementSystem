@@ -281,7 +281,8 @@ const MockData = function (url, params, isShowLoading) {
               'num_pages': 1,
               'per_page': 50
             }
-          }}
+          }
+        }
         break
       case API.BP_contactCreate:
         mockData = {
@@ -318,7 +319,24 @@ const MockData = function (url, params, isShowLoading) {
         break
       case API.BP_Industry_query:
         if (params.page === 1) {
-          mockData = {'code': 200, 'msg': 'OK', 'result': [{'id': 43, 'display_name': '其他'}, {'id': 42, 'display_name': '医疗健康'}, {'id': 41, 'display_name': '汽车交通'}, {'id': 40, 'display_name': '电子商务'}, {'id': 39, 'display_name': '体育'}, {'id': 38, 'display_name': '物流'}, {'id': 37, 'display_name': '影视'}, {'id': 36, 'display_name': '文化'}, {'id': 35, 'display_name': '地产'}, {'id': 34, 'display_name': '金融'}, {'id': 33, 'display_name': '旅游'}, {'id': 32, 'display_name': '制造业'}, {'id': 31, 'display_name': 'TMT'}, {'id': 30, 'display_name': '农业'}], 'info': {'pagination': {'count': 14, 'num_pages': 1, 'per_page': 50}}}
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [{'id': 43, 'display_name': '其他'}, {'id': 42, 'display_name': '医疗健康'}, {
+              'id': 41,
+              'display_name': '汽车交通'
+            }, {'id': 40, 'display_name': '电子商务'}, {'id': 39, 'display_name': '体育'}, {
+              'id': 38,
+              'display_name': '物流'
+            }, {'id': 37, 'display_name': '影视'}, {'id': 36, 'display_name': '文化'}, {
+              'id': 35,
+              'display_name': '地产'
+            }, {'id': 34, 'display_name': '金融'}, {'id': 33, 'display_name': '旅游'}, {
+              'id': 32,
+              'display_name': '制造业'
+            }, {'id': 31, 'display_name': 'TMT'}, {'id': 30, 'display_name': '农业'}],
+            'info': {'pagination': {'count': 14, 'num_pages': 1, 'per_page': 50}}
+          }
         }
         break
       case API.BP_Industry_add:
@@ -364,7 +382,18 @@ const MockData = function (url, params, isShowLoading) {
         break
       case API.BP_Round_query:
         if (params.page === 1) {
-          mockData = {'code': 200, 'msg': 'OK', 'result': [{'id': 15, 'display_name': 'PRO-IPO'}, {'id': 14, 'display_name': 'E轮'}, {'id': 13, 'display_name': 'D轮'}, {'id': 12, 'display_name': 'C轮'}, {'id': 11, 'display_name': 'B轮'}, {'id': 10, 'display_name': 'A轮'}, {'id': 9, 'display_name': '天使轮'}], 'info': {'pagination': {'count': 7, 'num_pages': 1, 'per_page': 50}}}
+          mockData = {
+            'code': 200,
+            'msg': 'OK',
+            'result': [{'id': 15, 'display_name': 'PRO-IPO'}, {'id': 14, 'display_name': 'E轮'}, {
+              'id': 13,
+              'display_name': 'D轮'
+            }, {'id': 12, 'display_name': 'C轮'}, {'id': 11, 'display_name': 'B轮'}, {
+              'id': 10,
+              'display_name': 'A轮'
+            }, {'id': 9, 'display_name': '天使轮'}],
+            'info': {'pagination': {'count': 7, 'num_pages': 1, 'per_page': 50}}
+          }
         }
         break
       case API.BP_Round_add:
@@ -1047,6 +1076,108 @@ const MockData = function (url, params, isShowLoading) {
         }
         break
       case API.Learning_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.ads_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 1,
+              'display_image': 'http://investdata-public.stor.sinaapp.com/Ads/Pub-Huttopia-2015.jpg',
+              'ad_type': 'vid',
+              'ad_title': 'Pub Huttopia 2015',
+              'ad_link_url': '/API/AdsView/1',
+              'ad_info': null
+            },
+            {
+              'id': 2,
+              'display_image': 'http://investdata-public.stor.sinaapp.com/Ads/ad02.jpg',
+              'ad_type': 'pdf',
+              'ad_title': '易观：中国SaaS客服市场专题研究报告',
+              'ad_link_url': '/Home/Article/19963',
+              'ad_info': null
+            },
+            {
+              'id': 6,
+              'display_image': 'http://investdata-public.stor.sinaapp.com/Ads/ad06.jpg',
+              'ad_type': 'img',
+              'ad_title': '新书推荐：企业上市审核标准实证解析',
+              'ad_link_url': '/API/AdsView/6',
+              'ad_info': null
+            },
+            {
+              'id': 9,
+              'display_image': 'http://investdata-public.stor.sinaapp.com/Ads/ad09.png',
+              'ad_type': 'pdf',
+              'ad_title': '上海国资委交流纪要：上海本地股及2017年上海国改主线深度解析2016',
+              'ad_link_url': '/Home/Article/29234',
+              'ad_info': null
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 4,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
+      case API.ads_detail(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 2,
+            'target': 'android,ios',
+            'show_order': 2,
+            'display_image': 'http://investdata-public.stor.sinaapp.com/Ads/ad02.jpg',
+            'ad_type': 'vid',
+            'ad_title': '易观：中国SaaS客服市场专题研究报告',
+            'ad_link_url': '/Home/Article/19963',
+            'ad_info': '{"Entries":[{"src":"https://test.com/test1.mp4","poster":"https://test.com/test1.jpg"},{"src":"https://test.com/test2.mp4","poster":"https://test.com/test2.jpg"}]}'
+          },
+          'info': null
+        }
+        break
+      case API.ads_create:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'display_image': 'http://127.0.0.1:8000/media/public/advertisement/20190620143940_fc816a2500.png',
+            'resource_url': 'http://127.0.0.1:8000/media/public/advertisement/20190620143940_fc816a2500.png',
+            'ad_type': 'img',
+            'ad_title': 'test',
+            'ad_link_url': ''
+          },
+          'info': null
+        }
+        break
+      case API.ads_update(2):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 10,
+            'display_image': 'http://127.0.0.1:8000/media/public/advertisement/20190620143940_fc816a2500.png',
+            'resource_url': 'http://127.0.0.1:8000/media/public/advertisement/20190620143940_fc816a2500.png',
+            'ad_type': 'img',
+            'ad_title': 'test——new',
+            'ad_link_url': ''
+          },
+          'info': null
+        }
+        break
+      case API.ads_delete(2):
         mockData = {
           'code': 200,
           'msg': 'OK',
