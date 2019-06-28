@@ -78,9 +78,6 @@ export default {
       })
     },
     handleSelect (key, keyPath) {
-      // TODO
-      console.log('key:', key)
-      console.log('keyPath:', keyPath)
       // 新打开tab页
       let menu = this.findMenuDataByKeyPath(keyPath)
       console.log(menu)
@@ -90,7 +87,6 @@ export default {
        * 退出
        */
     handleLogout () {
-      // TODO 是否需要走网络请求删除session
       this.$confirm('确认退出当前账号？')
         .then(_ => {
           console.log('退出')

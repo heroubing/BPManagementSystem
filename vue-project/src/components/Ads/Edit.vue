@@ -213,7 +213,7 @@ export default {
             url = API.ads_update(this.data.id)
             message = '保存成功'
             // 非新增时若用户不更改文件则不进行文件提交 todo
-            if (this.ruleForm.display_image_input === '已上传视频文件') delete params.display_image
+            if (this.ruleForm.display_image_input === '已上传封面图片') delete params.display_image
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({title: '成功', message})
