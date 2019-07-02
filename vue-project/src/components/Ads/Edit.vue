@@ -244,10 +244,10 @@ export default {
       Utils.getInfo(API.ads_detail(this.data.id)).then(({result}) => {
         if (result.ad_info) {
           if (this.isImg) {
-            this.ruleForm.imgEntriesList = result.ad_info.Entries
+            this.ruleForm.imgEntriesList = JSON.parse(result.ad_info).Entries
           }
           if (this.isVid) {
-            this.ruleForm.vidEntriesList = result.ad_info.Entries
+            this.ruleForm.vidEntriesList = JSON.parse(result.ad_info).Entries
           }
         }
       })
