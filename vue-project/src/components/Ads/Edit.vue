@@ -115,7 +115,7 @@ export default {
       ad_typeList: Constant.ad_type,
       isAdd: !data.id, // 是否为新增
       ruleForm: {
-        target: data.target ? data.target.join[','] : [],
+        target: data.target ? data.target.split(',') : [],
         display_image: null,
         ad_type: data.ad_type,
         ad_title: data.ad_title,
@@ -244,14 +244,12 @@ export default {
       Utils.getInfo(API.ads_detail(this.data.id)).then(({result}) => {
         if (result.ad_info) {
           if (this.isImg) {
-            this.ruleForm.imgEntriesList = JSON.parse(result.ad_info).Entries
+            this.ruleForm.imgEntriesList = result.ad_info.Entries
           }
           if (this.isVid) {
-            this.ruleForm.vidEntriesList = JSON.parse(result.ad_info).Entries
+            this.ruleForm.vidEntriesList = result.ad_info.Entries
           }
         }
-        this.ruleForm.target = result.target.split(',')
-        this.ruleForm.show_order = Number(result.show_order)
       })
     }
   }

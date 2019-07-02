@@ -20,6 +20,8 @@
         </template>
       </el-table-column>
       <el-table-column label='广告类型' prop='ad_type' width='100px' :formatter="formatterAdType"></el-table-column>
+      <el-table-column label='投放目标' prop='target' width='120px'></el-table-column>
+      <el-table-column label='显示顺序' prop='show_order' width='100px'></el-table-column>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
