@@ -178,11 +178,11 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': 1,
               'project_name': '测试',
-              'brief': '',
+              'brief': '简介信息',
               'upload_time': '2018-10-06T19:47:53+0800',
               'update_time': '2018-10-06T19:47:53+0800',
-              'industries': '9',
-              'round_id': 1,
+              'industries': '41,39,38',
+              'round_id': 11,
               'round': 'pre-A',
               'bp_file': 'https://www.investdata.com.cn/api/bp/1/file/',
               'points': 10,
@@ -1182,6 +1182,45 @@ const MockData = function (url, params, isShowLoading) {
           'code': 200,
           'msg': 'OK',
           'result': null,
+          'info': null
+        }
+        break
+      case API.BP_contactUpdate(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.BP_contactDelete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.BP_update(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.BP_detailApiView(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            contact: {
+              user_id: '12',
+              user: {
+                user_name: '开心'
+              }
+            }
+          },
           'info': null
         }
         break

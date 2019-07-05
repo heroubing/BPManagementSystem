@@ -21,3 +21,17 @@ new Vue({
   },
   template: '<App/>'
 })
+
+// 生产模式下全局去掉console
+if (process.env.NODE_ENV === 'production') {
+  global.console = {
+    info: () => {
+    },
+    log: () => {
+    },
+    warn: () => {
+    },
+    error: () => {
+    }
+  }
+}

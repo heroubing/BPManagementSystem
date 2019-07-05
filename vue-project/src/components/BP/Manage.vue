@@ -1,45 +1,40 @@
 <template>
   <div class="content">
-    <el-form :inline='true' :model='formData' style='margin-top: 20px;' @submit.native.prevent>
+    <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input v-model='formData.project_name' placeholder="请输入项目名称进行检索"></el-input>
+        <el-input placeholder="请输入项目名称进行检索" style="width: 250px;" v-model='formData.project_name'></el-input>
       </el-form-item>
-      <!--<el-form-item>-->
-      <!--<el-select v-model='formInline.region' class='select'>-->
-      <!--<el-option label='按标题' value='shanghai'></el-option>-->
-      <!--<el-option label='按关键字' value='beijing'></el-option>-->
-      <!--</el-select>-->
-      <!--</el-form-item>-->
       <el-form-item>
-        <el-button type='primary' @click='queryList'>搜索</el-button>
+        <el-button @click='queryList' type='primary'>搜索</el-button>
+        <el-button @click='createNew()' type='primary'>新增</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
-      <el-table-column prop='id' label='BPID'></el-table-column>
-      <el-table-column prop='project_name' label='项目名称'></el-table-column>
-      <el-table-column prop='upload_time' label='上传时间' :formatter="formatterUploadTime"
+    <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
+      <el-table-column label='BPID' prop='id'></el-table-column>
+      <el-table-column label='项目名称' prop='project_name'></el-table-column>
+      <el-table-column :formatter="formatterUploadTime" label='上传时间' prop='upload_time'
                        show-overflow-tooltip></el-table-column>
-      <el-table-column prop='points' label='阅读商业计划书积分'></el-table-column>
-      <el-table-column prop='contact_points' label='获取联系信息积分'></el-table-column>
+      <el-table-column label='阅读商业计划书积分' prop='points'></el-table-column>
+      <el-table-column label='获取联系信息积分' prop='contact_points'></el-table-column>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
-          <el-button @click.native.prevent='downloadFile(scope.row)' type='text' size='small'>下载文件</el-button>
-          <el-button @click.native.prevent='editRow(scope.row)' type='text' size='small'>编辑</el-button>
-          <el-button @click.native.prevent='deleteRow(scope.row)' type='text' size='small'>删除</el-button>
+          <el-button @click.native.prevent='downloadFile(scope.row)' size='small' type='text'>下载文件</el-button>
+          <el-button @click.native.prevent='editRow(scope.row)' size='small' type='text'>编辑</el-button>
+          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[pageSize]"
       :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
+      :page-sizes="[pageSize]"
+      :total="total"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+      layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
 
-    <el-dialog v-if="dialogVisible_edit" :title="dialogTitle" :visible.sync="dialogVisible_edit">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible_edit" v-if="dialogVisible_edit">
       <Add :data="dialogData" @saved="editSaved"/>
     </el-dialog>
   </div>
@@ -91,10 +86,24 @@ export default {
         .catch(_ => {
         })
     },
+    // 新增
+    createNew () {
+      this.dialogData = {
+        id: '',
+        project_name: '', // 项目名称
+        brief: '', // 项目简介
+        points: '500', // 阅读商业计划书积分，默认500
+        contact_points: '500', // 阅读联系信息积分，默认500
+        industries: [], // 行业，逗号分隔，每一个元素是一个行业ID
+        round_id: '' // 投资阶段ID
+      }
+      this.dialogTitle = `新增商业计划书（BP）`
+      this.dialogVisible_edit = true
+    },
     // 编辑
     editRow (row) {
       let tempRow = JSON.parse(JSON.stringify(row))
-      tempRow.industries = tempRow.industries.split(',').map((item) => parseInt(item))
+      tempRow.industries = tempRow.industries ? tempRow.industries.split(',').map((item) => parseInt(item)) : []
       console.log(tempRow)
       this.dialogData = tempRow
       this.dialogTitle = `编辑-${tempRow.project_name}`

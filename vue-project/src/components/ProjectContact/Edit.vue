@@ -1,14 +1,15 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='100px'>
+  <el-form :model='ruleForm' :rules='rules' label-width='100px' ref='ruleForm'>
     <el-form-item label='用户' prop='user_value'>
       <el-autocomplete
+        :debounce="500"
+        :disabled="!isAdd"
+        :fetch-suggestions="queryUserList"
+        :trigger-on-focus="true"
+        @select="handleSelect"
+        placeholder="请输入关键字查询"
         popper-class="Add-autocomplete"
         v-model="ruleForm.user_value"
-        :fetch-suggestions="queryUserList"
-        placeholder="请输入关键字查询"
-        @select="handleSelect"
-        :trigger-on-focus="true"
-        :debounce="500"
       >
         <template slot-scope="{ item }">
           <div class="name">{{ item.id}}-{{ item.user_name }}</div>
@@ -22,17 +23,17 @@
       <el-input type="textarea" v-model='ruleForm.contact_info'/>
     </el-form-item>
     <el-form-item>
-      <el-button type='primary' @click="submitForm('ruleForm')">{{!isAdd?'确定保存':'确定新增'}}</el-button>
+      <el-button @click="submitForm('ruleForm')" type='primary'>{{!isAdd?'确定保存':'确定新增'}}</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import Utils from '../../utils/Utils'
-import API from '../../utils/API'
+import Utils from '@/utils/Utils'
+import API from '@/utils/API'
 
 export default {
-  name: 'EditContact',
+  name: 'Edit',
   props: {
     data: {
       type: Object,
@@ -114,17 +115,20 @@ export default {
             organization: this.ruleForm.organization,
             contact_info: this.ruleForm.contact_info
           }
-          if (this.isAdd) {
-            Utils.getInfoPost(API.BP_contactCreate, params).then(() => {
-              this.$notify.success({
-                title: '成功',
-                message: '新增联系人成功'
-              })
-              this.$emit('saved', params)
-              this.$refs[formName].resetFields()
-            })
-          } else {
+          let url = API.BP_contactCreate
+          if (!this.isAdd) {
+            delete params.user_value
+            delete params.user
+            url = API.BP_contactUpdate(params.user)
           }
+          Utils.getInfoPost(url, params).then(() => {
+            this.$notify.success({
+              title: '成功',
+              message: `${this.isAdd ? '新增' : '修改'}联系人成功`
+            })
+            this.$emit('saved', params)
+            this.$refs[formName].resetFields()
+          })
         }
       })
     }
@@ -136,7 +140,7 @@ export default {
   .el-form {
     width: 100%;
     text-align: right;
-    margin:0 auto 0 auto;
+    margin: 0 auto 0 auto;
     padding-left: 50px;
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='ruleForm' :rules='rules' ref='ruleForm' label-width='200px'>
+  <el-form :model='ruleForm' :rules='rules' label-width='200px' ref='ruleForm'>
     <el-form-item label='项目名称' prop='project_name'>
       <el-input v-model='ruleForm.project_name'/>
     </el-form-item>
@@ -8,19 +8,19 @@
     </el-form-item>
     <el-form-item label='联系人ID' prop='contact_value'>
       <el-autocomplete
+        :debounce="500"
+        :fetch-suggestions="queryContactList"
+        :trigger-on-focus="true"
+        @select="handleSelect"
+        placeholder="请输入联系人ID查询"
         popper-class="Add-autocomplete"
         v-model="ruleForm.contact_value"
-        :fetch-suggestions="queryContactList"
-        placeholder="请输入联系人ID查询"
-        @select="handleSelect"
-        :trigger-on-focus="true"
-        :debounce="500"
       >
         <template slot-scope="{ item }">
           <div class="name">{{ item.user_id}}-{{ item.user.user_name }}-{{ item.user.phone }}</div>
           <div class="addr">{{ item.organization }} {{ item.user.contact_info }}</div>
         </template>
-        <el-button slot="append" icon="el-icon-plus" @click="dialogVisible_addContact = true"></el-button>
+        <el-button @click="dialogVisible_addContact = true" icon="el-icon-plus" slot="append"></el-button>
       </el-autocomplete>
     </el-form-item>
     <el-form-item label='阅读商业计划书积分' prop='points'>
@@ -30,36 +30,44 @@
       <el-input v-model='ruleForm.contact_points'/>
     </el-form-item>
     <el-form-item label='行业' prop='industries'>
-      <el-checkbox-group v-model="ruleForm.industries">
-        <el-checkbox v-for="item in industriesList" :key="item.id" :label="item.id" name="industries">
-          {{item.display_name}}
-        </el-checkbox>
-      </el-checkbox-group>
+      <el-select multiple placeholder="请选择" v-model="ruleForm.industries">
+        <el-option
+          :key="item.id"
+          :label="item.display_name"
+          :value="item.id"
+          v-for="item in industriesList">
+        </el-option>
+      </el-select>
     </el-form-item>
     <el-form-item label='投资阶段' prop='round_id'>
-      <el-radio-group v-model="ruleForm.round_id">
-        <el-radio v-for="item in roundList" :key="item.id" :label="item.id">{{item.display_name}}</el-radio>
-      </el-radio-group>
+      <el-select placeholder="请选择" v-model="ruleForm.round_id">
+        <el-option
+          :key="item.id"
+          :label="item.display_name"
+          :value="item.id"
+          v-for="item in roundList">
+        </el-option>
+      </el-select>
     </el-form-item>
-    <el-form-item prop='bp_file_input' label="BP文件">
-      <el-input v-model='ruleForm.bp_file_input' readonly placeholder='请上传pdf文件'>
-        <el-button v-if="!isAdd && !ruleForm.bp_file" slot="prepend" icon="el-icon-download" @click="downloadFile"/>
+    <el-form-item label="BP文件" prop='bp_file_input'>
+      <el-input placeholder='请上传pdf文件' readonly v-model='ruleForm.bp_file_input'>
+        <el-button @click="downloadFile" icon="el-icon-download" slot="prepend" v-if="!isAdd && !ruleForm.bp_file"/>
         <el-upload
-          slot="append"
-          action=""
-          :on-change='onChange'
           :auto-upload='false'
-          :show-file-list='false'>
+          :on-change='onChange'
+          :show-file-list='false'
+          action=""
+          slot="append">
           <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
-          <el-button slot="trigger" size='small' type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
+          <el-button size='small' slot="trigger" type='primary'>{{isAdd? '上传附件' : '重新上传'}}</el-button>
         </el-upload>
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type='primary' @click="submitForm('ruleForm')">{{isAdd ? '确定新增' : '确定保存'}}</el-button>
+      <el-button @click="submitForm('ruleForm')" type='primary'>{{isAdd ? '确定新增' : '确定保存'}}</el-button>
       <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
     </el-form-item>
-    <el-dialog title="新增联系人" :visible.sync="dialogVisible_addContact">
+    <el-dialog :visible.sync="dialogVisible_addContact" title="新增联系人">
       <edit-contact @saved="contactSaved"/>
     </el-dialog>
   </el-form>
@@ -68,7 +76,7 @@
 <script>
 import Utils from '../../utils/Utils'
 import API from '../../utils/API'
-import EditContact from './EditContact'
+import EditContact from '../ProjectContact/Edit'
 
 export default {
   name: 'Add',
@@ -151,9 +159,6 @@ export default {
     },
     // 联系人查询
     queryContactList (searchKey, cb) {
-      // if (searchKey === '') {
-      //   return null
-      // }
       // 清空contact，确保联系人是用户点击选择的
       this.ruleForm.contact = ''
       let params = {search_key: searchKey, page: 1}
@@ -274,4 +279,7 @@ export default {
     color: #ddd;
   }
 
+  .el-select {
+    width: 100%;
+  }
 </style>

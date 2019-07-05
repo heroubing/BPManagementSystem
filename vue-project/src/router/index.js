@@ -9,6 +9,7 @@ import RoundManage from '@/components/BP/Round/Manage'
 import InvestorReview from '@/components/Investor/Review'
 import LearningManage from '@/components/Learning/Manage'
 import AdsManage from '@/components/Ads/Manage'
+import ProjectContactManage from '@/components/ProjectContact/Manage'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/ads/manage',
       name: 'AdsManage',
       component: AdsManage
+    },
+    {
+      path: '/projectContact/manage',
+      name: 'ProjectContact',
+      component: ProjectContactManage
     },
     {
       path: '*',
