@@ -1177,7 +1177,7 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
-      case API.ads_delete(2):
+      case API.ads_delete:
         mockData = {
           'code': 200,
           'msg': 'OK',

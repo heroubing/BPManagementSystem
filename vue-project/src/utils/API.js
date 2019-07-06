@@ -46,6 +46,6 @@ const API = {
   ads_create: '/api/ads/create/',
   ads_detail: (id) => `/api/ads/${id}/`,
   ads_update: (id) => `/api/ads/${id}/update/`,
-  ads_delete: (id) => `/api/ads/${id}/delete/`
+  ads_delete: '/api/ads/delete/'
 }
 export default API

@@ -89,7 +89,7 @@ export default {
       this.$confirm(`确认删除ID为"${row.id}"的广告吗？`)
         .then(() => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.ads_delete(row.id), params).then(() => {
+          Utils.getInfoPost(API.ads_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '删除成功'
