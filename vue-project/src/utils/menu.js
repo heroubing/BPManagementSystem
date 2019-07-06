@@ -17,7 +17,7 @@ const menus = [
     catalogCode: 'user',
     children: [
       {
-        menuName: '投资人审核',
+        menuName: '投资人',
         menuCode: 'investor_review',
         menuUrl: '/investor/review'
       },
@@ -52,7 +52,7 @@ const menus = [
             menuUrl: '/bp/round/manage'
           },
           {
-            menuName: '投资人审核',
+            menuName: '投资人',
             menuCode: 'investor_review',
             menuUrl: '/investor/review'
           },
