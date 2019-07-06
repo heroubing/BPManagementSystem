@@ -71,7 +71,7 @@ export default {
     // 新增/编辑
     openDialog (row) {
       this.dialogData = Object.assign({}, row, {user: row.user_id, user_value: row.user.user_name})
-      this.dialogTitle = row.id ? `编辑联系人-${row.user.user_name}` : '新增联系人'
+      this.dialogTitle = row.user_id ? `编辑联系人-${row.user.user_name}` : '新增联系人'
       this.dialogVisible_edit = true
     },
     // 删除

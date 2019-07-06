@@ -119,7 +119,7 @@ export default {
           if (!this.isAdd) {
             delete params.user_value
             delete params.user
-            url = API.BP_contactUpdate(params.user)
+            url = API.BP_contactUpdate(this.ruleForm.user)
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({
