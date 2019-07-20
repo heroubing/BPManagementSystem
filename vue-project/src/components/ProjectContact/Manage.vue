@@ -19,7 +19,7 @@
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
-          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>
+          <el-button v-if="!scope.row.business_plans || scope.row.business_plans.length === 0" @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -239,6 +239,7 @@ const MockData = function (url, params, isShowLoading) {
               'organization': '美团',
               'contact_info': 'contact_info',
               'reg_time': '2018-11-23T15:18:51+0800',
+              'business_plans': [1, 2],
               'is_reviewed': true,
               'user': {
                 'user_name': '陈开心',
@@ -260,6 +261,7 @@ const MockData = function (url, params, isShowLoading) {
               'contact_info': 'contact_info',
               'reg_time': '2018-11-23T15:38:51+0800',
               'is_reviewed': true,
+              'business_plans': [],
               'user': {
                 'user_name': '俞敏洪',
                 'email': 'yuminhong@xindongfang.com',
