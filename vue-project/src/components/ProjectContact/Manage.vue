@@ -5,7 +5,7 @@
         <el-input v-model='formData.search_key' placeholder="请输入联系人信息进行检索" style="width: 250px;"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click='queryList' type='primary'>搜索</el-button>
+        <el-button @click='queryList(true)' type='primary'>搜索</el-button>
         <el-button @click='openDialog({user_id: "", user: {user_name: ""}})' type='primary'>新增</el-button>
       </el-form-item>
     </el-form>
@@ -92,7 +92,7 @@ export default {
     // 编辑成功回调
     editSaved () {
       this.dialogVisible_edit = false
-      this.queryList()
+      this.queryList(true)
     },
     // 修改每页显示数量
     handleSizeChange (val) {
@@ -107,11 +107,11 @@ export default {
       this.queryList()
     },
     // 分页查询
-    queryList () {
+    queryList (isFirstQuery) {
+      if (isFirstQuery) this.currentPage = 1
       let params = {page: this.currentPage, search_key: this.formData.search_key}
       Utils.getInfo(API.BP_contact, params).then(({result, info}) => {
         this.tableData = result
-        this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
       })
@@ -126,7 +126,7 @@ export default {
     }
   },
   mounted: function () {
-    this.queryList()
+    this.queryList(true)
   }
 }
 </script>

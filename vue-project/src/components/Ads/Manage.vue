@@ -8,7 +8,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-button @click='queryList' type='primary'>搜索</el-button>
+        <el-button @click='queryList(true)' type='primary'>搜索</el-button>
         <el-button @click='openDialog({id: ""})' type='primary'>新增</el-button>
       </el-form-item>
     </el-form>
@@ -102,7 +102,7 @@ export default {
     // 编辑成功回调
     editSaved () {
       this.dialogVisible_edit = false
-      this.queryList()
+      this.queryList(true)
     },
     // 修改每页显示数量
     handleSizeChange (val) {
@@ -117,11 +117,11 @@ export default {
       this.queryList()
     },
     // 分页查询
-    queryList () {
+    queryList (isFirstQuery) {
+      if (isFirstQuery) this.currentPage = 1
       let params = {page: this.currentPage, target: this.formData.target}
       Utils.getInfo(API.ads_query, params).then(({result, info}) => {
         this.tableData = result
-        this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
       })
@@ -144,7 +144,7 @@ export default {
     }
   },
   mounted: function () {
-    this.queryList()
+    this.queryList(true)
   }
 }
 </script>

@@ -5,7 +5,7 @@
         <el-input v-model='formData.search_key' placeholder="请输入投资人信息进行检索" style="width: 200px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type='primary' @click='queryList'>搜索</el-button>
+        <el-button type='primary' @click='queryList(true)'>搜索</el-button>
       </el-form-item>
     </el-form>
     <el-table :data='tableData' tooltip-effect='dark' style='width: 100%; margin-top: 20px'>
@@ -106,7 +106,7 @@ export default {
       console.log(resultList)
       this.industriesList = resultList[0]
       this.roundList = resultList[1]
-      this.queryList()
+      this.queryList(true)
     })
   },
   methods: {
@@ -161,14 +161,14 @@ export default {
       this.queryList()
     },
     // 分页查询
-    queryList () {
+    queryList (isFirstQuery) {
+      if (isFirstQuery) this.currentPage = 1
       let params = {
         page: this.currentPage,
         search_key: this.formData.search_key
       }
       Utils.getInfo(API.Investor_query, params).then(({result, info}) => {
         this.tableData = result
-        this.currentPage = info.pagination.num_pages
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
       })
