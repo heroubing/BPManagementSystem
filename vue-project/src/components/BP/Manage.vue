@@ -2,7 +2,7 @@
   <div class="content">
     <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input placeholder="请输入项目名称进行检索" style="width: 250px;" v-model='formData.project_name'></el-input>
+        <el-input placeholder="请输入项目名称或简介进行检索" style="width: 250px;" v-model='formData.search_key'></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
@@ -51,8 +51,7 @@ export default {
   data () {
     return {
       formData: {
-        project_name: '',
-        region: 'shanghai'
+        search_key: ''
       },
       dialogData: {},
       dialogTitle: '编辑',
@@ -131,7 +130,7 @@ export default {
     // 分页查询
     queryList (isFirstQuery) {
       if (isFirstQuery) this.currentPage = 1
-      let params = {page: this.currentPage}
+      let params = {page: this.currentPage, search_key: this.formData.search_key}
       Utils.getInfo(API.BP_query, params).then(({result, info}) => {
         this.tableData = result
         this.total = info.pagination.count

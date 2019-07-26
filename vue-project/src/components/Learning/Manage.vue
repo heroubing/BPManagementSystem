@@ -42,7 +42,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[pageSize]"
+      :page-sizes="[10,20,50]"
       :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -73,7 +73,7 @@ export default {
       tableData: [],
       currentPage: 1,
       total: 0,
-      pageSize: 50
+      pageSize: 10
     }
   },
   methods: {
@@ -123,11 +123,10 @@ export default {
     // 分页查询
     queryList (isFirstQuery) {
       if (isFirstQuery) this.currentPage = 1
-      let params = {page: this.currentPage, search_key: this.formData.search_key}
+      let params = {page: this.currentPage, search_key: this.formData.search_key, limit: this.pageSize}
       Utils.getInfo(API.Learning_query, params).then(({result, info}) => {
         this.tableData = result
         this.total = info.pagination.count
-        this.pageSize = info.pagination.per_page
       })
     },
     // 时间截取
