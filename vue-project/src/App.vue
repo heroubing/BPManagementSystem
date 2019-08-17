@@ -169,9 +169,8 @@ export default {
   }
 
   .title {
-    font-family: 微软雅黑, 宋体, Arial, serif;
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
     font-size: 25px;
-    font-weight: bold;
     letter-spacing: 3px;
     color: #fff;
   }

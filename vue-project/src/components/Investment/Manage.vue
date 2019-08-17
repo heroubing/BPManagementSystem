@@ -2,26 +2,17 @@
   <div class="content">
     <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-radio-group v-model="formData.target">
-          <el-radio :key="target.value" :label="target.value" border v-for="target in targetList">{{target.label}}
-          </el-radio>
-        </el-radio-group>
+        <el-input placeholder="请输入机构名称进行检索" style="width: 250px;" v-model='formData.search_key'></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
-        <el-button @click='openDialog({id: ""})' type='primary'>新增</el-button>
+        <el-button @click='openDialog()' type='primary'>新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
       <el-table-column label='ID' prop='id' width='100px'></el-table-column>
-      <el-table-column label='标题'>
-        <template slot-scope='scope'>
-          <el-button @click.native.prevent="info(scope.row.resource_url)" type='text'>{{scope.row.ad_title}}</el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label='广告类型' prop='ad_type' width='100px' :formatter="formatterAdType"></el-table-column>
-      <el-table-column label='投放目标' prop='target' width='120px'></el-table-column>
-      <el-table-column label='显示顺序' prop='show_order' width='100px'></el-table-column>
+      <el-table-column label='机构名称' prop='org_name'></el-table-column>
+      <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'></el-table-column>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
@@ -49,16 +40,14 @@
 import Utils from '../../utils/Utils'
 import Edit from './Edit'
 import API from '../../utils/API'
-import Constant from '@/utils/Constant'
 
 export default {
   name: 'Manage',
   components: {Edit},
   data () {
     return {
-      targetList: Constant.target,
       formData: {
-        target: Constant.target[0].value
+        search_key: ''
       },
       dialogData: {},
       dialogTitle: '',
@@ -70,26 +59,22 @@ export default {
     }
   },
   methods: {
-    // 查看图片
-    info (url) {
-      window.open(url)
-    },
-    // 广告类型格式转换
-    formatterAdType (row) {
-      return Constant.ad_type.find(item => item.value === row.ad_type).label
+    // 是否激活格式转换
+    formatterIsActive (row) {
+      return row.is_active ? '是' : '否'
     },
     // 新增/编辑
     openDialog (row) {
       this.dialogData = row
-      this.dialogTitle = row.id ? `编辑广告-${row.id}` : '新增广告'
+      this.dialogTitle = row ? `编辑投资机构-${row.id}` : '新增投资机构'
       this.dialogVisible_edit = true
     },
     // 删除
     deleteRow (row) {
-      this.$confirm(`确认删除ID为"${row.id}"的广告吗？`)
+      this.$confirm(`确认删除"${row.id}-${row.org_name}"吗？`)
         .then(() => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.ads_delete, params).then(() => {
+          Utils.getInfoPost(API.Investment_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '删除成功'
@@ -119,28 +104,12 @@ export default {
     // 分页查询
     queryList (isFirstQuery) {
       if (isFirstQuery) this.currentPage = 1
-      let params = {page: this.currentPage, target: this.formData.target}
-      Utils.getInfo(API.ads_query, params).then(({result, info}) => {
+      let params = {page: this.currentPage, search_key: this.formData.search_key}
+      Utils.getInfo(API.Investment_query, params).then(({result, info}) => {
         this.tableData = result
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
       })
-    },
-    // 时间截取
-    formatterUploadTime (row, column) {
-      return row.update_time.replace('T', ' ').substr(0, 19)
-    },
-    // 获取文件
-    viewFile (url) {
-      if (!url || url.indexOf('/null') >= 0) {
-        this.$message({
-          showClose: true,
-          message: '您还未上传相关文件',
-          type: 'warning'
-        })
-        return
-      }
-      window.open(url)
     }
   },
   mounted: function () {
@@ -154,10 +123,6 @@ export default {
     padding: 20px;
     width: 90%;
     max-width: 1400px;
-  }
-
-  .select {
-    width: 120px;
   }
 
   .el-pagination {
