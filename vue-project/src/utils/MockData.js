@@ -196,6 +196,48 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
+      case API.User_group_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 1,
+              'display_name': '11111',
+              'is_active': false
+            },
+            {
+              'id': 2,
+              'display_name': '2222',
+              'is_active': false
+            },
+            {
+              'id': 3,
+              'display_name': '3333',
+              'is_active': false
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 3,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
+      case API.User_group_create:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 4,
+            'display_name': '444',
+            'is_active': true
+          },
+          'info': null
+        }
+        break
       default:
         mockData = {
           'code': 400,
