@@ -16,6 +16,6 @@ const API = {
   User_group_create: '/api/investment/user_group/create/',
   User_group_detail: (id) => `/api/investment/user_group/${id}/`,
   User_group_update: (id) => `/api/investment/user_group/${id}/update/`,
-  User_group_delete: '/api/investment/user_group/delete/',
+  User_group_delete: '/api/investment/user_group/delete/'
 }
 export default API

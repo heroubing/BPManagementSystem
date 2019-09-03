@@ -3,5 +3,5 @@ export default {
   isNot_boolean: [
     {value: true, label: '是'},
     {value: false, label: '否'}
-  ],
+  ]
 }
