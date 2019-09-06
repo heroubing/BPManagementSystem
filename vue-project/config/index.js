@@ -9,7 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/org_manage',
     proxyTable: {
       '/api/': {
         target: 'http://127.0.0.1:8000'
@@ -17,12 +17,6 @@ module.exports = {
       '/captcha/': {
         target: 'http://127.0.0.1:8000'
       },
-      '/staff_admin_0/': {
-        target: 'http://127.0.0.1:8080/staff_admin.html',
-        pathRewrite: {
-          '^/staff_admin_0/': ''   //重写接口
-        }
-      }
     },
 
     // Various Dev Server settings
@@ -59,13 +53,13 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/staff_admin.html'),
-    index_login: path.resolve(__dirname, '../dist/staff_login.html'),
+    index: path.resolve(__dirname, '../dist/home.html'),
+    index_login: path.resolve(__dirname, '../dist/login.html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/org_manage',
 
     /**
      * Source Maps

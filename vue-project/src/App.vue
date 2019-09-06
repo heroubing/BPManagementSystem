@@ -91,7 +91,7 @@ export default {
         .then(_ => {
           console.log('退出')
           Utils.getInfo(API.USER_logout).then(() => {
-            document.location.href = '/staff_admin_0/login/'
+            document.location.href = '/org_manage/login.html'
           })
         })
         .catch(_ => {
