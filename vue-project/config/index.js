@@ -9,7 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/org_manage',
+    assetsPublicPath: '/org_manage/',
     proxyTable: {
       '/api/': {
         target: 'http://127.0.0.1:8000'
