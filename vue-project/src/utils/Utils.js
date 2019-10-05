@@ -100,7 +100,8 @@ export default class Utils {
     }
     let formData = new FormData()
     for (let key in params) {
-      formData.append(key, this.isNotNull(params[key]) ? params[key] : '')
+      // formData.append(key, this.isNotNull(params[key]) ? params[key] : '')
+      formData.append(key, this.dealParams(params[key]))
     }
     return fetch(url, {
       method: 'POST',
@@ -155,7 +156,7 @@ export default class Utils {
     try {
       let paramsArr = []
       for (let key in params) {
-        let param = key + '=' + (this.isNotNull(params[key]) ? params[key] : '')
+        let param = key + '=' + this.dealParams(params[key])
         paramsArr.push(param)
       }
       return paramsArr.join('&')
@@ -204,19 +205,6 @@ export default class Utils {
   }
 
   /**
-   * 判断是否不为[空字符串/null/undefined]
-   * @param value
-   * @returns {boolean}
-   */
-  static isNotNull (value) {
-    // number类型且为0时为真
-    if (typeof value === 'number' && value === 0) {
-      return true
-    }
-    return !!value
-  }
-
-  /**
    * 400类错误处理
    * @param json
    */
@@ -244,4 +232,17 @@ export default class Utils {
    */
 
   static stopPromise () { return new Promise(() => {}) }
+
+  /**
+   * 参数处理[空字符串/null/undefined时统一为'']
+   * @param value
+   */
+  static dealParams (value) {
+    if (typeof value === 'boolean') return value
+    // number类型且为0时为真
+    if (typeof value === 'number' && value === 0) {
+      return value
+    }
+    return value || ''
+  }
 }
