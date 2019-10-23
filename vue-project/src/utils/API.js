@@ -15,9 +15,9 @@ const API = {
 
   BP_contact: '/api/project_contact/',
   BP_contactCreate: '/api/project_contact/create/',
-  BP_projectContactDetailApiView: (id) => `/api/bp/${id}/contact`, // 通过id获取项目联系人
+  BP_projectContactDetailApiView: (id) => `/api/bp/${id}/contact/`, // 通过id获取项目联系人
   BP_contactDelete: '/api/project_contact/delete/',
-  BP_contactUpdate: (id) => `/api/project_contact/${id}/update`,
+  BP_contactUpdate: (id) => `/api/project_contact/${id}/update/`,
 
   BP_Industry_query: '/api/bp/industry/',
   BP_Industry_add: '/api/bp/industry/create/',
