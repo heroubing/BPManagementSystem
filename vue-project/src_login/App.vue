@@ -87,7 +87,7 @@ export default {
           case 200:
             // 登录成功
             setTimeout(() => {
-              window.location.href = `${window.location.origin}/org_manage/`
+              window.location.href = `${window.location.origin}/org_manage/home.html`
             }, 200)
             break
           case 1001:
