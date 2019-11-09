@@ -9,7 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/org_manage/',
     proxyTable: {
       '/api/': {
         target: 'http://127.0.0.1:8000'
@@ -53,7 +53,7 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/home.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
     index_login: path.resolve(__dirname, '../dist/login.html'),
 
     // Paths

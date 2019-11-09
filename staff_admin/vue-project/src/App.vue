@@ -3,12 +3,12 @@
     <el-container>
       <el-header>
         <div class='icon'>
-          <img src='../src_login/assets/logo.png' class='iconImg'/>
+          <img class='iconImg' src='../src_login/assets/logo.png'/>
           <span class='title'>投资数据库管理</span>
         </div>
         <div class='funcDiv'>
           <div class='topButtonDiv'>
-            <img src='./assets/button-logout.png' alt='退出' class='buttonImg'>
+            <img alt='退出' class='buttonImg' src='./assets/button-logout.png'>
             <el-button class='topButton' size='mini' type='text' v-on:click='handleLogout'>退出</el-button>
           </div>
         </div>
@@ -16,17 +16,17 @@
       <el-container>
         <el-aside width='210px'>
           <el-menu
-            v-bind:default-active='activeIndex'
-            v-on:select='handleSelect'
+            active-text-color='#ffd04b'
             background-color='#545c64'
             text-color='#fff'
-            active-text-color='#ffd04b'
             unique-opened
+            v-bind:default-active='activeIndex'
+            v-on:select='handleSelect'
           >
             <menu-item
-              v-for='(menu, index) in menus'
               v-bind:key='index'
               v-bind:menu-data='menu'
+              v-for='(menu, index) in menus'
             >
             </menu-item>
           </el-menu>
@@ -44,6 +44,7 @@ import MenuItem from './components/MenuItem'
 import menus from './utils/menu'
 import API from './utils/API'
 import Utils from './utils/Utils'
+import Constant from './utils/Constant'
 
 export default {
   name: 'App',
@@ -62,10 +63,10 @@ export default {
   },
   methods: {
     /**
-       * 根据keyPath查找菜单
-       * @param keyPath
-       * @returns {menuData}
-       */
+             * 根据keyPath查找菜单
+             * @param keyPath
+             * @returns {menuData}
+             */
     findMenuDataByKeyPath (keyPath) {
       let catalog = menus
       for (let i = 0; i < keyPath.length - 1; i++) {
@@ -84,14 +85,14 @@ export default {
       this.$router.push(menu.menuUrl)
     },
     /**
-       * 退出
-       */
+             * 退出
+             */
     handleLogout () {
       this.$confirm('确认退出当前账号？')
         .then(_ => {
           console.log('退出')
           Utils.getInfo(API.USER_logout).then(() => {
-            document.location.href = '/staff_admin_0/login/'
+            document.location.href = `${Constant.publicPath}/login.html`
           })
         })
         .catch(_ => {
@@ -169,9 +170,8 @@ export default {
   }
 
   .title {
-    font-family: 微软雅黑, 宋体, Arial, serif;
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
     font-size: 25px;
-    font-weight: bold;
     letter-spacing: 3px;
     color: #fff;
   }

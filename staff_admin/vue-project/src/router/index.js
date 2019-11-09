@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Constant from '@/utils/Constant'
 import Home from '@/components/Home'
-// import NotExist from '@/components/NotExist'
 import BpAdd from '@/components/BP/Add'
 import BpManage from '@/components/BP/Manage'
 import IndustryManage from '@/components/BP/Industry/Manage'
@@ -15,6 +15,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  base: Constant.publicPath,
   routes: [
     {
       path: '/home',
@@ -63,8 +64,6 @@ export default new Router({
     },
     {
       path: '*',
-      // name: 'NotExist',
-      // component: NotExist,
       redirect: '/home'
     }
   ]

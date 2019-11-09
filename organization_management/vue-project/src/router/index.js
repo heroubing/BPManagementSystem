@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Constant from '@/utils/Constant'
 import Home from '@/components/Home'
 import InvestmentManage from '@/components/Investment/Manage'
 import UserGroup from '@/components/UserGroup/Manage'
@@ -8,7 +9,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: '/org_manage',
+  base: Constant.publicPath,
   routes: [
     {
       path: '/home',
@@ -27,8 +28,6 @@ export default new Router({
     },
     {
       path: '*',
-      // name: 'NotExist',
-      // component: NotExist,
       redirect: '/home'
     }
   ]

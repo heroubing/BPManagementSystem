@@ -48,6 +48,7 @@
 import {Notification} from 'element-ui'
 import API from '../src/utils/API'
 import Utils from '../src/utils/Utils'
+import Constant from '../src/utils/Constant'
 
 export default {
   name: 'App',
@@ -87,7 +88,7 @@ export default {
           case 200:
             // 登录成功
             setTimeout(() => {
-              window.location.href = `${window.location.origin}/staff_admin_0/home.html`
+              window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
             }, 200)
             break
           case 1001:

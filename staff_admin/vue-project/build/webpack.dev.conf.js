@@ -25,6 +25,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
+        // '/' --> /assetsPublicPath/login.html
+        { from: /^\/$/, to: path.posix.join(config.dev.assetsPublicPath, 'login.html') },
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
@@ -54,7 +56,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'home.html',
+      filename: 'index.html',
       template: 'index.html',
       inject: true,
       chunks: ['app']

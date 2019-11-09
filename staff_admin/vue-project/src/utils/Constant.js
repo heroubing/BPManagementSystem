@@ -1,4 +1,5 @@
 export default {
+  publicPath: '/staff_admin_0',
   // 广告-广告类型
   ad_type: [
     {value: 'img', label: '图片'},
