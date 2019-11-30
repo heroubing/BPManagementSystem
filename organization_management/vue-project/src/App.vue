@@ -63,10 +63,10 @@ export default {
   },
   methods: {
     /**
-             * 根据keyPath查找菜单
-             * @param keyPath
-             * @returns {menuData}
-             */
+        * 根据keyPath查找菜单
+        * @param keyPath
+        * @returns {menuData}
+        */
     findMenuDataByKeyPath (keyPath) {
       let catalog = menus
       for (let i = 0; i < keyPath.length - 1; i++) {
