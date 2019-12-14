@@ -15,7 +15,6 @@
       <el-table-column label='所属机构' prop='organization_name' width='150px'/>
       <el-table-column label='所属用户组' prop='group_name' width='150px'/>
       <el-table-column label='内部用户名' align="center" prop='inner_user_name'/>
-      <el-table-column label='是否激活' prop='is_active' width='150px'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
