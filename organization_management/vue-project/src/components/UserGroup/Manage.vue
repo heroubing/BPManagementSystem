@@ -2,7 +2,7 @@
   <div class="content">
     <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input placeholder="请输入机构名称进行检索" style="width: 250px;" v-model='formData.search_key'></el-input>
+        <el-input placeholder="请输入投资用户组名称进行检索" style="width: 250px;" v-model='formData.search_key'/>
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
@@ -10,9 +10,9 @@
       </el-form-item>
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
-      <el-table-column label='ID' prop='id' width='100px'></el-table-column>
-      <el-table-column label='机构名称' prop='display_name'></el-table-column>
-      <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'></el-table-column>
+      <el-table-column label='ID' prop='id' width='100px'/>
+      <el-table-column label='投资用户组名称' prop='display_name'/>
+      <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>

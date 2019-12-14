@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-form :model='ruleForm' :rules='rules' label-width='200px' ref='ruleForm'>
-      <el-form-item label='机构名称' prop='display_name'>
+      <el-form-item label='投资用户组名称' prop='display_name'>
         <el-input v-model='ruleForm.display_name'/>
       </el-form-item>
       <el-form-item label='是否激活' prop='is_active'>
@@ -31,7 +31,7 @@ export default {
       default: function () {
         return {
           id: '', // id
-          display_name: '', // 机构名称
+          display_name: '', // 投资用户组
           is_active: true // 是否激活
         }
       }
@@ -48,7 +48,7 @@ export default {
       },
       rules: {
         display_name: [
-          {required: true, message: '请输入机构名称', trigger: 'blur'}
+          {required: true, message: '请输入投资用户组名称', trigger: 'blur'}
         ]
       }
     }
