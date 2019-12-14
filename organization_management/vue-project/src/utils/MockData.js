@@ -238,6 +238,93 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
+      case API.InvestmentUser_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 3,
+              'user': 3,
+              'user_name': '测试user',
+              'organization': 3,
+              'organization_name': '测试organization',
+              'group': 2,
+              'group_name': '测试group',
+              'inner_user_name': 'inn4',
+              'is_active': true
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 1,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
+      case API.InvestmentUser_create:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 4,
+            'user': 3,
+            'organization': 3,
+            'group': 2,
+            'inner_user_name': 'inv_user3',
+            'is_active': true
+          },
+          'info': null
+        }
+        break
+      case API.InvestmentUser_detail:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 3,
+              'user': 3,
+              'organization': 3,
+              'group': 2,
+              'inner_user_name': 'inn4',
+              'is_active': true
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 1,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
+      case API.InvestmentUser_update:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 4,
+            'user': 3,
+            'organization': 3,
+            'group': 2,
+            'inner_user_name': 'inv_user4',
+            'is_active': true
+          },
+          'info': null
+        }
+        break
+      case API.InvestmentUser_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
       default:
         mockData = {
           'code': 400,
