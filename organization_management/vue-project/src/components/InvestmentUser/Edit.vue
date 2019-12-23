@@ -73,12 +73,20 @@ export default {
       default: function () {
         return {
           id: '', // 投资用户id
-          user: '', // 用户id
-          user_name: '', // 用户id显示信息
-          organization: '', // 所属机构id
-          organization_name: '', // 所属机构id显示信息
-          group: '', // 所属用户组id
-          group_name: '', // 所属用户组id显示信息
+          user: {
+            id: null, // 用户id
+            user_name: '' // 用户id显示信息
+          },
+          organization: {
+            id: null, // 所属机构id
+            org_name: '', // 所属机构id显示信息
+            is_active: true
+          },
+          group: {
+            id: null, // 所属用户组id
+            display_name: '', // 所属用户组id显示信息
+            is_active: true
+          },
           inner_user_name: '', // 内部用户名
           is_active: true // 是否激活
         }
@@ -91,12 +99,12 @@ export default {
       isAdd: !this.data.id, // 是否为新增
       ruleForm: {
         id: this.data.id, // 投资用户id
-        user: this.data.user, // 用户id
-        user_name: this.data.user_name, // 用户id显示信息
-        organization: this.data.organization, // 所属机构id
-        organization_name: this.data.organization_name, // 所属机构id显示信息
-        group: this.data.group, // 所属用户组id
-        group_name: this.data.group_name, // 所属用户组id显示信息
+        user: this.data.user.id, // 用户id
+        user_name: this.data.user.user_name, // 用户id显示信息
+        organization: this.data.organization.id, // 所属机构id
+        organization_name: this.data.organization.org_name, // 所属机构id显示信息
+        group: this.data.group.id, // 所属用户组id
+        group_name: this.data.group.display_name, // 所属用户组id显示信息
         inner_user_name: this.data.inner_user_name, // 内部用户名
         is_active: this.data.is_active // 是否激活
       },

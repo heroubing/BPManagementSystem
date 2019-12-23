@@ -245,12 +245,20 @@ const MockData = function (url, params, isShowLoading) {
           'result': [
             {
               'id': 3,
-              'user': 3,
-              'user_name': '测试user',
-              'organization': 3,
-              'organization_name': '测试organization',
-              'group': 2,
-              'group_name': '测试group',
+              'user': {
+                'id': 3,
+                'user_name': '测试user'
+              },
+              'organization': {
+                'id': 3,
+                'org_name': '测试organization',
+                'is_ctive': true
+              },
+              'group': {
+                'id': 2,
+                'display_name': '测试group',
+                'is_ctive': true
+              },
               'inner_user_name': 'inn4',
               'is_active': true
             }
