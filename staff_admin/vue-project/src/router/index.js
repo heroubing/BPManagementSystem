@@ -10,6 +10,8 @@ import InvestorReview from '@/components/Investor/Review'
 import LearningManage from '@/components/Learning/Manage'
 import AdsManage from '@/components/Ads/Manage'
 import ProjectContactManage from '@/components/ProjectContact/Manage'
+import InvestmentManage from "@/components/Investment/Manage"
+import UserGroup from "@/components/UserGroup/Manage"
 
 Vue.use(Router)
 
@@ -61,6 +63,16 @@ export default new Router({
       path: '/projectContact/manage',
       name: 'ProjectContact',
       component: ProjectContactManage
+    },
+    {
+      path: '/investment/manage',
+      name: 'Investment',
+      component: InvestmentManage
+    },
+    {
+      path: '/userGroup/manage',
+      name: 'UserGroup',
+      component: UserGroup
     },
     {
       path: '*',

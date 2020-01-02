@@ -12,5 +12,10 @@ export default {
     {value: 'android', label: 'android'},
     {value: 'ios', label: 'ios'},
     {value: 'web', label: 'web'}
+  ],
+  // 基本类型-是否（布尔值）
+  isNot_boolean: [
+    {value: true, label: '是'},
+    {value: false, label: '否'}
   ]
 }

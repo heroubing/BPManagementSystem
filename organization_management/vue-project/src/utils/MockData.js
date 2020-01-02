@@ -154,48 +154,6 @@ const MockData = function (url, params, isShowLoading) {
           'result': true
         }
         break
-      case API.Investment_query:
-        mockData = {
-          'code': 200,
-          'msg': 'OK',
-          'result': [
-            {
-              'id': 1,
-              'org_name': '11111',
-              'is_active': true
-            },
-            {
-              'id': 2,
-              'org_name': '2222',
-              'is_active': false
-            },
-            {
-              'id': 3,
-              'org_name': '3333',
-              'is_active': false
-            }
-          ],
-          'info': {
-            'pagination': {
-              'count': 3,
-              'num_pages': 1,
-              'per_page': 50
-            }
-          }
-        }
-        break
-      case API.Investment_create:
-        mockData = {
-          'code': 200,
-          'msg': 'OK',
-          'result': {
-            'id': 4,
-            'org_name': '444',
-            'is_active': true
-          },
-          'info': null
-        }
-        break
       case API.User_group_query:
         mockData = {
           'code': 200,
@@ -331,6 +289,36 @@ const MockData = function (url, params, isShowLoading) {
           'msg': 'OK',
           'result': null,
           'info': null
+        }
+        break
+      case API.Investment_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 1,
+              'org_name': '11111',
+              'is_active': true
+            },
+            {
+              'id': 2,
+              'org_name': '2222',
+              'is_active': false
+            },
+            {
+              'id': 3,
+              'org_name': '3333',
+              'is_active': false
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 3,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
         }
         break
       default:

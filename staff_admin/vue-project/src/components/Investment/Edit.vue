@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Utils from '../../utils/Utils'
-import API from '../../utils/API'
+import Utils from '@/utils/Utils'
+import API from '@/utils/API'
 import Constant from '@/utils/Constant'
 
 export default {

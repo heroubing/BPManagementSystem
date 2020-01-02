@@ -2,7 +2,7 @@
   <div class="content">
     <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input placeholder="请输入机构名称进行检索" style="width: 250px;" v-model='formData.search_key'/>
+        <el-input placeholder="请输入投资用户组名称进行检索" style="width: 250px;" v-model='formData.search_key'/>
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
@@ -11,7 +11,7 @@
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
       <el-table-column label='ID' prop='id' width='100px'/>
-      <el-table-column label='机构名称' prop='org_name'/>
+      <el-table-column label='投资用户组名称' prop='display_name'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import Utils from '../../utils/Utils'
+import Utils from '@/utils/Utils'
 import Edit from './Edit'
-import API from '../../utils/API'
+import API from '@/utils/API'
 
 export default {
   name: 'Manage',
@@ -71,10 +71,10 @@ export default {
     },
     // 删除
     deleteRow (row) {
-      this.$confirm(`确认删除"${row.id}-${row.org_name}"吗？`)
+      this.$confirm(`确认删除"${row.id}-${row.display_name}"吗？`)
         .then(() => {
           let params = {id: row.id}
-          Utils.getInfoPost(API.Investment_delete, params).then(() => {
+          Utils.getInfoPost(API.User_group_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
               message: '删除成功'
@@ -105,7 +105,7 @@ export default {
     queryList (isFirstQuery) {
       if (isFirstQuery) this.currentPage = 1
       let params = {page: this.currentPage, search_key: this.formData.search_key}
-      Utils.getInfo(API.Investment_query, params).then(({result, info}) => {
+      Utils.getInfo(API.User_group_query, params).then(({result, info}) => {
         this.tableData = result
         this.total = info.pagination.count
         this.pageSize = info.pagination.per_page
