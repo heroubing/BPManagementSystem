@@ -10,8 +10,8 @@ import InvestorReview from '@/components/Investor/Review'
 import LearningManage from '@/components/Learning/Manage'
 import AdsManage from '@/components/Ads/Manage'
 import ProjectContactManage from '@/components/ProjectContact/Manage'
-import InvestmentManage from "@/components/Investment/Manage"
-import UserGroup from "@/components/UserGroup/Manage"
+import InvestmentManage from '@/components/Investment/Manage'
+import UserGroup from '@/components/UserGroup/Manage'
 
 Vue.use(Router)
 
