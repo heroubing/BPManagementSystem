@@ -6,19 +6,19 @@
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
-        <el-button @click='openDialog()' type='primary'>新增</el-button>
+<!--        <el-button @click='openDialog()' type='primary'>新增</el-button>-->
       </el-form-item>
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
       <el-table-column label='ID' prop='id' width='100px'/>
       <el-table-column label='投资用户组名称' prop='display_name'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
-      <el-table-column label='操作' width='200px'>
-        <template slot-scope='scope'>
-          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
-          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label='操作' width='200px'>-->
+<!--        <template slot-scope='scope'>-->
+<!--          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>-->
+<!--          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
     <el-pagination
       :current-page="currentPage"
