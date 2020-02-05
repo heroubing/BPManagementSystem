@@ -81,7 +81,6 @@ export default {
     handleSelect (key, keyPath) {
       // 新打开tab页
       let menu = this.findMenuDataByKeyPath(keyPath)
-      console.log(menu)
       this.$router.push(menu.menuUrl)
     },
     /**

@@ -81,12 +81,15 @@ export default {
         captcha_key: this.captcha_key,
         captcha: this.captcha
       }
-      Utils.getInfoPost(API.SYS_staffLogin, params, true, false).then((json) => {
+      Utils.getInfoPost(API.SYS_userLogin, params, true, false).then((json) => {
         this.loading = false
         let errMessage
         switch (json.code) {
           case 200:
             // 登录成功
+            // 记录用户id
+            localStorage.setItem('userInfo', JSON.stringify(json.result))
+            // 跳转至主页
             setTimeout(() => {
               window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
             }, 200)

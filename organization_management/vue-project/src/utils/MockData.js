@@ -37,6 +37,44 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
+      case API.SYS_userLogin:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 15,
+            'user_name': 'staff10',
+            'email': null,
+            'phone': null,
+            'sex': '',
+            'reg_time': '2018-06-27T00:12:00+0800',
+            'homepage': '',
+            'qq': '',
+            'points': 100,
+            'user_avatar': '',
+            'birthday': null,
+            'address': '',
+            'subscription': [
+              {
+                'product_type': 'annual',
+                'start_time': '2018-07-09T23:54:00+0800',
+                'end_time': '2019-07-09T23:54:00+0800'
+              }
+            ],
+            'investor': {
+              'organization': 'Invest Data Ltd.',
+              'reg_time': '2018-09-25T11:37:43+0800',
+              'org_email': 'k@qq.com',
+              'fav_industries': '3,4',
+              'fav_round': '1,5',
+              'review_status': 'WAITING',
+              'reviewer_note': '',
+              'review_update_time': null
+            }
+          },
+          'info': null
+        }
+        break
       case API.USER_query:
         mockData = {
           'code': 200,
@@ -319,6 +357,132 @@ const MockData = function (url, params, isShowLoading) {
               'per_page': 50
             }
           }
+        }
+        break
+      case API.InvestmentProject_query:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 1,
+              'full_name': 'tttttttttttttttttt12312321e1312ttttttttttttttttttttttttttt',
+              'short_name': 't1231231231231231231t',
+              'code': '34',
+              'status': '立项',
+              'brief': 17,
+              'bp': 17,
+              'record': 17,
+              'other_file': 17,
+              'industry': 'dd',
+              'contact_info': 'dd',
+              'contact_card': 17,
+              'advantage': 'ww',
+              'origin': 'ww',
+              'upload_user': 1
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 1,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
+      case API.InvestmentProject_create:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 4,
+            'full_name': 'qqqqq',
+            'short_name': 'qq',
+            'code': '34',
+            'status': '立项',
+            'brief': 17,
+            'bp': 17,
+            'record': 17,
+            'other_file': 17,
+            'industry': 'dd',
+            'contact_info': 'dd',
+            'contact_card': 17,
+            'advantage': 'ww',
+            'origin': 'ww',
+            'upload_user': 1
+          },
+          'info': null
+        }
+        break
+      case API.InvestmentProject_detail:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 3,
+            'full_name': 'qqqqq',
+            'short_name': 'qq',
+            'code': '34',
+            'status': '立项',
+            'brief': 17,
+            'bp': 17,
+            'record': 17,
+            'other_file': 17,
+            'industry': 'dd',
+            'contact_info': 'dd',
+            'contact_card': 17,
+            'advantage': 'ww',
+            'origin': 'ww',
+            'upload_user': 1
+          },
+          'info': null
+        }
+        break
+      case API.InvestmentProject_update:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'full_name': 'tttqqqwww',
+            'short_name': 'qq',
+            'code': '34',
+            'status': 'ff',
+            'brief': 17,
+            'bp': 17,
+            'record': 17,
+            'other_file': 17,
+            'industry': 'dd',
+            'contact_info': 'dd',
+            'contact_card': 17,
+            'advantage': 'ww',
+            'origin': 'ww',
+            'upload_user': 1
+          },
+          'info': null
+        }
+        break
+      case API.InvestmentProject_delete:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': null,
+          'info': null
+        }
+        break
+      case API.File_create:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 15,
+            'file_type': 'test',
+            'is_private': true,
+            'file': 'http://localhost:8000/api/file/15/',
+            'upload_user': 1
+          },
+          'info': null
         }
         break
       default:

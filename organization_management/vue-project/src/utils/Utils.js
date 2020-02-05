@@ -2,12 +2,10 @@
  * 工具类
  */
 import {Loading, Notification} from 'element-ui'
-import MockData from './MockData'
 
 export default class Utils {
   // 是否使用模拟数据
-  static USE_MOCK = false;
-  // static USE_MOCK = true;
+  static USE_MOCK = process.env.NODE_ENV === 'development';
 
   /**
    * get网络请求公共方法
@@ -28,9 +26,11 @@ export default class Utils {
         fullscreen: true
       })
     }
-
-    if (Utils.USE_MOCK) {
-      return MockData(url, params, isShowLoading)
+    if (Utils.USE_MOCK) { // 开发环境下且已配置时使用模拟数据
+      return import('./MockData').then((module) => {
+        const MockData = module.default
+        return MockData(url, params, isShowLoading)
+      })
     }
     // 拼写方法
     url += '?' + this.paramsToUrl(params)
@@ -95,8 +95,11 @@ export default class Utils {
         fullscreen: true
       })
     }
-    if (Utils.USE_MOCK) {
-      return MockData(url, params, isShowLoading)
+    if (Utils.USE_MOCK) { // 开发环境下且已配置时使用模拟数据
+      return import('./MockData').then((module) => {
+        const MockData = module.default
+        return MockData(url, params, isShowLoading)
+      })
     }
     let formData = new FormData()
     for (let key in params) {
@@ -244,5 +247,9 @@ export default class Utils {
       return value
     }
     return value || ''
+  }
+
+  static getUserInfo () {
+    return JSON.parse(localStorage.getItem('userInfo'))
   }
 }

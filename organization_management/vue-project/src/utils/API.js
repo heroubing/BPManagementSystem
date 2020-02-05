@@ -1,9 +1,14 @@
 const API = {
   SYS_staffLogin: '/api/staff/login/',
+  SYS_userLogin: '/api/user/login/',
   SYS_captcha: '/api/captcha/',
 
   USER_query: '/api/user/',
   USER_logout: '/api/user/logout/',
+
+  // 附件
+  File_create: '/api/file/create/',
+  File_download: (id) => `/api/file/${id}/`,
 
   // 投资机构
   Investment_query: '/api/investment/organization/',
@@ -20,6 +25,13 @@ const API = {
   InvestmentUser_create: '/api/investment/user/create/',
   InvestmentUser_detail: (id) => `/api/investment/user/${id}/`,
   InvestmentUser_update: (id) => `/api/investment/user/${id}/update/`,
-  InvestmentUser_delete: '/api/investment/user/delete/'
+  InvestmentUser_delete: '/api/investment/user/delete/',
+
+  // 投资项目
+  InvestmentProject_query: '/api/investment/project/',
+  InvestmentProject_create: '/api/investment/project/create/',
+  InvestmentProject_detail: (id) => `/api/investment/project/${id}/`,
+  InvestmentProject_update: (id) => `/api/investment/project/${id}/update/`,
+  InvestmentProject_delete: '/api/investment/project/delete/'
 }
 export default API

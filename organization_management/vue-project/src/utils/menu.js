@@ -16,6 +16,11 @@ const menus = [
     menuName: '投资机构用户',
     menuCode: 'investmentUser_manage',
     menuUrl: '/investmentUser/manage'
+  },
+  {
+    menuName: '项目储备登记',
+    menuCode: 'project_manage',
+    menuUrl: '/project/manage'
   }
 ]
 export default menus
