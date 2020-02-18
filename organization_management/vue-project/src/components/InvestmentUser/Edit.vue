@@ -2,6 +2,7 @@
   <el-form :model='ruleForm' :rules='rules' label-width='100px' ref='ruleForm'>
     <el-form-item label='用户' prop='user'>
       <el-autocomplete
+        :disabled="!isAdd"
         :debounce="500"
         :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'user')"
         :trigger-on-focus="true"
@@ -72,7 +73,6 @@ export default {
       type: Object,
       default: function () {
         return {
-          id: '', // 投资用户id
           user: {
             id: null, // 用户id
             user_name: '' // 用户id显示信息
@@ -96,9 +96,8 @@ export default {
   data () {
     return {
       is_activeList: Constant.isNot_boolean,
-      isAdd: !this.data.id, // 是否为新增
+      isAdd: !this.data.user.id, // 是否为新增
       ruleForm: {
-        id: this.data.id, // 投资用户id
         user: this.data.user.id, // 用户id
         user_name: this.data.user.user_name, // 用户id显示信息
         organization: this.data.organization.id, // 所属机构id
@@ -190,8 +189,7 @@ export default {
           }
           let url = API.InvestmentUser_create
           if (!this.isAdd) {
-            params.id = this.ruleForm.id
-            url = API.InvestmentUser_update(this.ruleForm.id)
+            url = API.InvestmentUser_update(this.ruleForm.user.id)
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({

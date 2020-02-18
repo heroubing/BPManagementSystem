@@ -10,7 +10,7 @@
       </el-form-item>
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
-      <el-table-column label='投资用户ID' prop='id' width='100px'/>
+      <el-table-column label='投资用户ID' prop='user.id' width='100px'/>
       <el-table-column label='用户' prop='user.user_name' width='150px'/>
       <el-table-column label='所属机构' prop='organization.org_name'/>
       <el-table-column label='所属用户组' prop='group.display_name'/>
@@ -71,14 +71,14 @@ export default {
     // 新增/编辑
     openDialog (row) {
       this.dialogData = row
-      this.dialogTitle = row ? `编辑投资机构用户-${row.id}` : '新增投资机构用户'
+      this.dialogTitle = row ? `编辑投资机构用户-${row.user.id}` : '新增投资机构用户'
       this.dialogVisible_edit = true
     },
     // 删除
     deleteRow (row) {
-      this.$confirm(`确认删除投资用户【${row.id}】${row.inner_user_name} 吗？`)
+      this.$confirm(`确认删除投资用户【${row.user.id}】${row.user.user_name} 吗？`)
         .then(() => {
-          let params = {id: row.id}
+          let params = {id: row.user.id}
           Utils.getInfoPost(API.InvestmentUser_delete, params).then(() => {
             this.$notify.success({
               title: '成功',
