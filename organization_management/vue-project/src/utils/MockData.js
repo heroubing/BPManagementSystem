@@ -240,7 +240,6 @@ const MockData = function (url, params, isShowLoading) {
           'msg': 'OK',
           'result': [
             {
-              'id': 3,
               'user': {
                 'id': 3,
                 'user_name': '测试user'
