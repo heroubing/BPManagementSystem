@@ -12,6 +12,7 @@ import AdsManage from '@/components/Ads/Manage'
 import ProjectContactManage from '@/components/ProjectContact/Manage'
 import InvestmentManage from '@/components/Investment/Manage'
 import UserGroup from '@/components/UserGroup/Manage'
+import User from '@/components/User/Manage'
 
 Vue.use(Router)
 
@@ -73,6 +74,11 @@ export default new Router({
       path: '/userGroup/manage',
       name: 'UserGroup',
       component: UserGroup
+    },
+    {
+      path: '/user/manage',
+      name: 'User',
+      component: User
     },
     {
       path: '*',

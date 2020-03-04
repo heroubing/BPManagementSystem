@@ -45,13 +45,13 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': '3',
               'user_name': 'user3',
-              'email': null,
-              'phone': null,
+              'email': 'user3@example.com',
+              'phone': '13218105046',
               'sex': '',
               'reg_time': '2018-11-18T10:50:46+0800',
               'homepage': '',
               'qq': '',
-              'points': 100,
+              'points': 200,
               'user_avatar': '',
               'birthday': null,
               'address': '',
@@ -61,13 +61,13 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': '2',
               'user_name': 'user2',
-              'email': null,
-              'phone': null,
+              'email': 'user2@example.com',
+              'phone': '13218105000',
               'sex': '',
               'reg_time': '2018-11-18T10:50:00+0800',
               'homepage': '',
               'qq': '',
-              'points': 100,
+              'points': 400,
               'user_avatar': '',
               'birthday': null,
               'address': '',
@@ -76,13 +76,13 @@ const MockData = function (url, params, isShowLoading) {
             },
             {
               'user_name': 'user1',
-              'email': null,
-              'phone': null,
+              'email': 'user1@example.com',
+              'phone': '13218105000',
               'sex': '',
               'reg_time': '2018-11-18T10:50:00+0800',
               'homepage': '',
               'qq': '',
-              'points': 100,
+              'points': 300,
               'user_avatar': '',
               'birthday': null,
               'address': '',
@@ -92,13 +92,13 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': '1',
               'user_name': 'sun',
-              'email': null,
-              'phone': null,
+              'email': 'sun@example.com',
+              'phone': '13217223453',
               'sex': '',
               'reg_time': '2018-11-17T22:34:53+0800',
               'homepage': '',
               'qq': '',
-              'points': 100,
+              'points': 30,
               'user_avatar': '',
               'birthday': null,
               'address': '',
@@ -116,8 +116,8 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': '4',
               'user_name': 'DefineFC',
-              'email': null,
-              'phone': null,
+              'email': 'DefineFC@example.com',
+              'phone': '13216214902',
               'sex': '',
               'reg_time': '2018-11-16T21:49:02+0800',
               'homepage': '',
@@ -1308,6 +1308,37 @@ const MockData = function (url, params, isShowLoading) {
             'is_active': true
           },
           'info': null
+        }
+        break
+      case API.USER_charge:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'order_id': 'iap202003010952537f9d48ef93734aa',
+            'pay_cny_fen': 100,
+            'source': 'iap',
+            'pay_time': '2020-03-01T17:52:53+0800',
+            'expire_time': '2020-03-01T20:52:53+0800',
+            'status': 'generate_order',
+            'total': null
+          },
+          'info': {
+            'id': 1,
+            'user_name': 'DefineFC',
+            'email': null,
+            'phone': null,
+            'sex': '',
+            'reg_time': '2019-08-16T22:43:20+0800',
+            'homepage': '',
+            'qq': '',
+            'points': 100,
+            'user_avatar': '',
+            'birthday': null,
+            'address': '',
+            'subscription': [],
+            'investor': null
+          }
         }
         break
       default:

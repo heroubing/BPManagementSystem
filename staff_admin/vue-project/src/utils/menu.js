@@ -25,6 +25,11 @@ const menus = [
         menuName: '项目联系人',
         menuCode: 'projectContact_manage',
         menuUrl: '/projectContact/manage'
+      },
+      {
+        menuName: '用户管理',
+        menuCode: 'user_manage',
+        menuUrl: '/user/manage'
       }
     ]
   },

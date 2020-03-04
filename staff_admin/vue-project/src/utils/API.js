@@ -4,6 +4,8 @@ const API = {
 
   USER_query: '/api/user/',
   USER_logout: '/api/user/logout/',
+  // 充值
+  USER_charge: '/api/charge/admin/',
 
   BP_add: '/api/bp/create/',
   BP_query: '/api/bp/',
