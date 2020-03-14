@@ -10,6 +10,37 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label='初始管理员' prop='user' v-if="isAdd">
+        <el-autocomplete
+          :debounce="500"
+          :disabled="!isAdd"
+          :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'user')"
+          :trigger-on-focus="true"
+          @select="(item) => handleSelect(item, 'user')"
+          placeholder="请输入关键字查询"
+          popper-class="Add-autocomplete"
+          v-model="ruleForm.user_name"
+        >
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.id}}-{{ item.user_name }}</div>
+          </template>
+        </el-autocomplete>
+      </el-form-item>
+      <el-form-item label='初始管理员用户组' prop='group' v-if="isAdd">
+        <el-autocomplete
+          :debounce="500"
+          :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'group')"
+          :trigger-on-focus="true"
+          @select="(item) => handleSelect(item, 'group')"
+          placeholder="请输入关键字查询"
+          popper-class="Add-autocomplete"
+          v-model="ruleForm.group_name"
+        >
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.id}}-{{ item.display_name }}</div>
+          </template>
+        </el-autocomplete>
+      </el-form-item>
       <div style="text-align: end;">
         <el-button @click="submitForm('ruleForm')" type='primary'>{{isAdd ? '确定新增' : '确定保存'}}</el-button>
         <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
@@ -44,27 +75,83 @@ export default {
       isAdd: !data.id, // 是否为新增
       ruleForm: {
         org_name: data.org_name,
-        is_active: data.is_active
+        is_active: data.is_active,
+        user: null, // 用户id
+        user_name: '', // 用户id显示信息
+        group: null, // 所属用户组id
+        group_name: '' // 所属用户组id显示信息
       },
       rules: {
         org_name: [
           {required: true, message: '请输入机构名称', trigger: 'blur'}
+        ],
+        user: [
+          {required: true, message: '请通过查询点击选择指定初始管理员', trigger: 'blur'},
+          {
+            validator: (rule, value, callback) => this.validator(rule, value, callback, 'user'),
+            message: '请通过查询点击选择指定初始管理员'
+          }
+        ],
+        group: [
+          {required: true, message: '请通过查询点击选择现有用户组', trigger: 'blur'},
+          {
+            validator: (rule, value, callback) => this.validator(rule, value, callback, 'group'),
+            message: '请通过查询点击选择现有用户组'
+          }
         ]
       }
     }
   },
   methods: {
+    // 用户查询
+    queryInputList (searchKey, cb, key) {
+      // 清空key，确保key是用户点击选择的
+      this.ruleForm[key] = ''
+      let api = ''
+      let value = ''
+      let params = {search_key: searchKey, page: 1}
+      switch (key) {
+        case 'user':
+          api = API.USER_search
+          value = 'user_name'
+          break
+        case 'group':
+          api = API.User_group_query
+          value = 'display_name'
+          params.is_admin = true
+          break
+      }
+      Utils.getInfo(api, params, false).then(({result}) => {
+        cb(result.map(item => Object.assign({value: item[value]}, item)))
+      })
+    },
+    // 选中联系人
+    handleSelect (item, key) {
+      this.ruleForm[key] = item.id
+    },
+    // 校验用户ID是否为用户选择而非手填
+    validator (rule, value, callback, key) {
+      if (this.ruleForm[key] === '') {
+        callback(new Error())
+      } else {
+        callback()
+      }
+    },
     // 表单提交
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
             org_name: this.ruleForm.org_name,
-            is_active: this.ruleForm.is_active
+            is_active: this.ruleForm.is_active,
+            user: this.ruleForm.user,
+            user_group: this.ruleForm.group
           }
           let url = API.Investment_create
           let message = '录入成功'
           if (!this.isAdd) {
+            delete params.user
+            delete params.user_group
             url = API.Investment_update(this.data.id)
             message = '保存成功'
           }

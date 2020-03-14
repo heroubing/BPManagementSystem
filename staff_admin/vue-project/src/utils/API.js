@@ -3,6 +3,7 @@ const API = {
   SYS_captcha: '/api/captcha/',
 
   USER_query: '/api/user/',
+  USER_search: '/api/user/search/',
   USER_logout: '/api/user/logout/',
   // 充值
   USER_charge: '/api/charge/admin/',

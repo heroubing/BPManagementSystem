@@ -39,7 +39,7 @@ export default {
           id: '', // id
           display_name: '', // 投资用户组
           is_active: true, // 是否激活
-          is_admin: true, // 是否为管理员组
+          is_admin: true // 是否为管理员组
         }
       }
     }

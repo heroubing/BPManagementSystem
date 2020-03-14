@@ -147,6 +147,26 @@ const MockData = function (url, params, isShowLoading) {
           }
         }
         break
+      case API.USER_search:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': [
+            {
+              'id': 2,
+              'user_name': 'sun',
+              'user_avatar': ''
+            }
+          ],
+          'info': {
+            'pagination': {
+              'count': 1,
+              'num_pages': 1,
+              'per_page': 50
+            }
+          }
+        }
+        break
       case API.USER_logout:
         mockData = {
           'code': 200,
