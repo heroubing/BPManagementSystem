@@ -1276,17 +1276,20 @@ const MockData = function (url, params, isShowLoading) {
             {
               'id': 1,
               'display_name': '11111',
-              'is_active': false
+              'is_active': false,
+              'is_admin': false
             },
             {
               'id': 2,
               'display_name': '2222',
-              'is_active': false
+              'is_active': false,
+              'is_admin': true
             },
             {
               'id': 3,
               'display_name': '3333',
-              'is_active': false
+              'is_active': false,
+              'is_admin': false
             }
           ],
           'info': {

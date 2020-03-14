@@ -13,6 +13,7 @@
       <el-table-column label='ID' prop='id' width='100px'/>
       <el-table-column label='投资用户组名称' prop='display_name'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
+      <el-table-column :formatter="formatterIsAdmin" label='是否为管理员组' prop='is_admin' width='150px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
@@ -62,6 +63,10 @@ export default {
     // 是否激活格式转换
     formatterIsActive (row) {
       return row.is_active ? '是' : '否'
+    },
+    // 是否为管理员组格式转换
+    formatterIsAdmin (row) {
+      return row.is_admin ? '是' : '否'
     },
     // 新增/编辑
     openDialog (row) {

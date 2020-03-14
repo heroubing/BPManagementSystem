@@ -10,6 +10,12 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label='是否为管理员组' prop='is_admin'>
+        <el-radio-group v-model="ruleForm.is_admin">
+          <el-radio :key="item.value" :label="item.value" v-for="item in is_adminList">{{item.label}}
+          </el-radio>
+        </el-radio-group>
+      </el-form-item>
       <div style="text-align: end;">
         <el-button @click="submitForm('ruleForm')" type='primary'>{{isAdd ? '确定新增' : '确定保存'}}</el-button>
         <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
@@ -32,7 +38,8 @@ export default {
         return {
           id: '', // id
           display_name: '', // 投资用户组
-          is_active: true // 是否激活
+          is_active: true, // 是否激活
+          is_admin: true, // 是否为管理员组
         }
       }
     }
@@ -41,10 +48,12 @@ export default {
     let data = this.data
     return {
       is_activeList: Constant.isNot_boolean,
+      is_adminList: Constant.isNot_boolean,
       isAdd: !data.id, // 是否为新增
       ruleForm: {
         display_name: data.display_name,
-        is_active: data.is_active
+        is_active: data.is_active,
+        is_admin: data.is_admin
       },
       rules: {
         display_name: [
@@ -60,7 +69,8 @@ export default {
         if (valid) {
           let params = {
             display_name: this.ruleForm.display_name,
-            is_active: this.ruleForm.is_active
+            is_active: this.ruleForm.is_active,
+            is_admin: this.ruleForm.is_admin
           }
           let url = API.User_group_create
           let message = '录入成功'
