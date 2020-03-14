@@ -106,7 +106,10 @@ export default {
         short_name: [{required: true, message: '请输入项目简称', trigger: 'blur'}],
         code: [{required: true, message: '请输入项目编码', trigger: 'blur'}],
         status: [{required: true, message: '请选择项目状态', trigger: 'blur'}],
-        industry: [{required: true, message: '请输入所属行业', trigger: 'blur'}]
+        industry: [{required: true, message: '请输入所属行业', trigger: 'blur'}],
+        contact_info: [{required: true, message: '请输入联系人信息', trigger: 'blur'}],
+        advantage: [{required: true, message: '请输入项目优势', trigger: 'blur'}],
+        origin: [{required: true, message: '请输入项目来源', trigger: 'blur'}]
       }
     }
   },
