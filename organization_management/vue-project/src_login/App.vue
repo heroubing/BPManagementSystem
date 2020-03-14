@@ -2,7 +2,7 @@
   <div id='app'>
     <div class='header'>
       <img src='./assets/logo.png' class='icon'>
-      投资数据库管理
+      机构管理
     </div>
     <div class='main'>
       <img src='./assets/bg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>

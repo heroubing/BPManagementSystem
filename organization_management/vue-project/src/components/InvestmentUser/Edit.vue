@@ -129,9 +129,6 @@ export default {
             message: '请通过查询点击选择现有用户组'
           }
         ],
-        inner_user_name: [
-          {required: true, message: '请输入内部用户名', trigger: 'blur'}
-        ],
         is_active: [
           {required: true, message: '请输入联系方式', trigger: 'blur'}
         ]
@@ -147,7 +144,7 @@ export default {
       let value = ''
       switch (key) {
         case 'user':
-          api = API.USER_query
+          api = API.USER_search
           value = 'user_name'
           break
         case 'organization':

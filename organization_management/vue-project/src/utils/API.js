@@ -4,6 +4,7 @@ const API = {
   SYS_captcha: '/api/captcha/',
 
   USER_query: '/api/user/',
+  USER_search: '/api/user/search/',
   USER_logout: '/api/user/logout/',
 
   // 附件

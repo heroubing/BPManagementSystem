@@ -4,7 +4,7 @@
       <el-header>
         <div class='icon'>
           <img class='iconImg' src='../src_login/assets/logo.png'/>
-          <span class='title'>投资数据库管理</span>
+          <span class='title'>机构管理</span>
         </div>
         <div class='funcDiv'>
           <div class='topButtonDiv'>
