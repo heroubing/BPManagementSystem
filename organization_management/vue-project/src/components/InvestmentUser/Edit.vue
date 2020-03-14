@@ -16,21 +16,6 @@
         </template>
       </el-autocomplete>
     </el-form-item>
-    <el-form-item label='所属机构' prop='organization'>
-      <el-autocomplete
-        :debounce="500"
-        :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'organization')"
-        :trigger-on-focus="true"
-        @select="(item) => handleSelect(item, 'organization')"
-        placeholder="请输入关键字查询"
-        popper-class="Add-autocomplete"
-        v-model="ruleForm.organization_name"
-      >
-        <template slot-scope="{ item }">
-          <div class="name">{{ item.id}}-{{ item.org_name }}</div>
-        </template>
-      </el-autocomplete>
-    </el-form-item>
     <el-form-item label='所属用户组' prop='group'>
       <el-autocomplete
         :debounce="500"
@@ -77,11 +62,6 @@ export default {
             id: null, // 用户id
             user_name: '' // 用户id显示信息
           },
-          organization: {
-            id: null, // 所属机构id
-            org_name: '', // 所属机构id显示信息
-            is_active: true
-          },
           group: {
             id: null, // 所属用户组id
             display_name: '', // 所属用户组id显示信息
@@ -100,8 +80,6 @@ export default {
       ruleForm: {
         user: this.data.user.id, // 用户id
         user_name: this.data.user.user_name, // 用户id显示信息
-        organization: this.data.organization.id, // 所属机构id
-        organization_name: this.data.organization.org_name, // 所属机构id显示信息
         group: this.data.group.id, // 所属用户组id
         group_name: this.data.group.display_name, // 所属用户组id显示信息
         inner_user_name: this.data.inner_user_name, // 内部用户名
@@ -113,13 +91,6 @@ export default {
           {
             validator: (rule, value, callback) => this.validator(rule, value, callback, 'user'),
             message: '请通过查询点击选择现有用户'
-          }
-        ],
-        organization: [
-          {required: true, message: '请通过查询点击选择现有所属机构', trigger: 'blur'},
-          {
-            validator: (rule, value, callback) => this.validator(rule, value, callback, 'organization'),
-            message: '请通过查询点击选择现有所属机构'
           }
         ],
         group: [
@@ -147,10 +118,6 @@ export default {
           api = API.USER_search
           value = 'user_name'
           break
-        case 'organization':
-          api = API.Investment_query
-          value = 'org_name'
-          break
         case 'group':
           api = API.User_group_query
           value = 'display_name'
@@ -163,7 +130,7 @@ export default {
     },
     // 选中联系人
     handleSelect (item, key) {
-      this.ruleForm[key] = String(item.id)
+      this.ruleForm[key] = item.id
     },
     // 校验用户ID是否为用户选择而非手填
     validator (rule, value, callback, key) {
@@ -179,7 +146,6 @@ export default {
         if (valid) {
           let params = {
             user: this.ruleForm.user,
-            organization: this.ruleForm.organization,
             group: this.ruleForm.group,
             inner_user_name: this.ruleForm.inner_user_name,
             is_active: this.ruleForm.is_active
