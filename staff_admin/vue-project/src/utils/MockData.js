@@ -37,6 +37,20 @@ const MockData = function (url, params, isShowLoading) {
           'info': null
         }
         break
+      case API.SYS_permission:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'authenticated': true,
+            'permissions': {
+              'common.frontend_staff_admin': true,
+              'product.add_article': true
+            }
+          },
+          'info': null
+        }
+        break
       case API.USER_query:
         mockData = {
           'code': 200,
