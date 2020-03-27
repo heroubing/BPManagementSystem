@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Constant from '@/utils/Constant'
+import Utils from '@/utils/Utils'
+import API from '@/utils/API'
+import {MessageBox} from 'element-ui'
 import Home from '@/components/Home'
 import UserGroup from '@/components/UserGroup/Manage'
 import InvestmentUser from '@/components/InvestmentUser/Manage'
@@ -8,7 +11,7 @@ import Project from '@/components/Project/Manage'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: Constant.publicPath,
   routes: [
@@ -38,3 +41,23 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  console.log(to, from)
+  Utils.getInfo(API.SYS_permission, {key: 'core.frontend_staff_admin'}).then(({result}) => {
+    if (result && result.authenticated) {
+      next()
+    } else {
+      MessageBox.alert(
+        Constant.AJAX_ERROR_NO_AUTH,
+        '访问失败',
+        {
+          type: 'error',
+          showClose: false,
+          callback: function () {
+            window.top.location.href = `${window.location.origin}${Constant.publicPath}/login.html`
+          }
+        })
+    }
+  })
+})
+export default router

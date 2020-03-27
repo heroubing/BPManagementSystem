@@ -1,4 +1,5 @@
 export default {
+  AJAX_ERROR_NO_AUTH: '您的登录信息已过期或还未登录，请重新登录',
   publicPath: '/org_manage',
 
   METHOD_ADD: 'add', // 新增
