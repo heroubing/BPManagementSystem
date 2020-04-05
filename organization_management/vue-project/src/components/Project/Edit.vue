@@ -6,7 +6,7 @@
     <el-form-item label='项目简称' prop='short_name'>
       <el-input :readonly="readonly" v-model='ruleForm.short_name'/>
     </el-form-item>
-    <el-form-item label='项目编码' prop='code'>
+    <el-form-item label='项目代号' prop='code'>
       <el-input :readonly="readonly" v-model='ruleForm.code'/>
     </el-form-item>
     <el-form-item label='项目状态' prop='status'>
@@ -67,7 +67,7 @@ export default {
           id: '', // 投资项目id
           full_name: '', // 项目全名
           short_name: '', // 项目简称
-          code: '', // 项目编码
+          code: '', // 项目代号
           status: '', // 项目状态
           brief: null, // 项目简介，已上传文件的id
           bp: null, // 项目计划书，已上传文件的id
@@ -89,7 +89,7 @@ export default {
       ruleForm: {
         full_name: this.data.full_name, // 项目全名
         short_name: this.data.short_name, // 项目简称
-        code: this.data.code, // 项目编码
+        code: this.data.code, // 项目代号
         status: this.data.status ? this.data.status : '储备', // 项目状态
         brief: this.data.brief, // 项目简介，已上传文件的id
         bp: this.data.bp, // 项目计划书，已上传文件的id
@@ -104,7 +104,7 @@ export default {
       rules: {
         full_name: [{required: true, message: '请输入项目全名', trigger: 'blur'}],
         short_name: [{required: true, message: '请输入项目简称', trigger: 'blur'}],
-        code: [{required: true, message: '请输入项目编码', trigger: 'blur'}],
+        code: [{required: true, message: '请输入项目代号', trigger: 'blur'}],
         status: [{required: true, message: '请选择项目状态', trigger: 'blur'}],
         industry: [{required: true, message: '请输入所属行业', trigger: 'blur'}],
         contact_info: [{required: true, message: '请输入联系人信息', trigger: 'blur'}],

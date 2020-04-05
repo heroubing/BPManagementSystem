@@ -2,7 +2,7 @@
   <div class="content">
     <el-form :inline='true' :model='formData' @submit.native.prevent style='margin-top: 20px;'>
       <el-form-item label=''>
-        <el-input placeholder="请输入项目全名、简称或编码进行检索" style="width: 300px;" v-model='formData.search_key'/>
+        <el-input placeholder="请输入项目全名、简称或代号进行检索" style="width: 300px;" v-model='formData.search_key'/>
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
@@ -13,7 +13,7 @@
       <el-table-column label='投资项目ID' prop='id' width='100px'/>
       <el-table-column label='项目全称' prop='full_name'/>
       <el-table-column label='简称' prop='short_name' width='150px'/>
-      <el-table-column label='编码' prop='code' width='100px'/>
+      <el-table-column label='代号' prop='code' width='100px'/>
       <el-table-column label='状态' prop='status' width='100px'/>
       <el-table-column label='所属行业' prop='industry' width='100px'/>
       <el-table-column label='来源' prop='origin' width='100px'/>
