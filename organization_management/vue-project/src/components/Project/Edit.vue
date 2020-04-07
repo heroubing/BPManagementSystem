@@ -21,7 +21,8 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <form-item-file :readonly="readonly" label="项目简介" prop="brief" v-model="ruleForm.brief"/>
+    <form-item-file :params="{category:'investment_management/project/brief'}" :readonly="readonly" label="项目简介"
+                    prop="brief" v-model="ruleForm.brief"/>
     <form-item-file :readonly="readonly" label="项目计划书" prop="brief" v-model="ruleForm.bp"/>
     <form-item-file :readonly="readonly" label="考察报告" prop="brief" v-model="ruleForm.reports"/>
     <form-item-file :readonly="readonly" label="其他资料" prop="brief" v-model="ruleForm.other_file"/>
@@ -69,13 +70,13 @@ export default {
           short_name: '', // 项目简称
           code: '', // 项目代号
           status: '', // 项目状态
-          brief: null, // 项目简介，已上传文件的id
-          bp: null, // 项目计划书，已上传文件的id
-          reports: null, // 项目考察报告，已上传文件的id
-          other_file: null, // 项目其他资料，已上传文件的id
+          brief: '', // 项目简介，已上传文件的id
+          bp: '', // 项目计划书，已上传文件的id
+          reports: '', // 项目考察报告，已上传文件的id
+          other_file: '', // 项目其他资料，已上传文件的id
           industry: '', // 项目所属行业
           contact_info: '', // 项目联系人信息
-          contact_card: null, // 项目联系人名片，已上传文件的id
+          contact_card: '', // 项目联系人名片，已上传文件的id
           advantage: '', // 项目优势
           origin: ''// 项目来源
         }
@@ -91,13 +92,13 @@ export default {
         short_name: this.data.short_name, // 项目简称
         code: this.data.code, // 项目代号
         status: this.data.status ? this.data.status : '储备', // 项目状态
-        brief: this.data.brief, // 项目简介，已上传文件的id
-        bp: this.data.bp, // 项目计划书，已上传文件的id
-        reports: this.data.reports, // 项目考察报告，已上传文件的id
-        other_file: this.data.other_file, // 项目其他资料，已上传文件的id
+        brief: this.data.brief ? this.data.brief.split(',') : [], // 项目简介，已上传文件的id
+        bp: this.data.bp ? this.data.bp.split(',') : [], // 项目计划书，已上传文件的id
+        reports: this.data.reports ? this.data.reports.split(',') : [], // 项目考察报告，已上传文件的id
+        other_file: this.data.other_file ? this.data.other_file.split(',') : [], // 项目其他资料，已上传文件的id
         industry: this.data.industry, // 项目所属行业
         contact_info: this.data.contact_info, // 项目联系人信息
-        contact_card: this.data.contact_card, // 项目联系人名片，已上传文件的id
+        contact_card: this.data.contact_card ? this.data.contact_card.split(',') : [], // 项目联系人名片，已上传文件的id
         advantage: this.data.advantage, // 项目优势
         origin: this.data.origin// 项目来源
       },
@@ -123,13 +124,13 @@ export default {
             short_name: this.ruleForm.short_name,
             code: this.ruleForm.code,
             status: this.ruleForm.status,
-            brief: this.ruleForm.brief,
-            bp: this.ruleForm.bp,
-            reports: this.ruleForm.reports,
-            other_file: this.ruleForm.other_file,
+            brief: this.ruleForm.brief.join(','),
+            bp: this.ruleForm.bp.join(','),
+            reports: this.ruleForm.reports.join(','),
+            other_file: this.ruleForm.other_file.join(','),
             industry: this.ruleForm.industry,
             contact_info: this.ruleForm.contact_info,
-            contact_card: this.ruleForm.contact_card,
+            contact_card: this.ruleForm.contact_card.join(','),
             advantage: this.ruleForm.advantage,
             origin: this.ruleForm.origin
           }
