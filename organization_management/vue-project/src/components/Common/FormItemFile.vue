@@ -1,11 +1,9 @@
 <template>
   <el-form-item :label="label" :prop='prop'>
-    <!--    <el-input :placeholder="readonly ? '未上传' : '请上传文件'" :value="hasFile ? '已上传，点击左侧按钮下载文件' : ''" readonly>-->
-    <!--      <el-button @click="downloadFile" icon="el-icon-download" slot="prepend" v-if="hasFile"/>-->
     <el-upload
       :action="uploadApi"
-      :class="{'public-upload-show': readonly}"
       :before-remove="beforeRemove"
+      :class="{'public-upload-show': readonly}"
       :data="params"
       :disabled="readonly"
       :file-list="fileList"
@@ -13,12 +11,11 @@
       :on-preview="onPreview"
       :on-remove="onRemove"
       :on-success="onSuccess"
+      class="public-upload"
       with-credentials
     >
-      <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
       <el-button size='small' type='primary' v-if="!readonly">点击上传</el-button>
     </el-upload>
-    <!--    </el-input>-->
   </el-form-item>
 </template>
 
@@ -62,7 +59,7 @@ export default {
     if (this.value && this.value.map) { // todo 查名字
       fileList = this.value.map(id => ({
         name: '已上传文件-' + id,
-        id,
+        id
       }))
     } else {
       fileList = []
@@ -103,10 +100,10 @@ export default {
       let attachmentList = this.value.filter(id => file.id !== id)
       this.$emit('input', attachmentList)
     },
-    onError (err, file) {
+    onError () {
       this.$notify.error({
         title: '错误',
-        message: err.message
+        message: '文件上传失败，请重新尝试'
       })
     },
     beforeRemove (file) {
@@ -132,6 +129,12 @@ export default {
 }
 </script>
 
+<style scoped>
+  .public-upload {
+    width: 50%;
+    min-width: 250px;
+  }
+</style>
 <style>
   .public-upload-show .el-upload--text,
   .public-upload-show .el-upload--picture-card {
