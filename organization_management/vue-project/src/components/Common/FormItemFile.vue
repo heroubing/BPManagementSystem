@@ -4,6 +4,7 @@
     <!--      <el-button @click="downloadFile" icon="el-icon-download" slot="prepend" v-if="hasFile"/>-->
     <el-upload
       :action="uploadApi"
+      :class="{'public-upload-show': readonly}"
       :before-remove="beforeRemove"
       :data="params"
       :disabled="readonly"
@@ -12,8 +13,8 @@
       :on-preview="onPreview"
       :on-remove="onRemove"
       :on-success="onSuccess"
-      v-if="!readonly"
-      with-credentials>
+      with-credentials
+    >
       <!--<div slot='tip' class='el-upload__tip'>只能上传jpg/png文件，且不超过500kb</div>-->
       <el-button size='small' type='primary' v-if="!readonly">点击上传</el-button>
     </el-upload>
@@ -61,8 +62,7 @@ export default {
     if (this.value && this.value.map) { // todo 查名字
       fileList = this.value.map(id => ({
         name: '已上传文件-' + id,
-        status: 'success',
-        id
+        id,
       }))
     } else {
       fileList = []
@@ -132,6 +132,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  .public-upload-show .el-upload--text,
+  .public-upload-show .el-upload--picture-card {
+    display: none;
+  }
 </style>
