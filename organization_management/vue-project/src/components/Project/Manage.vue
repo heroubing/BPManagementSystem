@@ -17,6 +17,7 @@
       <el-table-column label='状态' prop='status' width='100px'/>
       <el-table-column label='所属行业' prop='industry' width='100px'/>
       <el-table-column label='来源' prop='origin' width='100px'/>
+      <el-table-column :formatter="formatterUserName" label='项目提交人' width='100px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
           <el-button
@@ -41,7 +42,7 @@
     </el-pagination>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible_edit" width="65%">
-      <Edit :data="dialogData" @saved="editSaved" v-if="dialogVisible_edit" :method="dialogMethod"/>
+      <Edit :data="dialogData" :method="dialogMethod" @saved="editSaved" v-if="dialogVisible_edit"/>
     </el-dialog>
   </div>
 </template>
@@ -73,9 +74,13 @@ export default {
     }
   },
   methods: {
-    // 是否激活格式转换
-    formatterIsActive (row) {
-      return row.is_active ? '是' : '否'
+    // 项目提交人格式化
+    formatterUserName (row) {
+      if (row.upload_user && row.upload_user.investment_user) {
+        return row.upload_user.investment_user.inner_user_name ? row.upload_user.investment_user.inner_user_name : row.upload_user.user_name
+      } else {
+        return ''
+      }
     },
     // 新增/编辑/查看
     openDialog (row, method = Constant.METHOD_ADD) {

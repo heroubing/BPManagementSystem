@@ -399,20 +399,31 @@ const MockData = function (url, params, isShowLoading) {
           'result': [
             {
               'id': 1,
-              'full_name': 'tttttttttttttttttt12312321e1312ttttttttttttttttttttttttttt',
-              'short_name': 't1231231231231231231t',
+              'organization': 9,
+              'full_name': 'ttttt',
+              'short_name': 'tt',
               'code': '34',
-              'status': '立项',
-              'brief': '17',
-              'bp': '17',
-              'record': '17',
-              'other_file': '17',
+              'status': 'ff',
+              'brief': '2,5',
+              'bp': '2,5',
+              'reports': '2,5',
+              'other_file': '2,5',
               'industry': 'dd',
               'contact_info': 'dd',
-              'contact_card': '17',
+              'contact_card': '2,5',
               'advantage': 'ww',
               'origin': 'ww',
-              'upload_user': 1
+              'upload_user': {
+                'id': 3,
+                'user_name': 'user2',
+                'user_avatar': 'https://investdata.com.cn/favicon.ico',
+                'investment_user': {
+                  'organization': 1,
+                  'group': 1,
+                  'inner_user_name': null,
+                  'is_active': true
+                }
+              }
             }
           ],
           'info': {
