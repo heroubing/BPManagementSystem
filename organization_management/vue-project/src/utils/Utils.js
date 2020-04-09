@@ -2,7 +2,6 @@
  * 工具类
  */
 import {Loading, Notification} from 'element-ui'
-import fa from 'element-ui/src/locale/lang/fa'
 
 export default class Utils {
   // 是否使用模拟数据
