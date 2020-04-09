@@ -2,10 +2,11 @@
  * 工具类
  */
 import {Loading, Notification} from 'element-ui'
+import fa from 'element-ui/src/locale/lang/fa'
 
 export default class Utils {
   // 是否使用模拟数据
-  static USE_MOCK = true;
+  static USE_MOCK = false;
 
   /**
    * get网络请求公共方法
