@@ -21,18 +21,18 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <form-item-file :params="{category:'investment_management/project/brief'}" :readonly="readonly" label="项目简介"
+    <form-item-file :params="{category:'investment_management/project/brief', is_private: true}" :readonly="readonly" label="项目简介"
                     prop="brief" v-model="ruleForm.brief"/>
-    <form-item-file :readonly="readonly" label="项目计划书" prop="brief" v-model="ruleForm.bp"/>
-    <form-item-file :readonly="readonly" label="考察报告" prop="brief" v-model="ruleForm.reports"/>
-    <form-item-file :readonly="readonly" label="其他资料" prop="brief" v-model="ruleForm.other_file"/>
+    <form-item-file :params="{category:'investment_management/project/bp', is_private: true}" :readonly="readonly" label="项目计划书" prop="brief" v-model="ruleForm.bp"/>
+    <form-item-file :params="{category:'investment_management/project/report', is_private: true}" :readonly="readonly" label="考察报告" prop="brief" v-model="ruleForm.reports"/>
+    <form-item-file :params="{category:'investment_management/project/other', is_private: true}" :readonly="readonly" label="其他资料" prop="brief" v-model="ruleForm.other_file"/>
     <el-form-item label='所属行业' prop='industry'>
       <el-input :readonly="readonly" v-model='ruleForm.industry'/>
     </el-form-item>
     <el-form-item label='联系人信息' prop='contact_info'>
       <el-input :readonly="readonly" type="textarea" v-model='ruleForm.contact_info'/>
     </el-form-item>
-    <form-item-file :readonly="readonly" label="联系人名片" prop="brief" v-model="ruleForm.contact_card"/>
+    <form-item-file :params="{category:'investment_management/project/contact_card', is_private: true}" :readonly="readonly" label="联系人名片" prop="brief" v-model="ruleForm.contact_card"/>
     <el-form-item label='项目优势' prop='advantage'>
       <el-input :readonly="readonly" type="textarea" v-model='ruleForm.advantage'/>
     </el-form-item>
