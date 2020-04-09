@@ -50,7 +50,7 @@ export default {
     params: {
       type: Object,
       default: function () {
-        return {is_private: false}
+        return {is_private: true}
       }
     }
   },
