@@ -15,35 +15,16 @@ const router = new Router({
   mode: 'history',
   base: Constant.publicPath,
   routes: [
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/userGroup/manage',
-      name: 'UserGroup',
-      component: UserGroup
-    },
-    {
-      path: '/investmentUser/manage',
-      name: 'InvestmentUser',
-      component: InvestmentUser
-    },
-    {
-      path: '/project/manage',
-      name: 'Project',
-      component: Project
-    },
-    {
-      path: '*',
-      redirect: '/home'
-    }
+    {path: '/home', name: 'Home', component: Home},
+    {path: '/userGroup/manage', name: 'UserGroup', component: UserGroup},
+    {path: '/investmentUser/manage', name: 'InvestmentUser', component: InvestmentUser},
+    {path: '/project/manage', name: 'Project', component: Project},
+    {path: '*', redirect: '/home'}
   ]
 })
 router.beforeEach((to, from, next) => {
   console.log(to, from)
-  Utils.getInfo(API.SYS_permission, {key: 'core.frontend_staff_admin'}).then(({result}) => {
+  Utils.getInfo(API.SYS_permission, {key: 'core.frontend_organization_management'}).then(({result}) => {
     if (result && result.authenticated) {
       next()
     } else {
