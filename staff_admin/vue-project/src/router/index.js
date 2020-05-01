@@ -23,70 +23,19 @@ const router = new Router({
   mode: 'history',
   base: Constant.publicPath,
   routes: [
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/bp/add',
-      name: 'BpAdd',
-      component: BpAdd
-    },
-    {
-      path: '/bp/manage',
-      name: 'BpManage',
-      component: BpManage
-    },
-    {
-      path: '/bp/industry/manage',
-      name: 'IndustryManage',
-      component: IndustryManage
-    },
-    {
-      path: '/bp/round/manage',
-      name: 'RoundManage',
-      component: RoundManage
-    },
-    {
-      path: '/investor/review',
-      name: 'InvestorReview',
-      component: InvestorReview
-    },
-    {
-      path: '/learning/manage',
-      name: 'LearningManage',
-      component: LearningManage
-    },
-    {
-      path: '/ads/manage',
-      name: 'AdsManage',
-      component: AdsManage
-    },
-    {
-      path: '/projectContact/manage',
-      name: 'ProjectContact',
-      component: ProjectContactManage
-    },
-    {
-      path: '/investment/manage',
-      name: 'Investment',
-      component: InvestmentManage
-    },
-    {
-      path: '/userGroup/manage',
-      name: 'UserGroup',
-      component: UserGroup
-    },
-    {
-      path: '/user/manage',
-      name: 'User',
-      component: User
-    },
-    {
-      path: '*',
-      redirect: '/home'
-    }
+    {path: '/home', name: 'Home', component: Home},
+    {path: '/bp/add', name: 'BpAdd', component: BpAdd},
+    {path: '/bp/manage', name: 'BpManage', component: BpManage},
+    {path: '/bp/industry/manage', name: 'IndustryManage', component: IndustryManage},
+    {path: '/bp/round/manage', name: 'RoundManage', component: RoundManage},
+    {path: '/investor/review', name: 'InvestorReview', component: InvestorReview},
+    {path: '/learning/manage', name: 'LearningManage', component: LearningManage},
+    {path: '/ads/manage', name: 'AdsManage', component: AdsManage},
+    {path: '/projectContact/manage', name: 'ProjectContact', component: ProjectContactManage},
+    {path: '/investment/manage', name: 'Investment', component: InvestmentManage},
+    {path: '/userGroup/manage', name: 'UserGroup', component: UserGroup},
+    {path: '/user/manage', name: 'User', component: User},
+    {path: '*', redirect: '/home'}
   ]
 })
 router.beforeEach((to, from, next) => {

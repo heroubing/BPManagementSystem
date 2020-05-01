@@ -21,8 +21,8 @@
           popper-class="Add-autocomplete"
           v-model="ruleForm.user_name"
         >
-          <template slot-scope="{ item }">
-            <div class="name">{{ item.id}}-{{ item.user_name }}</div>
+          <template slot-scope="{item}">
+            <div class="name">{{item.user_name}}</div>
           </template>
         </el-autocomplete>
       </el-form-item>
@@ -36,8 +36,8 @@
           popper-class="Add-autocomplete"
           v-model="ruleForm.group_name"
         >
-          <template slot-scope="{ item }">
-            <div class="name">{{ item.id}}-{{ item.display_name }}</div>
+          <template slot-scope="{item}">
+            <div class="name">{{item.display_name}}</div>
           </template>
         </el-autocomplete>
       </el-form-item>
@@ -105,6 +105,11 @@ export default {
   methods: {
     // 用户查询
     queryInputList (searchKey, cb, key) {
+      if (!searchKey) {
+        let result = []
+        cb(result)
+        return
+      }
       // 清空key，确保key是用户点击选择的
       this.ruleForm[key] = ''
       let api = ''
