@@ -24,7 +24,7 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   console.log(to, from)
-  Utils.getInfo(API.SYS_permission, {key: 'core.frontend_organization_management'}).then(({result}) => {
+  Utils.getInfo(API.SYS_permission, {keys: 'core.frontend_organization_management'}).then(({result}) => {
     if (result && result.authenticated) {
       next()
     } else {
