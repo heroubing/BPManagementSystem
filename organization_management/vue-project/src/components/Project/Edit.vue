@@ -136,8 +136,8 @@ export default {
           }
           let url = API.InvestmentProject_create
           if (!this.isAdd) {
-            params.id = this.ruleForm.id
-            url = API.InvestmentProject_update(this.ruleForm.id)
+            params.id = this.data.id
+            url = API.InvestmentProject_update(this.data.id)
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({
