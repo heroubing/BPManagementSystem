@@ -44,104 +44,104 @@
 </template>
 
 <script>
-  import Utils from '@/utils/Utils'
-  import Edit from './Edit'
-  import API from '@/utils/API'
-  import Constant from '@/utils/Constant'
+import Utils from '@/utils/Utils'
+import Edit from './Edit'
+import API from '@/utils/API'
+import Constant from '@/utils/Constant'
 
-  export default {
-    name: 'Manage',
-    components: {Edit},
-    data () {
-      return {
-        userInfo: Utils.getUserInfo(),
-        Constant,
-        formData: {
-          search_key: ''
-        },
-        dialogData: {},
-        dialogTitle: '',
-        dialogVisible_edit: false,
-        dialogMethod: Constant.METHOD_ADD,
-        tableData: [],
-        currentPage: 1,
-        total: 0,
-        pageSize: 50
-      }
-    },
-    methods: {
-      // 项目提交人格式化
-      formatterUserName (row) {
-        if (row.upload_user && row.upload_user.investment_user) {
-          return row.upload_user.investment_user.inner_user_name ? row.upload_user.investment_user.inner_user_name : row.upload_user.user_name
-        } else {
-          return ''
-        }
+export default {
+  name: 'Manage',
+  components: {Edit},
+  data () {
+    return {
+      userInfo: Utils.getUserInfo(),
+      Constant,
+      formData: {
+        search_key: ''
       },
-      // 新增/编辑/查看
-      openDialog (row, method = Constant.METHOD_ADD) {
-        this.dialogData = row
-        switch (method) {
-          case Constant.METHOD_ADD:
-            this.dialogTitle = `新增项目`
-            break
-          case Constant.METHOD_EDIT:
-            this.dialogTitle = `编辑项目-${row.id}`
-            break
-          case Constant.METHOD_SHOW:
-            this.dialogTitle = `查看项目-${row.id}`
-            break
-        }
-        this.dialogMethod = method
-        this.dialogVisible_edit = true
-      },
-      // 删除
-      deleteRow (row) {
-        this.$confirm(`确认删除项目【${row.id}】${row.full_name} 吗？`)
-          .then(() => {
-            let params = {id: row.id}
-            Utils.getInfoPost(API.InvestmentProject_delete, params).then(() => {
-              this.$notify.success({
-                title: '成功',
-                message: '删除成功'
-              })
-              this.queryList()
-            })
-          })
-          .catch(() => null)
-      },
-      // 编辑成功回调
-      editSaved () {
-        this.dialogVisible_edit = false
-        this.queryList(true)
-      },
-      // 修改每页显示数量
-      handleSizeChange (val) {
-        console.log(`每页 ${val} 条`)
-        this.pageSize = val
-        this.queryList()
-      },
-      // 跳转到某页
-      handleCurrentChange (val) {
-        console.log(`当前页: ${val}`)
-        this.currentPage = val
-        this.queryList()
-      },
-      // 分页查询
-      queryList (isFirstQuery) {
-        if (isFirstQuery) this.currentPage = 1
-        let params = {page: this.currentPage, name: this.formData.search_key}
-        Utils.getInfo(API.InvestmentProject_query, params).then(({result, info}) => {
-          this.tableData = result
-          this.total = info.pagination.count
-          this.pageSize = info.pagination.per_page
-        })
-      }
-    },
-    mounted: function () {
-      this.queryList(true)
+      dialogData: {},
+      dialogTitle: '',
+      dialogVisible_edit: false,
+      dialogMethod: Constant.METHOD_ADD,
+      tableData: [],
+      currentPage: 1,
+      total: 0,
+      pageSize: 50
     }
+  },
+  methods: {
+    // 项目提交人格式化
+    formatterUserName (row) {
+      if (row.upload_user && row.upload_user.investment_user) {
+        return row.upload_user.investment_user.inner_user_name ? row.upload_user.investment_user.inner_user_name : row.upload_user.user_name
+      } else {
+        return ''
+      }
+    },
+    // 新增/编辑/查看
+    openDialog (row, method = Constant.METHOD_ADD) {
+      this.dialogData = row
+      switch (method) {
+        case Constant.METHOD_ADD:
+          this.dialogTitle = `新增项目`
+          break
+        case Constant.METHOD_EDIT:
+          this.dialogTitle = `编辑项目-${row.id}`
+          break
+        case Constant.METHOD_SHOW:
+          this.dialogTitle = `查看项目-${row.id}`
+          break
+      }
+      this.dialogMethod = method
+      this.dialogVisible_edit = true
+    },
+    // 删除
+    deleteRow (row) {
+      this.$confirm(`确认删除项目【${row.id}】${row.full_name} 吗？`)
+        .then(() => {
+          let params = {id: row.id}
+          Utils.getInfoPost(API.InvestmentProject_delete, params).then(() => {
+            this.$notify.success({
+              title: '成功',
+              message: '删除成功'
+            })
+            this.queryList()
+          })
+        })
+        .catch(() => null)
+    },
+    // 编辑成功回调
+    editSaved () {
+      this.dialogVisible_edit = false
+      this.queryList(true)
+    },
+    // 修改每页显示数量
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      this.pageSize = val
+      this.queryList()
+    },
+    // 跳转到某页
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.queryList()
+    },
+    // 分页查询
+    queryList (isFirstQuery) {
+      if (isFirstQuery) this.currentPage = 1
+      let params = {page: this.currentPage, name: this.formData.search_key}
+      Utils.getInfo(API.InvestmentProject_query, params).then(({result, info}) => {
+        this.tableData = result
+        this.total = info.pagination.count
+        this.pageSize = info.pagination.per_page
+      })
+    }
+  },
+  mounted: function () {
+    this.queryList(true)
   }
+}
 </script>
 
 <style scoped>
