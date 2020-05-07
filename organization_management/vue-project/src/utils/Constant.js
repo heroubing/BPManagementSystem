@@ -1,6 +1,6 @@
 export default {
-  AJAX_ERROR_NO_AUTH: '您的登录信息已过期或还未登录，请重新登录',
-  AJAX_ERROR_NO_AUTH_LOGIN: '您无权限登录此系统，如有问题请联系管理员',
+  AJAX_ERROR_NO_AUTH: '您无权限登录此系统，如有问题请联系管理员',
+  AJAX_ERROR_NO_AUTH_LOGIN: '您的登录信息已过期或还未登录，请重新登录',
   publicPath: '/org_manage',
 
   METHOD_ADD: 'add', // 新增

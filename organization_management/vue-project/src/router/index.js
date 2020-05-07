@@ -26,10 +26,19 @@ router.beforeEach((to, from, next) => {
   console.log(to, from)
   Utils.getInfo(API.SYS_permission, {keys: 'core.frontend_organization_management'}).then(({result}) => {
     if (result && result.authenticated) {
-      next()
+      if (result.permissions && result.permissions['core.frontend_organization_management']) {
+        next()
+      } else {
+        this.$notify.error({
+          title: '错误',
+          message: Constant.AJAX_ERROR_NO_AUTH
+        })
+        this.handleVerfClick()
+        this.captcha = ''
+      }
     } else {
       MessageBox.alert(
-        Constant.AJAX_ERROR_NO_AUTH,
+        Constant.AJAX_ERROR_NO_AUTH_LOGIN,
         '访问失败',
         {
           type: 'error',

@@ -89,10 +89,19 @@ export default {
             // 判断是否有权限
             Utils.getInfo(API.SYS_permission, {keys: 'core.frontend_organization_management'}).then(({result}) => {
               if (result && result.authenticated) {
-                // 记录用户id
-                localStorage.setItem('userInfo', JSON.stringify(json.result))
-                // 跳转至主页
-                window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
+                if (result.permissions && result.permissions['core.frontend_organization_management']) {
+                  // 记录用户id
+                  localStorage.setItem('userInfo', JSON.stringify(json.result))
+                  // 跳转至主页
+                  window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
+                } else {
+                  this.$notify.error({
+                    title: '错误',
+                    message: Constant.AJAX_ERROR_NO_AUTH
+                  })
+                  this.handleVerfClick()
+                  this.captcha = ''
+                }
               } else {
                 this.$notify.error({
                   title: '错误',
