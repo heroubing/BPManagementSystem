@@ -157,7 +157,7 @@ export default {
           }
           let url = API.InvestmentUser_create
           if (!this.isAdd) {
-            url = API.InvestmentUser_update(this.ruleForm.user.id)
+            url = API.InvestmentUser_update(this.ruleForm.user)
           }
           Utils.getInfoPost(url, params).then(() => {
             this.$notify.success({
