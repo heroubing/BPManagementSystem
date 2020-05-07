@@ -1,39 +1,39 @@
 <template>
   <div id='app'>
     <div class='header'>
-      <img src='./assets/logo.png' class='icon'>
+      <img class='icon' src='./assets/logo.png'>
       机构管理
     </div>
     <div class='main'>
-      <img src='./assets/bg.jpg' alt='BP后台管理系统' v-bind:height='height - 161'>
+      <img alt='BP后台管理系统' src='./assets/bg.jpg' v-bind:height='height - 161'>
       <div class='innerDiv'>
         <el-input
           class='input'
           placeholder='账号'
           v-model='name'>
-          <img slot='prefix' src='./assets/user.svg' alt='用户名' class='input-icon'>
+          <img alt='用户名' class='input-icon' slot='prefix' src='./assets/user.svg'>
         </el-input>
         <el-input
           class='input'
-          placeholder='密码'
-          v-model='password'
           maxlength='30'
-          type='password'>
-          <img slot='prefix' src='./assets/lock.svg' alt='密码' class='input-icon'>
+          placeholder='密码'
+          type='password'
+          v-model='password'>
+          <img alt='密码' class='input-icon' slot='prefix' src='./assets/lock.svg'>
         </el-input>
         <div class='verDiv'>
           <el-input
             class='input'
+            v-bind:maxlength='4'
             v-model='captcha'
-            v-on:keyup.enter.native='login'
-            v-bind:maxlength='4'>
+            v-on:keyup.enter.native='login'>
           </el-input>
           <img :src='captchaImg' alt='验证码' class='verImg' v-on:click='handleVerfClick'>
         </div>
         <div style='width: 100%;height: 20px;'>
           <!--<el-button type='text' class='forgetPassword' v-bind:click='handleForgetPassword'>忘记密码？</el-button>-->
         </div>
-        <el-button type='primary' class='loginButton' v-bind:loading='loading' v-on:click='login'>登 录
+        <el-button class='loginButton' type='primary' v-bind:loading='loading' v-on:click='login'>登 录
         </el-button>
       </div>
     </div>
@@ -45,7 +45,6 @@
 
 <script>
 
-import {Notification} from 'element-ui'
 import API from '../src/utils/API'
 import Utils from '../src/utils/Utils'
 import Constant from '../src/utils/Constant'
@@ -87,13 +86,23 @@ export default {
         switch (json.code) {
           case 200:
             // 登录成功
-            // 记录用户id
-            localStorage.setItem('userInfo', JSON.stringify(json.result))
-            // 跳转至主页
-            setTimeout(() => {
-              window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
-            }, 200)
-            break
+            // 判断是否有权限
+            Utils.getInfo(API.SYS_permission, {keys: 'core.frontend_organization_management'}).then(({result}) => {
+              if (result && result.authenticated) {
+                // 记录用户id
+                localStorage.setItem('userInfo', JSON.stringify(json.result))
+                // 跳转至主页
+                window.location.href = `${window.location.origin}${Constant.publicPath}/index.html`
+              } else {
+                this.$notify.error({
+                  title: '错误',
+                  message: Constant.AJAX_ERROR_NO_AUTH_LOGIN
+                })
+                this.handleVerfClick()
+                this.captcha = ''
+              }
+            })
+            return
           case 1001:
             errMessage = '验证码错误，请重试'
             break
@@ -105,7 +114,7 @@ export default {
             break
         }
         if (errMessage) {
-          Notification.error({
+          this.$notify.error({
             title: '错误',
             message: errMessage
           })
