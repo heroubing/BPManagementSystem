@@ -25,5 +25,5 @@ export default {
     {value: 'annual', label: '拍卖年鉴'},
     {value: 'article', label: '文章报告'},
     {value: 'business_plan', label: '互联网投行'}
-  ],
+  ]
 }

@@ -19,7 +19,7 @@
         由于充值时用户可能有购买或其充值操作，该结果仅供参考
       </el-form-item>
       <div style="text-align: end;">
-        <el-button @click="charge()" type='primary'>充值</el-button>
+        <el-button @click="submit" type='primary'>充值</el-button>
       </div>
     </el-form>
   </div>
@@ -54,7 +54,7 @@ export default {
       },
       rules: {
         pay_cny_fen: [
-          {required: true, message: '请输入支付金额'},
+          {required: true, message: '请输入支付金额', trigger: 'change'},
           {
             validator (rule, value, callback) {
               let reg = /^[0-9]+(.[0-9]{1,2})?$/
@@ -67,7 +67,7 @@ export default {
           }
         ],
         total: [
-          {required: true, message: '请输入支付总额'},
+          {required: true, message: '请输入支付总额', trigger: 'change'},
           {
             validator (rule, value, callback) {
               let reg = /^[0-9]+(.[0-9]{1,2})?$/
@@ -83,36 +83,38 @@ export default {
     }
   },
   methods: {
-    charge () {
-      let params = {
-        user_id: this.data.id,
-        pay_cny_fen: Number(this.ruleForm.pay_cny_fen) * 100,
-        total: Number(this.ruleForm.total) * 100,
-        extern_id: this.ruleForm.extern_id,
-        note: this.ruleForm.note
-      }
-      Utils.getInfoPost(API.USER_charge, params).then(({result}) => {
-        let message = ''
-        switch (result.status) {
-          case 'SUCCESS':
-            message = '充值成功'
-            this.$notify.success({title: '成功', message})
-            this.$emit('saved')
-            break
-          case 'FAILED':
-            message = '充值失败'
-            this.$notify.error({title: '失败', message})
-            break
-          case 'generate_order':
-            message = '生成订单中，请稍后再次查询'
-            this.$notify.info({title: '正在充值', message})
-            this.$emit('saved')
-            break
-          case 'handel_result':
-            message = '正在处理结果中，请稍后再次查询'
-            this.$notify.info({title: '正在充值', message})
-            this.$emit('saved')
-            break
+    submit () {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          let params = {
+            user_id: this.data.id,
+            pay_cny_fen: Number(this.ruleForm.pay_cny_fen) * 100,
+            total: Number(this.ruleForm.total) * 100,
+            extern_id: this.ruleForm.extern_id,
+            note: this.ruleForm.note
+          }
+          Utils.getInfoPost(API.USER_charge, params).then(({result}) => {
+            let message = ''
+            switch (result.status) {
+              case 'SUCCESS':
+                message = '充值成功'
+                this.$notify.success({title: '成功', message})
+                break
+              case 'FAILED':
+                message = '充值失败'
+                this.$notify.error({title: '失败', message})
+                return
+              case 'generate_order':
+                message = '生成订单中，请稍后再次查询'
+                this.$notify.info({title: '正在充值', message})
+                break
+              case 'handel_result':
+                message = '正在处理结果中，请稍后再次查询'
+                this.$notify.info({title: '正在充值', message})
+                break
+            }
+            this.$emit('saved', 'charge')
+          })
         }
       })
     }
@@ -131,7 +133,7 @@ export default {
     max-width: 600px;
     text-align: start;
     margin-right: 150px;
-    padding: 20px;
+        padding: 20px;
   }
 
   .upload {

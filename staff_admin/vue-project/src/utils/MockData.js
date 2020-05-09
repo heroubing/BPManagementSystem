@@ -44,7 +44,7 @@ const MockData = function (url, params, isShowLoading) {
           'result': {
             'authenticated': true,
             'permissions': {
-              'common.frontend_staff_admin': true,
+              'core.frontend_staff_admin': true,
               'product.add_article': true
             }
           },
@@ -69,7 +69,18 @@ const MockData = function (url, params, isShowLoading) {
               'user_avatar': '',
               'birthday': null,
               'address': '',
-              'subscription': [],
+              'subscription': [
+                {
+                  'product_type': 'annual',
+                  'start_time': '2018-07-09T23:54:00+0800',
+                  'end_time': '2019-07-09T23:54:00+0800'
+                },
+                {
+                  'product_type': 'business_plan',
+                  'start_time': '2018-07-09T23:54:00+0800',
+                  'end_time': '2019-07-09T23:54:00+0800'
+                }
+              ],
               'investor': null
             },
             {
@@ -1367,6 +1378,176 @@ const MockData = function (url, params, isShowLoading) {
             'phone': null,
             'sex': '',
             'reg_time': '2019-08-16T22:43:20+0800',
+            'homepage': '',
+            'qq': '',
+            'points': 100,
+            'user_avatar': '',
+            'birthday': null,
+            'address': '',
+            'subscription': [],
+            'investor': null
+          }
+        }
+        break
+      case API.USER_subscribe_meta:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'wx_app': {
+              'charge': [
+                {
+                  'product_id': 'wx.charge1',
+                  'description': '1 元 = 10 积分',
+                  'quantity': 1,
+                  'price': 1,
+                  'points': 10
+                }
+              ],
+              'subscribe': {
+                'article': {
+                  'product_id': 'subscription.article',
+                  'price': 198,
+                  'quantity': 1,
+                  'description': '订阅 报告 1 年',
+                  'duration': 12,
+                  'marketing': true,
+                  'marketing_id': 1,
+                  'num': null
+                },
+                'annual': {
+                  'product_id': 'subscription.annual',
+                  'price': 98,
+                  'quantity': 1,
+                  'description': '订阅 年鉴 1 年',
+                  'duration': 12,
+                  'marketing': true,
+                  'marketing_id': 1,
+                  'num': null
+                },
+                'business_plan': {
+                  'product_id': 'subscription.business_plan.3mon',
+                  'price': 298,
+                  'quantity': 1,
+                  'description': '订阅 商业计划书 3 月',
+                  'duration': 3,
+                  'marketing': true,
+                  'marketing_id': 1,
+                  'num': null
+                }
+              }
+            },
+            'iap': {
+              'charge': [
+                {
+                  'product_id': 'cn.com.investdata.recharge60',
+                  'price': 60,
+                  'quantity': 1,
+                  'points': 600,
+                  'description': '支付 60 元以获取 600 积分'
+                }
+              ],
+              'subscribe': {
+                'article': {
+                  'product_id': 'investdata.subscribe.article',
+                  'price': 198,
+                  'quantity': 1,
+                  'description': '报告订阅1年',
+                  'duration': 12,
+                  'marketing': false,
+                  'marketing_id': 0,
+                  'num': null
+                },
+                'annual': {
+                  'product_id': 'investdata.subscribe.annual',
+                  'price': 1,
+                  'quantity': 250,
+                  'description': '年鉴订阅1年',
+                  'duration': 12,
+                  'marketing': false,
+                  'marketing_id': 0,
+                  'num': null
+                },
+                'business_plan': {
+                  'product_id': 'investdata.subscribe.business_plan',
+                  'price': 1,
+                  'quantity': 500,
+                  'description': '商业计划书订阅1年',
+                  'duration': 12,
+                  'marketing': false,
+                  'marketing_id': 0,
+                  'num': null
+                }
+              }
+            }
+          },
+          'info': {
+            'latest_version': {
+              'product': 'ios',
+              'version': '2.2.1',
+              'dev_type': 'release',
+              'url': 'http://openbox.mobilem.360.cn/index/d/sid/3293710',
+              'pub_date': '2017-12-02',
+              'exp_date': null
+            },
+            'user': {
+              'user_name': 'iOSAPP',
+              'email': 'test@d-long.cn',
+              'phone': '',
+              'sex': '',
+              'reg_time': null,
+              'homepage': '',
+              'qq': '',
+              'points': 2737,
+              'user_avatar': '',
+              'birthday': '1954-01-22',
+              'address': '',
+              'subscription': [
+                {
+                  'product_type': 'annual',
+                  'start_time': '2018-07-09T23:54:00+0800',
+                  'end_time': '2019-07-09T23:54:00+0800'
+                }
+              ],
+              'investor': {
+                'organization': 'Invest Data Ltd.',
+                'reg_time': '2018-09-25T11:37:43+0800',
+                'org_email': 'k@qq.com',
+                'fav_industries': 'other',
+                'fav_round': 'A'
+              }
+            }
+          }
+        }
+        break
+      case API.USER_subscribe:
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 18,
+            'order_id': 'admin202003220546330a518279398f4',
+            'user': 3,
+            'pay_cny_fen': 100,
+            'source': 'admin',
+            'pay_time': '2020-03-22T13:46:33+0800',
+            'expire_time': '2020-03-22T16:46:33+0800',
+            'status': 'SUCCESS',
+            'total': 200,
+            'extern_id': '',
+            'extern_info': null,
+            'note': '',
+            'product_type': 'business_plan',
+            'start_time': '2020-09-03T00:00:00+0800',
+            'end_time': '2020-10-04T00:00:00+0800'
+          },
+          'info': {
+            'id': 1,
+            'user_name': 'DefineFC',
+            'email': null,
+            'phone': null,
+            'sex': '',
+            'reg_time': '2020-03-08T11:05:02+0800',
             'homepage': '',
             'qq': '',
             'points': 100,

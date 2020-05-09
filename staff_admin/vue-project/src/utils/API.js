@@ -8,6 +8,9 @@ const API = {
   USER_logout: '/api/user/logout/',
   // 充值
   USER_charge: '/api/charge/admin/',
+  // 订阅
+  USER_subscribe: '/api/subscribe/admin/',
+  USER_subscribe_meta: '/api/subscribe/meta/',
 
   BP_add: '/api/bp/create/',
   BP_query: '/api/bp/',

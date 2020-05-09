@@ -16,7 +16,7 @@
       <el-table-column label='积分' prop='points'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
-          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>充值</el-button>
+          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,7 +62,7 @@ export default {
     // 新增/编辑
     openDialog (row) {
       this.dialogData = row
-      this.dialogTitle = row ? `充值-${row.user_name}` : '新增用户'
+      this.dialogTitle = row ? `查看-${row.user_name}` : '新增用户'
       this.dialogVisible_edit = true
     },
     // 编辑成功回调
