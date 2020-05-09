@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Constant from '@/utils/Constant'
 import Utils from '@/utils/Utils'
 import API from '@/utils/API'
-import {MessageBox} from 'element-ui'
+import {MessageBox, Notification} from 'element-ui'
 import Home from '@/components/Home'
 import UserGroup from '@/components/UserGroup/Manage'
 import InvestmentUser from '@/components/InvestmentUser/Manage'
@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
       if (result.permissions && result.permissions['core.frontend_organization_management']) {
         next()
       } else {
-        this.$notify.error({
+        Notification.error({
           title: '错误',
           message: Constant.AJAX_ERROR_NO_AUTH
         })
