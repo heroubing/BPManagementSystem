@@ -15,7 +15,7 @@ import UserGroup from '@/components/UserGroup/Manage'
 import User from '@/components/User/Manage'
 import Utils from '@/utils/Utils'
 import API from '@/utils/API'
-import {MessageBox} from 'element-ui'
+import {MessageBox, Notification} from 'element-ui'
 
 Vue.use(Router)
 
@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
       if (result.permissions && result.permissions['core.frontend_staff_admin']) {
         next()
       } else {
-        this.$notify.error({
+        Notification.error({
           title: '错误',
           message: Constant.AJAX_ERROR_NO_AUTH
         })
