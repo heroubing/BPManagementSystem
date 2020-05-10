@@ -16,7 +16,7 @@
         <el-input v-model='ruleForm.note'/>
       </el-form-item>
       <el-form-item label=''>
-        由于充值时用户可能有购买或其充值操作，该结果仅供参考
+        由于充值时用户可能有购买或其他充值操作，该结果仅供参考，请在充值后刷新页面实时查询用户积分。
       </el-form-item>
       <div style="text-align: end;">
         <el-button @click="submit" type='primary'>充值</el-button>

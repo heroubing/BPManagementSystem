@@ -39,9 +39,9 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  Utils.getInfo(API.SYS_permission, {keys: 'core.frontend_staff_admin'}).then(({result}) => {
+  Utils.getInfo(API.SYS_permission, {keys: 'common.frontend_staff_admin'}).then(({result}) => {
     if (result && result.authenticated) {
-      if (result.permissions && result.permissions['core.frontend_staff_admin']) {
+      if (result.permissions && result.permissions['common.frontend_staff_admin']) {
         next()
       } else {
         Notification.error({

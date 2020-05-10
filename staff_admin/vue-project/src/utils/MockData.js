@@ -44,7 +44,7 @@ const MockData = function (url, params, isShowLoading) {
           'result': {
             'authenticated': true,
             'permissions': {
-              'core.frontend_staff_admin': true,
+              'common.frontend_staff_admin': true,
               'product.add_article': true
             }
           },
