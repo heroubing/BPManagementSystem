@@ -11,6 +11,7 @@ const API = {
   // 附件
   File_create: '/api/file/create/',
   File_download: (id) => `/api/file/${id}/`,
+  File_detail: (id) => `/api/file/${id}/detail/`,
 
   // 投资机构
   Investment_query: '/api/investment/organization/',
