@@ -4,13 +4,11 @@
       :action="uploadApi"
       :before-remove="beforeRemove"
       :class="{'public-upload-show': readonly}"
-      :data="params"
       :disabled="readonly"
       :file-list="fileList"
-      :on-error="onError"
+      :http-request="httpRequest"
       :on-preview="onPreview"
       :on-remove="onRemove"
-      :on-success="onSuccess"
       class="public-upload"
       with-credentials
     >
@@ -80,26 +78,6 @@ export default {
     onPreview (file) {
       window.open(API.File_download(file.id))
     },
-    onSuccess (response, file, fileList) {
-      let {result, msg, code} = response
-      if (code === 200) { // 上传成功
-        // 更新当前附件列表
-        file.id = result.id
-        file.name = '已上传文件-' + result.id
-        this.fileList = fileList
-        // 抛出附件信息
-        this.$emit('input', [...this.value, result.id])
-      } else { // 上传失败
-        // 还原附件列表
-        fileList.pop()
-        this.fileList = fileList
-        // 提示异常
-        this.$notify.error({
-          title: '错误',
-          message: `${msg}【错误代码：${code}】`
-        })
-      }
-    },
     onRemove (file, fileList) {
       // 更新当前附件列表
       this.fileList = fileList
@@ -107,34 +85,43 @@ export default {
       let attachmentList = this.value.filter(id => file.id !== id)
       this.$emit('input', attachmentList)
     },
-    onError () {
-      this.$notify.error({
-        title: '错误',
-        message: '文件上传失败，请重新尝试'
-      })
-    },
     beforeRemove (file) {
       return this.$confirm(`确定移除 ${file.name}？`)
-    }
-  },
-  computed: {
-    hasFile: function () {
-      return this.value || this.value === 0
+    },
+    httpRequest ({file}) {
+      let {name} = file
+      let ext = name.substring(name.lastIndexOf('.') + 1, name.length)
+      let filename = name.substring(0, name.lastIndexOf('.'))
+      let params = Object.assign({}, this.params, {filename, ext})
+      Utils.getInfoPost(this.uploadApi, params, true, false).then((response) => {
+        let {result, msg, code} = response
+        if (code === 200) { // 上传成功
+          // 更新当前附件列表
+          file.id = result.id
+          this.fileList.push(file)
+          // 抛出附件信息
+          this.$emit('input', [...this.value, result.id])
+        } else { // 上传失败
+          // 还原附件列表
+          this.fileList.pop()
+          // 提示异常
+          this.$notify.error({
+            title: '错误',
+            message: `${msg}【错误代码：${code}】`
+          })
+        }
+      }).catch(e => {
+        // 上传失败  还原附件列表
+        this.fileList.pop()
+        this.$notify.error({
+          title: '错误',
+          message: e.message
+        })
+      })
     }
   },
   mounted () {
     this.getFileName()
-  },
-  watch: {
-    value: function (newValue) {
-      if (newValue && newValue.map && newValue.length !== this.fileList.length) {
-        this.fileList = this.value.map(id => ({
-          name: +id.name,
-          status: 'success',
-          id
-        }))
-      }
-    }
   }
 }
 </script>
