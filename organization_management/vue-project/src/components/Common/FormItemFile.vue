@@ -65,7 +65,6 @@ export default {
       fileList = []
     }
     return {
-      // uploadApi: `${window.SERVER_URL}${API.Common.uploadFileTemp}`,
       fileList
     }
   },
