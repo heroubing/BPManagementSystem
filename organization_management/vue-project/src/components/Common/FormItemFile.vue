@@ -21,6 +21,7 @@
 
 <script>
 import API from '@/utils/API'
+import Utils from '@/utils/Utils'
 
 export default {
   name: 'form-item-file',
@@ -69,6 +70,13 @@ export default {
     }
   },
   methods: {
+    getFileName () {
+      Promise.all(this.fileList.map(({id}) => Utils.getInfo(API.File_detail(id)))).then(jsonList => {
+        this.fileList = this.fileList.map((item, index) => Object.assign(item, {
+          name: `${jsonList[index].result.filename}.${jsonList[index].result.ext}`
+        }))
+      })
+    },
     onPreview (file) {
       window.open(API.File_download(file.id))
     },
@@ -114,11 +122,14 @@ export default {
       return this.value || this.value === 0
     }
   },
+  mounted () {
+    this.getFileName()
+  },
   watch: {
     value: function (newValue) {
       if (newValue && newValue.map && newValue.length !== this.fileList.length) {
         this.fileList = this.value.map(id => ({
-          name: id.name,
+          name: +id.name,
           status: 'success',
           id
         }))

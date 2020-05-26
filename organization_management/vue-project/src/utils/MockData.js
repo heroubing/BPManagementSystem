@@ -82,7 +82,8 @@ const MockData = function (url, params, isShowLoading) {
           'result': {
             'authenticated': true,
             'permissions': {
-              'common.frontend_staff_admin': true,
+              'core.frontend_organization_management': true,
+              'common.frontend_organization_management': true,
               'product.add_article': true
             }
           },
@@ -404,13 +405,13 @@ const MockData = function (url, params, isShowLoading) {
               'short_name': 'tt',
               'code': '34',
               'status': 'ff',
-              'brief': '2,5',
-              'bp': '2,5',
-              'reports': '2,5',
-              'other_file': '2,5',
+              'brief': '1,2',
+              'bp': '1,2',
+              'reports': '1,2',
+              'other_file': '1,2',
               'industry': 'dd',
               'contact_info': 'dd',
-              'contact_card': '2,5',
+              'contact_card': '2',
               'advantage': 'ww',
               'origin': 'ww',
               'upload_user': {
@@ -520,10 +521,42 @@ const MockData = function (url, params, isShowLoading) {
           'code': 200,
           'msg': 'OK',
           'result': {
-            'id': 15,
+            'id': 1,
             'file_type': 'test',
             'is_private': true,
             'file': 'http://localhost:8000/api/file/15/',
+            'upload_user': 1
+          },
+          'info': null
+        }
+        break
+      case API.File_detail(1):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 1,
+            'category': 'test',
+            'is_private': true,
+            'file': 'http://localhost:8000/api/file/15/',
+            'filename': '说明书1',
+            'ext': 'pdf',
+            'upload_user': 1
+          },
+          'info': null
+        }
+        break
+      case API.File_detail(2):
+        mockData = {
+          'code': 200,
+          'msg': 'OK',
+          'result': {
+            'id': 2,
+            'category': 'test',
+            'is_private': true,
+            'file': 'http://localhost:8000/api/file/15/',
+            'filename': '说明书2',
+            'ext': 'pdf',
             'upload_user': 1
           },
           'info': null
