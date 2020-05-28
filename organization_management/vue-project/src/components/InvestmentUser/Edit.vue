@@ -7,7 +7,7 @@
         :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'user')"
         :trigger-on-focus="true"
         @select="(item) => handleSelect(item, 'user')"
-        placeholder="请输入关键字查询"
+        placeholder="请输入完整用户名查询"
         popper-class="Add-autocomplete"
         v-model="ruleForm.user_name"
       >
