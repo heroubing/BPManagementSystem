@@ -92,7 +92,7 @@ export default {
       let {name} = file
       let ext = name.substring(name.lastIndexOf('.') + 1, name.length)
       let filename = name.substring(0, name.lastIndexOf('.'))
-      let params = Object.assign({}, this.params, {filename, ext})
+      let params = Object.assign({}, this.params, {filename, ext, file})
       Utils.getInfoPost(this.uploadApi, params, true, false).then((response) => {
         let {result, msg, code} = response
         if (code === 200) { // 上传成功
