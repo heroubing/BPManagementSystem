@@ -12,6 +12,7 @@
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
       <el-table-column label='ID' prop='id' width='100px'/>
       <el-table-column label='机构名称' prop='org_name'/>
+      <el-table-column label='过期时间' prop='expire_time' :formatter="formatterTime" width='200px'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
       <el-table-column label='操作' width='200px'>
         <template slot-scope='scope'>
@@ -59,6 +60,10 @@ export default {
     }
   },
   methods: {
+    // 时间截取
+    formatterTime (row) {
+      return Utils.formatterTime(row.expire_time)
+    },
     // 是否激活格式转换
     formatterIsActive (row) {
       return row.is_active ? '是' : '否'

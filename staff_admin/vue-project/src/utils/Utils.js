@@ -242,6 +242,14 @@ export default class Utils {
   /**
    * 阻止promise继续链式下去
    */
-
   static stopPromise () { return new Promise(() => {}) }
+
+  /**
+   * 时间截取
+   * @return {string}
+   * @param timeStr
+   */
+  static formatterTime (timeStr = '') {
+    return timeStr.replace('T', ' ').substr(0, 19)
+  }
 }

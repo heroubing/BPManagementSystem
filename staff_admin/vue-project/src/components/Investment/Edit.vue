@@ -41,6 +41,15 @@
           </template>
         </el-autocomplete>
       </el-form-item>
+      <el-form-item label='过期时间' prop='expire_time'>
+        <el-date-picker
+          placeholder="选择日期时间"
+          type="datetime"
+          value-format="yyyy-MM-ddTHH:mm:ss"
+          v-model="ruleForm.expire_time"
+        >
+        </el-date-picker>
+      </el-form-item>
       <div style="text-align: end;">
         <el-button @click="submitForm('ruleForm')" type='primary'>{{isAdd ? '确定新增' : '确定保存'}}</el-button>
         <el-button @click="resetForm('ruleForm')">{{isAdd ? '清空重写' : '重置'}}</el-button>
@@ -63,7 +72,8 @@ export default {
         return {
           id: '', // id
           org_name: '', // 机构名称
-          is_active: true // 是否激活
+          is_active: true, // 是否激活
+          expire_time: '' // 过期时间
         }
       }
     }
@@ -79,7 +89,8 @@ export default {
         user: null, // 用户id
         user_name: '', // 用户id显示信息
         group: null, // 所属用户组id
-        group_name: '' // 所属用户组id显示信息
+        group_name: '', // 所属用户组id显示信息
+        expire_time: data.expire_time // 过期时间
       },
       rules: {
         org_name: [
@@ -98,6 +109,9 @@ export default {
             validator: (rule, value, callback) => this.validator(rule, value, callback, 'group'),
             message: '请通过查询点击选择现有用户组'
           }
+        ],
+        expire_time: [
+          {required: true, message: '请选择过期时间', trigger: 'blur'}
         ]
       }
     }
@@ -150,7 +164,8 @@ export default {
             org_name: this.ruleForm.org_name,
             is_active: this.ruleForm.is_active,
             user: this.ruleForm.user,
-            user_group: this.ruleForm.group
+            user_group: this.ruleForm.group,
+            expire_time: this.ruleForm.expire_time
           }
           let url = API.Investment_create
           let message = '录入成功'
