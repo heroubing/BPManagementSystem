@@ -91,7 +91,17 @@ export default {
     httpRequest ({file}) {
       let {name} = file
       let ext = name.substring(name.lastIndexOf('.') + 1, name.length)
-      let filename = name.substring(0, name.lastIndexOf('.'))
+      let filename = name.substring(0, name.lastIndexOf('.')).trim()
+      let re = /^[^*|\\:"<>?/\.]+$/
+      if (!filename || !re.test(filename)) {
+        // 上传失败  还原附件列表
+        this.fileList = this.fileList.slice(0, this.fileList.length)
+        this.$notify.error({
+          title: '错误',
+          message: '文件名不能为空，且不能包含特殊字符，请修改后再次上传'
+        })
+        return
+      }
       let params = Object.assign({}, this.params, {filename, ext, file})
       Utils.getInfoPost(this.uploadApi, params, true, false).then((response) => {
         let {result, msg, code} = response
@@ -103,7 +113,7 @@ export default {
           this.$emit('input', [...this.value, result.id])
         } else { // 上传失败
           // 还原附件列表
-          this.fileList.pop()
+          this.fileList = this.fileList.slice(0, this.fileList.length)
           // 提示异常
           this.$notify.error({
             title: '错误',
@@ -112,7 +122,7 @@ export default {
         }
       }).catch(e => {
         // 上传失败  还原附件列表
-        this.fileList.pop()
+        this.fileList = this.fileList.slice(0, this.fileList.length)
         this.$notify.error({
           title: '错误',
           message: e.message
