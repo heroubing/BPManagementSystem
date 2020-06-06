@@ -100,12 +100,18 @@ export default {
   },
   mounted: function () {
     setTimeout(() => {
-      this.$notify({
-        title: '欢迎回来',
-        type: 'success',
-        duration: 2000,
-        offset: 90
-      })
+      let {organization = {}} = Utils.getUserInfo()
+      let expireTime = new Date(organization.expire_time)
+      if (expireTime < new Date()) {
+        this.$alert('您的机构已经过期，请联系“投资数据库”客服续期。邮箱：service@d-long.cn 微信：invest-data8')
+      } else {
+        this.$notify({
+          title: '欢迎回来',
+          type: 'success',
+          duration: 2000,
+          offset: 90
+        })
+      }
     }, 1500)
   }
 }
