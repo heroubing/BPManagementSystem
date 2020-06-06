@@ -109,6 +109,7 @@ export default {
   methods: {
     // 用户查询
     queryInputList (searchKey, cb, key) {
+      searchKey = searchKey.trim()
       if (!searchKey && key === 'user') {
         let result = []
         cb(result)

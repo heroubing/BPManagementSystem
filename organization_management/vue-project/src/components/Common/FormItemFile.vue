@@ -92,6 +92,7 @@ export default {
       let {name} = file
       let ext = name.substring(name.lastIndexOf('.') + 1, name.length)
       let filename = name.substring(0, name.lastIndexOf('.')).trim()
+      // eslint-disable-next-line no-useless-escape
       let re = /^[^*|\\:"<>?/\.]+$/
       if (!filename || !re.test(filename)) {
         // 上传失败  还原附件列表
