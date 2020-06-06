@@ -54,7 +54,6 @@ export default {
   components: {Edit},
   data () {
     return {
-      userInfo: Utils.getUserInfo(),
       Constant,
       formData: {
         search_key: ''

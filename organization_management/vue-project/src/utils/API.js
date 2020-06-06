@@ -1,6 +1,6 @@
 const API = {
   SYS_staffLogin: '/api/staff/login/',
-  SYS_userLogin: '/api/user/login/',
+  SYS_userLogin: '/api/investment/login/',
   SYS_captcha: '/api/captcha/',
   SYS_permission: '/api/permission/',
 

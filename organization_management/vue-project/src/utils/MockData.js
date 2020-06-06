@@ -42,35 +42,25 @@ const MockData = function (url, params, isShowLoading) {
           'code': 200,
           'msg': 'OK',
           'result': {
-            'id': 15,
-            'user_name': 'staff10',
-            'email': null,
-            'phone': null,
-            'sex': '',
-            'reg_time': '2018-06-27T00:12:00+0800',
-            'homepage': '',
-            'qq': '',
-            'points': 100,
-            'user_avatar': '',
-            'birthday': null,
-            'address': '',
-            'subscription': [
-              {
-                'product_type': 'annual',
-                'start_time': '2018-07-09T23:54:00+0800',
-                'end_time': '2019-07-09T23:54:00+0800'
-              }
-            ],
-            'investor': {
-              'organization': 'Invest Data Ltd.',
-              'reg_time': '2018-09-25T11:37:43+0800',
-              'org_email': 'k@qq.com',
-              'fav_industries': '3,4',
-              'fav_round': '1,5',
-              'review_status': 'WAITING',
-              'reviewer_note': '',
-              'review_update_time': null
-            }
+            'user': {
+              'id': 3,
+              'user_name': 'user2',
+              'user_avatar': 'https://investdata.com.cn/favicon.ico'
+            },
+            'organization': {
+              'id': 3,
+              'org_name': 'org3',
+              'expire_time': '2020-01-02T22:55:00+0000',
+              'is_active': true
+            },
+            'group': {
+              'id': 2,
+              'display_name': 'gro2',
+              'is_active': true,
+              'is_admin': false
+            },
+            'inner_user_name': 'inv_user3',
+            'is_active': true
           },
           'info': null
         }
