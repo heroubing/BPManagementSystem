@@ -397,43 +397,108 @@ const MockData = function (url, params, isShowLoading) {
         mockData = {
           'code': 200,
           'msg': 'OK',
-          'result': [
-            {
-              'id': 1,
-              'organization': 9,
-              'full_name': 'ttttt',
-              'short_name': 'tt',
-              'code': '34',
-              'status': 'ff',
-              'brief': '1,2',
-              'bp': '1,2',
-              'reports': '1,2',
-              'other_file': '1,2',
-              'industry': 'dd',
-              'contact_info': 'dd',
-              'contact_card': '2',
-              'advantage': 'ww',
-              'origin': 'ww',
-              'upload_user': {
-                'id': 3,
-                'user_name': 'user2',
-                'user_avatar': 'https://investdata.com.cn/favicon.ico',
-                'investment_user': {
-                  'organization': 1,
-                  'group': 1,
-                  'inner_user_name': null,
-                  'is_active': true
-                }
-              }
+          'result': [{
+            'id': 2,
+            'organization': 1,
+            'full_name': '123',
+            'short_name': '1233',
+            'code': '12333',
+            'status': '储备',
+            'brief': [{
+              'id': 10,
+              'category': 'investment_management/project/brief',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/2/brief/10/',
+              'filename': 'test[file]',
+              'ext': 'rtf',
+              'upload_user': 2
+            }, {
+              'id': 11,
+              'category': 'investment_management/project/brief',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/2/brief/11/',
+              'filename': 'test[file] 2',
+              'ext': 'rtf',
+              'upload_user': 2
+            }, {
+              'id': 12,
+              'category': 'investment_management/project/brief',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/2/brief/12/',
+              'filename': 'test[file] 2',
+              'ext': 'rtf',
+              'upload_user': 2
+            }],
+            'bp': [],
+            'reports': [],
+            'other_file': [],
+            'industry': '1233333',
+            'contact_info': '123333333',
+            'contact_card': [],
+            'advantage': '2222',
+            'origin': '3333',
+            'upload_user': {
+              'id': 2,
+              'user_name': 'heroubing_test',
+              'user_avatar': '',
+              'investment_user': {'user': 2, 'organization': 1, 'group': 1, 'inner_user_name': '111', 'is_active': true}
             }
-          ],
-          'info': {
-            'pagination': {
-              'count': 1,
-              'num_pages': 1,
-              'per_page': 50
+          }, {
+            'id': 1,
+            'organization': 1,
+            'full_name': 'test',
+            'short_name': 'test',
+            'code': '001',
+            'status': '储备',
+            'brief': [{
+              'id': 6,
+              'category': 'investment_management/project/brief',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/1/brief/6/',
+              'filename': 'testfile',
+              'ext': 'rtf',
+              'upload_user': 2
+            }],
+            'bp': [{
+              'id': 7,
+              'category': 'investment_management/project/bp',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/1/bp/7/',
+              'filename': 'testfile',
+              'ext': 'rtf',
+              'upload_user': 2
+            }],
+            'reports': [],
+            'other_file': [{
+              'id': 8,
+              'category': 'investment_management/project/other',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/1/other_file/8/',
+              'filename': 'testfile',
+              'ext': 'rtf',
+              'upload_user': 2
+            }],
+            'industry': '1',
+            'contact_info': '111',
+            'contact_card': [{
+              'id': 9,
+              'category': 'investment_management/project/contact_card',
+              'is_private': true,
+              'file': 'http://localhost:8080/api/investment/project/1/contact_card/9/',
+              'filename': 'testfile',
+              'ext': 'rtf',
+              'upload_user': 2
+            }],
+            'advantage': '111',
+            'origin': '111',
+            'upload_user': {
+              'id': 2,
+              'user_name': 'heroubing_test',
+              'user_avatar': '',
+              'investment_user': {'user': 2, 'organization': 1, 'group': 1, 'inner_user_name': '111', 'is_active': true}
             }
-          }
+          }],
+          'info': {'pagination': {'count': 2, 'num_pages': 1, 'per_page': 50}}
         }
         break
       case API.InvestmentProject_create:

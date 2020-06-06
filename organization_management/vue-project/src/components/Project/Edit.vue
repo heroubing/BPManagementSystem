@@ -92,13 +92,13 @@ export default {
         short_name: this.data.short_name, // 项目简称
         code: this.data.code, // 项目代号
         status: this.data.status ? this.data.status : '储备', // 项目状态
-        brief: this.data.brief ? this.data.brief.split(',') : [], // 项目简介，已上传文件的id
-        bp: this.data.bp ? this.data.bp.split(',') : [], // 项目计划书，已上传文件的id
-        reports: this.data.reports ? this.data.reports.split(',') : [], // 项目考察报告，已上传文件的id
-        other_file: this.data.other_file ? this.data.other_file.split(',') : [], // 项目其他资料，已上传文件的id
+        brief: this.data.brief ? this.data.brief : [], // 项目简介，已上传文件的id
+        bp: this.data.bp ? this.data.bp : [], // 项目计划书，已上传文件的id
+        reports: this.data.reports ? this.data.reports : [], // 项目考察报告，已上传文件的id
+        other_file: this.data.other_file ? this.data.other_file : [], // 项目其他资料，已上传文件的id
         industry: this.data.industry, // 项目所属行业
         contact_info: this.data.contact_info, // 项目联系人信息
-        contact_card: this.data.contact_card ? this.data.contact_card.split(',') : [], // 项目联系人名片，已上传文件的id
+        contact_card: this.data.contact_card ? this.data.contact_card : [], // 项目联系人名片，已上传文件的id
         advantage: this.data.advantage, // 项目优势
         origin: this.data.origin// 项目来源
       },
@@ -124,13 +124,13 @@ export default {
             short_name: this.ruleForm.short_name,
             code: this.ruleForm.code,
             status: this.ruleForm.status,
-            brief: this.ruleForm.brief.join(','),
-            bp: this.ruleForm.bp.join(','),
-            reports: this.ruleForm.reports.join(','),
-            other_file: this.ruleForm.other_file.join(','),
+            brief: this.ruleForm.brief.map(item => item.id).join(','),
+            bp: this.ruleForm.bp.map(item => item.id).join(','),
+            reports: this.ruleForm.reports.map(item => item.id).join(','),
+            other_file: this.ruleForm.other_file.map(item => item.id).join(','),
             industry: this.ruleForm.industry,
             contact_info: this.ruleForm.contact_info,
-            contact_card: this.ruleForm.contact_card.join(','),
+            contact_card: this.ruleForm.contact_card.map(item => item.id).join(','),
             advantage: this.ruleForm.advantage,
             origin: this.ruleForm.origin
           }

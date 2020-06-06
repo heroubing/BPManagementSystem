@@ -56,9 +56,9 @@ export default {
   data: function () {
     let fileList
     if (this.value && this.value.map) { // todo 查名字
-      fileList = this.value.map(id => ({
-        name: '已上传文件-' + id,
-        id
+      fileList = this.value.map(item => ({
+        name: `${item.filename}.${item.ext}`,
+        id: item.id
       }))
     } else {
       fileList = []
@@ -82,7 +82,7 @@ export default {
       // 更新当前附件列表
       this.fileList = fileList
       // 抛出附件信息
-      let attachmentList = this.value.filter(id => file.id !== id)
+      let attachmentList = this.value.filter(item => file.id !== item.id)
       this.$emit('input', attachmentList)
     },
     beforeRemove (file) {
@@ -110,7 +110,7 @@ export default {
           file.id = result.id
           this.fileList.push(file)
           // 抛出附件信息
-          this.$emit('input', [...this.value, result.id])
+          this.$emit('input', [...this.value, result])
         } else { // 上传失败
           // 还原附件列表
           this.fileList = this.fileList.slice(0, this.fileList.length)
@@ -131,7 +131,7 @@ export default {
     }
   },
   mounted () {
-    this.getFileName()
+    // this.getFileName()
   }
 }
 </script>
