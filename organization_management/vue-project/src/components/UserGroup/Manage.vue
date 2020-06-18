@@ -6,19 +6,20 @@
       </el-form-item>
       <el-form-item>
         <el-button @click='queryList(true)' type='primary'>搜索</el-button>
-<!--        <el-button @click='openDialog()' type='primary'>新增</el-button>-->
+        <el-button @click='openDialog()' type='primary' v-if="isAdmin">新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data='tableData' style='width: 100%; margin-top: 20px' tooltip-effect='dark'>
       <el-table-column label='ID' prop='id' width='100px'/>
       <el-table-column label='投资用户组名称' prop='display_name'/>
       <el-table-column :formatter="formatterIsActive" label='是否激活' prop='is_active' width='100px'/>
-<!--      <el-table-column label='操作' width='200px'>-->
-<!--        <template slot-scope='scope'>-->
-<!--          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>-->
-<!--          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+      <el-table-column :formatter="formatterIsAdmin" label='是否为管理员组' prop='is_admin' width='150px'/>
+      <el-table-column label='操作' width='200px' v-if="isAdmin">
+        <template slot-scope='scope'>
+          <el-button @click.native.prevent='openDialog(scope.row)' size='small' type='text'>编辑</el-button>
+          <el-button @click.native.prevent='deleteRow(scope.row)' size='small' type='text'>删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :current-page="currentPage"
@@ -37,9 +38,9 @@
 </template>
 
 <script>
-import Utils from '../../utils/Utils'
+import Utils from '@/utils/Utils'
 import Edit from './Edit'
-import API from '../../utils/API'
+import API from '@/utils/API'
 
 export default {
   name: 'Manage',
@@ -55,13 +56,18 @@ export default {
       tableData: [],
       currentPage: 1,
       total: 0,
-      pageSize: 50
+      pageSize: 50,
+      isAdmin: false
     }
   },
   methods: {
     // 是否激活格式转换
     formatterIsActive (row) {
       return row.is_active ? '是' : '否'
+    },
+    // 是否为管理员组格式转换
+    formatterIsAdmin (row) {
+      return row.is_admin ? '是' : '否'
     },
     // 新增/编辑
     openDialog (row) {
@@ -114,6 +120,8 @@ export default {
   },
   mounted: function () {
     this.queryList(true)
+    let {group} = Utils.getUserInfo()
+    if (group && group.is_admin) this.isAdmin = true
   }
 }
 </script>

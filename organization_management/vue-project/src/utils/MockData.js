@@ -57,7 +57,7 @@ const MockData = function (url, params, isShowLoading) {
               'id': 2,
               'display_name': 'gro2',
               'is_active': true,
-              'is_admin': false
+              'is_admin': true
             },
             'inner_user_name': 'inv_user3',
             'is_active': true
