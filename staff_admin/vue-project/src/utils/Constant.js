@@ -17,8 +17,8 @@ export default {
   ],
   // 基本类型-是否（布尔值）
   isNot_boolean: [
-    {value: true, label: '是'},
-    {value: false, label: '否'}
+    {value: 1, label: '是'},
+    {value: 0, label: '否'}
   ],
   // 订阅- 产品类型
   product_type: [
