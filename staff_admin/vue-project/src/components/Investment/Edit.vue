@@ -26,20 +26,8 @@
           </template>
         </el-autocomplete>
       </el-form-item>
-      <el-form-item label='初始管理员用户组' prop='group' v-if="isAdd">
-        <el-autocomplete
-          :debounce="500"
-          :fetch-suggestions="(searchKey, cb) => queryInputList(searchKey, cb, 'group')"
-          :trigger-on-focus="true"
-          @select="(item) => handleSelect(item, 'group')"
-          placeholder="请输入关键字查询"
-          popper-class="Add-autocomplete"
-          v-model="ruleForm.group_name"
-        >
-          <template slot-scope="{item}">
-            <div class="name">{{item.display_name}}</div>
-          </template>
-        </el-autocomplete>
+      <el-form-item label='初始管理员用户组' prop='user_group' v-if="isAdd">
+        <el-input v-model='ruleForm.user_group'/>
       </el-form-item>
       <el-form-item label='过期时间' prop='expire_time'>
         <el-date-picker
@@ -88,9 +76,8 @@ export default {
         is_active: data.is_active,
         user: null, // 用户id
         user_name: '', // 用户id显示信息
-        group: null, // 所属用户组id
-        group_name: '', // 所属用户组id显示信息
-        expire_time: data.expire_time // 过期时间
+        expire_time: data.expire_time, // 过期时间
+        user_group: 'admin' // 所属用户组
       },
       rules: {
         org_name: [
@@ -103,12 +90,8 @@ export default {
             message: '请通过查询点击选择指定初始管理员'
           }
         ],
-        group: [
-          {required: true, message: '请通过查询点击选择现有用户组', trigger: 'blur'},
-          {
-            validator: (rule, value, callback) => this.validator(rule, value, callback, 'group'),
-            message: '请通过查询点击选择现有用户组'
-          }
+        user_group: [
+          {required: true, message: '请输入初始管理员用户组', trigger: 'blur'}
         ],
         expire_time: [
           {required: true, message: '请选择过期时间', trigger: 'blur'}
@@ -164,7 +147,7 @@ export default {
             org_name: this.ruleForm.org_name,
             is_active: this.ruleForm.is_active,
             user: this.ruleForm.user,
-            user_group: this.ruleForm.group,
+            user_group: this.ruleForm.user_group,
             expire_time: this.ruleForm.expire_time
           }
           let url = API.Investment_create
