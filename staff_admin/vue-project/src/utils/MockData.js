@@ -176,13 +176,11 @@ const MockData = function (url, params, isShowLoading) {
         mockData = {
           'code': 200,
           'msg': 'OK',
-          'result': [
-            {
-              'id': 2,
-              'user_name': 'sun',
-              'user_avatar': ''
-            }
-          ],
+          'result': {
+            'id': 2,
+            'user_name': 'sun',
+            'user_avatar': ''
+          },
           'info': {
             'pagination': {
               'count': 1,
