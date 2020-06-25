@@ -124,9 +124,7 @@ export default {
           break
       }
       Utils.getInfo(api, params, false).then(({result}) => {
-        if (key === 'user') {
-          result = [result]
-        }
+        if (key === 'user') result = [result]
         cb(result.map(item => Object.assign({value: item[value]}, item)))
       })
     },
