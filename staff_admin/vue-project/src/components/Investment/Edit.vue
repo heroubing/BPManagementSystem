@@ -146,7 +146,7 @@ export default {
         if (valid) {
           let params = {
             org_name: this.ruleForm.org_name,
-            is_active: this.ruleForm.is_active,
+            is_active: this.ruleForm.is_active ? '1' : '0',
             user: this.ruleForm.user,
             user_group: this.ruleForm.user_group,
             expire_time: this.ruleForm.expire_time
