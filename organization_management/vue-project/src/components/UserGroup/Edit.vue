@@ -69,8 +69,8 @@ export default {
         if (valid) {
           let params = {
             display_name: this.ruleForm.display_name,
-            is_active: this.ruleForm.is_active,
-            is_admin: this.ruleForm.is_admin
+            is_active: this.ruleForm.is_active ? '1' : '0',
+            is_admin: this.ruleForm.is_admin ? '1' : '0'
           }
           let url = API.User_group_create
           let message = '录入成功'

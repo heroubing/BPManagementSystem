@@ -9,8 +9,8 @@ export default {
 
   // 基本类型-是否（布尔值）
   isNot_boolean: [
-    {value: 1, label: '是'},
-    {value: 0, label: '否'}
+    {value: true, label: '是'},
+    {value: false, label: '否'}
   ],
   statusList: [
     {value: '储备', label: '储备'},

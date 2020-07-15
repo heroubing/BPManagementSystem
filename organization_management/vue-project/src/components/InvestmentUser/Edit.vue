@@ -155,7 +155,7 @@ export default {
             user: this.ruleForm.user,
             group: this.ruleForm.group,
             inner_user_name: this.ruleForm.inner_user_name,
-            is_active: this.ruleForm.is_active
+            is_active: this.ruleForm.is_active ? '1' : '0'
           }
           let url = API.InvestmentUser_create
           if (!this.isAdd) {
